@@ -5,8 +5,7 @@ export const Container = styled.View`
   width: 100%;
   flex-direction: row;
   align-items: center;
-  padding-top: 15px;
-  padding-left: 15px;
+  padding: 15px;
 `;
 
 export const TextHeader = styled.Text`

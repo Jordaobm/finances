@@ -47,29 +47,29 @@ const Home: React.FC = () => {
                 <GoalText>Controle de minhas despesas</GoalText>
               </Goal>
 
-              <Goal style={styles.container}>
-                <GoalIconWraper color={'#E0F8E9'}>
+              <Goal disable={true} style={styles.container}>
+                <GoalIconWraper color={'#E0F8E9'} disable={true}>
                   <Graphic source={pandeiro} />
                 </GoalIconWraper>
                 <GoalText>Juntar para comprar </GoalText>
               </Goal>
 
-              <Goal style={styles.container}>
-                <GoalIconWraper color={'#F9F3FF'}>
+              <Goal disable={true} style={styles.container}>
+                <GoalIconWraper color={'#F9F3FF'} disable={true}>
                   <Graphic source={flower} />
                 </GoalIconWraper>
                 <GoalText>Economize para investir</GoalText>
               </Goal>
 
-              <Goal style={styles.container}>
-                <GoalIconWraper color={'#FFF6D9'}>
+              <Goal disable={true} style={styles.container}>
+                <GoalIconWraper color={'#FFF6D9'} disable={true}>
                   <Graphic source={alert} />
                 </GoalIconWraper>
                 <GoalText>Economize para imprevistos</GoalText>
               </Goal>
 
-              <Goal style={styles.container}>
-                <GoalIconWraper color={'#F0F7FD'}>
+              <Goal disable={true} style={styles.container}>
+                <GoalIconWraper color={'#F0F7FD'} disable={true}>
                   <Graphic source={other} />
                 </GoalIconWraper>
                 <GoalText>Outros</GoalText>

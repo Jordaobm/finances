@@ -15,9 +15,10 @@ interface ButtonProps {
     initial: string;
     finished: string;
   };
+  icon: string;
 }
 
-const Button: React.FC<ButtonProps> = ({children, direction, colors}) => {
+const Button: React.FC<ButtonProps> = ({children, direction, colors, icon}) => {
   const navigation = useNavigation();
 
   if (colors) {
@@ -30,7 +31,7 @@ const Button: React.FC<ButtonProps> = ({children, direction, colors}) => {
             onPress={() => navigation.navigate(direction)}
             colors={colors}>
             <TextButton color="white">{children}</TextButton>
-            <IconButton color="white" name="arrow-right" size={24} />
+            <IconButton color="white" name={icon} size={24} />
           </Content>
         </GradienteColor>
       </Container>
@@ -41,7 +42,7 @@ const Button: React.FC<ButtonProps> = ({children, direction, colors}) => {
     <Container>
       <Content onPress={() => navigation.navigate(direction)} colors={colors}>
         <TextButton>{children}</TextButton>
-        <IconButton name="arrow-right" size={24} />
+        <IconButton name={icon} size={24} />
       </Content>
     </Container>
   );

@@ -40,7 +40,11 @@ export const Goals = styled.View`
   width: 100%;
 `;
 
-export const Goal = styled(RectButton)`
+interface GoalProps {
+  disable?: boolean;
+}
+
+export const Goal = styled<GoalProps>(RectButton)`
   margin: 8px 0px;
   width: 100%;
   background-color: #fff;
@@ -49,10 +53,17 @@ export const Goal = styled(RectButton)`
   flex-direction: row;
   align-items: center;
   padding: 15px;
+
+  ${(props) =>
+    props.disable &&
+    css`
+      background-color: #dddee2;
+    `}
 `;
 
 interface GoalIconWraperProps {
   color?: string;
+  disable?: boolean;
 }
 export const GoalIconWraper = styled.View<GoalIconWraperProps>`
   width: 80px;
@@ -66,6 +77,11 @@ export const GoalIconWraper = styled.View<GoalIconWraperProps>`
     css`
       background-color: ${props.color};
     `}
+  ${(props) =>
+    props.disable &&
+    css`
+      background-color: #dddee2;
+    `}
 `;
 export const GoalText = styled.Text`
   color: #5d87a8;
@@ -75,6 +91,6 @@ export const GoalText = styled.Text`
 `;
 
 export const Graphic = styled.Image`
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
 `;

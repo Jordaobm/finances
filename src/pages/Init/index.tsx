@@ -26,7 +26,9 @@ const Init: React.FC = () => {
           <AppDescriptionText>Seu aplicativo de finanças</AppDescriptionText>
         </AppDescription>
       </Content>
-      <Button direction="Home">Começar</Button>
+      <Button icon="arrow-right" direction="Home">
+        Começar
+      </Button>
     </Container>
   );
 };
