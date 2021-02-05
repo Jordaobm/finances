@@ -39,3 +39,7 @@ export const AppDescriptionText = styled.Text`
   font-size: 25px;
   color: #2b9d57;
 `;
+export const ButtonWraper = styled.View`
+  width: 100%;
+  padding: 0 20px;
+`;

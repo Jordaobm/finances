@@ -5,7 +5,7 @@ import {css} from 'styled-components';
 import LinearGradient from 'react-native-linear-gradient';
 
 export const Container = styled.View`
-  padding: 0 30px;
+  padding: 0 10px;
 `;
 
 interface ButtonContentProps {

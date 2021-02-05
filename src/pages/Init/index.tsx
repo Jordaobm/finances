@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {
   Container,
   Content,
@@ -8,11 +8,19 @@ import {
   ImageWraper,
   AppNameText,
   AppDescriptionText,
+  ButtonWraper,
 } from './styles';
 import logo from '../../assets/logo1.png';
 import Button from '../../components/Button';
+import {useNavigation} from '@react-navigation/native';
 
 const Init: React.FC = () => {
+  const navigation = useNavigation();
+
+  const handleNextPage = useCallback(() => {
+    navigation.navigate('Home');
+  }, [navigation]);
+
   return (
     <Container>
       <Content>
@@ -26,9 +34,11 @@ const Init: React.FC = () => {
           <AppDescriptionText>Seu aplicativo de finanças</AppDescriptionText>
         </AppDescription>
       </Content>
-      <Button icon="arrow-right" direction="Home">
-        Começar
-      </Button>
+      <ButtonWraper>
+        <Button icon="arrow-right" onPress={handleNextPage}>
+          Começar
+        </Button>
+      </ButtonWraper>
     </Container>
   );
 };

@@ -1,6 +1,7 @@
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {Text} from 'react-native';
+import {RectButtonProperties} from 'react-native-gesture-handler';
 import {
   Container,
   TextButton,
@@ -9,8 +10,9 @@ import {
   GradienteColor,
 } from './styles';
 
-interface ButtonProps {
-  direction: string;
+interface ButtonProps extends RectButtonProperties {
+  iconColor?: string;
+  textColor?: string;
   colors?: {
     initial: string;
     finished: string;
@@ -18,20 +20,23 @@ interface ButtonProps {
   icon: string;
 }
 
-const Button: React.FC<ButtonProps> = ({children, direction, colors, icon}) => {
-  const navigation = useNavigation();
-
+const Button: React.FC<ButtonProps> = ({
+  children,
+  colors,
+  icon,
+  textColor,
+  iconColor,
+  ...rest
+}) => {
   if (colors) {
     return (
       <Container>
         <GradienteColor
           colors={[colors.initial, colors.finished]}
-          start={{x: -1, y: 0}}>
-          <Content
-            onPress={() => navigation.navigate(direction)}
-            colors={colors}>
-            <TextButton color="white">{children}</TextButton>
-            <IconButton color="white" name={icon} size={24} />
+          start={{x: 0.1, y: 1}}>
+          <Content {...rest} colors={colors}>
+            <TextButton color={textColor}>{children}</TextButton>
+            <IconButton color={iconColor} name={icon} size={24} />
           </Content>
         </GradienteColor>
       </Container>
@@ -40,7 +45,7 @@ const Button: React.FC<ButtonProps> = ({children, direction, colors, icon}) => {
 
   return (
     <Container>
-      <Content onPress={() => navigation.navigate(direction)} colors={colors}>
+      <Content {...rest} colors={colors}>
         <TextButton>{children}</TextButton>
         <IconButton name={icon} size={24} />
       </Content>
