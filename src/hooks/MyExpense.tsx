@@ -6,10 +6,12 @@ import React, {
   useEffect,
   useState,
 } from 'react';
+import { exp } from 'react-native-reanimated';
 import {
   IExpense,
   IExpenseCategory,
   IExpenseDetailPageState,
+  IIncome,
 } from '../dtos/types';
 
 interface MyExpensesContextData {
@@ -29,6 +31,18 @@ interface MyExpensesContextData {
   setExpenses(expenses: IExpense[]): void;
 
   balanceAvailable(): number;
+
+  incomes: IIncome[];
+  setIncomes(incomes: IIncome[]): void;
+
+  editExpenseState: IExpense;
+  setEditExpenseState(expense: IExpense): void;
+
+  setEditExpense(expense: IExpense): void;
+  deleteExpense(expense: IExpense): void;
+
+  editIncomeState: IIncome;
+  setEditIncomeState(income: IIncome): void;
 }
 
 const MyExpensesContext = createContext<MyExpensesContextData>(
@@ -65,14 +79,63 @@ const MyExpensesProvider: React.FC = ({ children }) => {
 
   const [category_id, setCategory_id] = useState(0);
 
+  const [incomes, setIncomes] = useState<IIncome[]>([]);
+
+  const [editExpenseState, setEditExpenseState] = useState<IExpense>(
+    {} as IExpense,
+  );
+  const [editIncomeState, setEditIncomeState] = useState<IIncome>(
+    {} as IIncome,
+  );
+
   const balanceAvailable = useCallback(() => {
-    let sum = 0;
+    let sumExpense = 0;
+    let sumIncomes = 0;
     expenses.map((expense) => {
-      sum = sum + Number(expense.ValueExpense);
+      sumExpense = sumExpense + Number(expense.ValueExpense);
     });
-    const available = salary - sum;
+    incomes.map((income) => {
+      sumIncomes = sumIncomes + Number(income.ValueIncome);
+    });
+    const available = salary + sumIncomes - sumExpense;
+
     return available;
-  }, [expenses, salary]);
+  }, [expenses, salary, incomes]);
+
+  const setEditExpense = useCallback(
+    (expense: IExpense) => {
+      const filterExpenses = expenses.filter(
+        (filter) => filter.id !== expense.id,
+      );
+      filterExpenses.push(expense);
+      setExpenses(filterExpenses);
+    },
+    [expenses],
+  );
+
+  const deleteExpense = useCallback(
+    (expense: IExpense) => {
+      const filterAndDeleteExpense = expenses.filter(
+        (filter) => filter.id !== expense.id,
+      );
+
+      const find = expenses.filter(
+        (filter) => filter.idExpenseCategory === expense.idExpenseCategory,
+      );
+
+      console.log(find.length);
+
+      if (find.length === 1) {
+        const filterAndDeleteCategory = categories.filter(
+          (filter) => filter.id !== expense.idExpenseCategory,
+        );
+        setCategories(filterAndDeleteCategory);
+      }
+      setExpenses(filterAndDeleteExpense);
+    },
+    [expenses, categories],
+  );
+
   // BUSCANDO INFORMAÇÕES NO ASYNCSTORAGE
 
   useEffect(() => {
@@ -100,9 +163,18 @@ const MyExpensesProvider: React.FC = ({ children }) => {
       }
     }
 
+    async function loadIncome() {
+      const load = await AsyncStorage.getItem('@finances:incomes');
+      if (load) {
+        const parsed = JSON.parse(load);
+        setIncomes(parsed);
+      }
+    }
+
     loadSalary();
     loadCategory();
     loadExpenses();
+    loadIncome();
   }, []);
 
   //GUARDANDO NOVAS INFORMAÇÕES NO ASYNCSTORAGE
@@ -135,6 +207,14 @@ const MyExpensesProvider: React.FC = ({ children }) => {
     setExpenses();
   }, [expenses]);
 
+  useEffect(() => {
+    async function setIncomeState() {
+      await AsyncStorage.setItem('@finances:incomes', JSON.stringify(incomes));
+    }
+
+    setIncomeState();
+  }, [incomes]);
+
   return (
     <MyExpensesContext.Provider
       value={{
@@ -149,6 +229,14 @@ const MyExpensesProvider: React.FC = ({ children }) => {
         category_id,
         setCategory_id,
         balanceAvailable,
+        incomes,
+        setIncomes,
+        editExpenseState,
+        setEditExpenseState,
+        editIncomeState,
+        setEditIncomeState,
+        setEditExpense,
+        deleteExpense,
       }}
     >
       {children}

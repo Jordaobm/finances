@@ -1,6 +1,6 @@
-import {TextInput} from 'react-native-gesture-handler';
-import {TextInputMask} from 'react-native-masked-text';
-import {css} from 'styled-components';
+import { TextInput } from 'react-native-gesture-handler';
+import { TextInputMask } from 'react-native-masked-text';
+import { css } from 'styled-components';
 import styled from 'styled-components/native';
 
 interface ContainerProps {
@@ -17,7 +17,7 @@ export const Container = styled.View<ContainerProps>`
   ${(props) =>
     props.inputFocus &&
     css`
-      border: 2px solid #1d50ff;
+      border: 2px solid #4ad07e;
     `}
 `;
 

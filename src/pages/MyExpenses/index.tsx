@@ -39,7 +39,6 @@ import {
   Salary,
   InputContainer,
   ExpenseValue,
-  Value,
   History,
   HistoryTitle,
   ExpenseContent,
@@ -49,9 +48,22 @@ import {
   ExpenseIcon,
   ExpenseName,
   ExpenseIconContainer,
+  ButtonAlterSalary,
+  IncomeContainer,
+  IncomeIconContainer,
+  IncomeName,
+  IncomeValueInput,
+  IncomeIconWraper,
+  IncomeValue,
+  SalaryNegative,
+  Negative,
+  NegativeIcon,
+  ButtonIncome,
+  ContentCategory,
+  ActionsEdit,
 } from './styles';
 import Header from '../../components/Header';
-import { ScrollView, TextInput } from 'react-native-gesture-handler';
+import { ScrollView } from 'react-native-gesture-handler';
 import addSalary from '../../assets/addsalary.png';
 import removeSalaty from '../../assets/removesalary.png';
 import arrowDown from '../../assets/arrowDown.png';
@@ -66,14 +78,21 @@ import luz from '../../assets/luz.png';
 import agua from '../../assets/agua.png';
 import cash from '../../assets/cash.png';
 import Button from '../../components/Button';
-import { useNavigation } from '@react-navigation/native';
+import {
+  NavigationRouteContext,
+  useNavigation,
+} from '@react-navigation/native';
 import { Graphic } from '../Home/styles';
 import { useMyExpenses } from '../../hooks/MyExpense';
-import { IExpense, IExpenseCategory } from '../../dtos/types';
+import {
+  IExpense,
+  IExpenseCategory,
+  IExpenseEdit,
+  IIncome,
+} from '../../dtos/types';
 import Input from '../../components/Input';
 import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
-import { exp } from 'react-native-reanimated';
 
 const YourSalary: React.FC = () => {
   const navigation = useNavigation();
@@ -149,64 +168,65 @@ const YourSpending: React.FC = () => {
           <ImageWraper colors={['#F97474', '#E15050']} start={{ x: 0.9, y: 0 }}>
             <IconFlag source={removeSalaty} />
           </ImageWraper>
-          <TextTitle>Insira suas despesas constantes </TextTitle>
+          <TextTitle>Insira suas despesas </TextTitle>
         </Content>
 
-        {categories &&
-          categories.map((category) => (
-            <Categories key={categories.indexOf(category)}>
-              <Category>
-                <CategoryTitle>
-                  <IconWraper>
-                    <IconCategoryWraper color={category.color}>
-                      <IconCategory source={category.icon} />
-                    </IconCategoryWraper>
-                  </IconWraper>
-                  <Name>
-                    <CategoryName>{category.name}</CategoryName>
-                  </Name>
-                  <IconArrowWraper>
-                    <IconArrow name="chevron-down" size={20} />
-                  </IconArrowWraper>
-                </CategoryTitle>
+        <ContentCategory>
+          {categories &&
+            categories.map((category) => (
+              <Categories key={categories.indexOf(category)}>
+                <Category>
+                  <CategoryTitle>
+                    <IconWraper>
+                      <IconCategoryWraper color={category.color}>
+                        <IconCategory source={category.icon} />
+                      </IconCategoryWraper>
+                    </IconWraper>
+                    <Name>
+                      <CategoryName>{category.name}</CategoryName>
+                    </Name>
+                    <IconArrowWraper>
+                      <IconArrow name="chevron-down" size={20} />
+                    </IconArrowWraper>
+                  </CategoryTitle>
 
-                {expenses
-                  .filter(
-                    (expense) => expense.idExpenseCategory === category.id,
-                  )
-                  .map((expense) => (
-                    <ExpenseContainer key={expense.id}>
-                      <ExpenseIconContainer>
-                        <ExpenseIconWraper color={expense.color}>
-                          <ExpenseIcon source={expense.icon} />
-                        </ExpenseIconWraper>
-                      </ExpenseIconContainer>
-                      <ExpenseName>{expense.name}</ExpenseName>
-                      <ExpenseValue>
-                        <ExpenseValueInput
-                          editable={false}
-                          type={'money'}
-                          value={expense.ValueExpense}
-                        />
-                      </ExpenseValue>
-                    </ExpenseContainer>
-                  ))}
+                  {expenses
+                    .filter(
+                      (expense) => expense.idExpenseCategory === category.id,
+                    )
+                    .map((expense) => (
+                      <ExpenseContainer key={expense.id}>
+                        <ExpenseIconContainer>
+                          <ExpenseIconWraper color={expense.color}>
+                            <ExpenseIcon source={expense.icon} />
+                          </ExpenseIconWraper>
+                        </ExpenseIconContainer>
+                        <ExpenseName>{expense.NameExpense}</ExpenseName>
+                        <ExpenseValue>
+                          <ExpenseValueInput
+                            editable={false}
+                            type={'money'}
+                            value={expense.ValueExpense}
+                          />
+                        </ExpenseValue>
+                      </ExpenseContainer>
+                    ))}
 
-                <ButtonAddCategory>
-                  <Button
-                    colors={{ finished: '#E7F5ED', initial: '#E7F5ED' }}
-                    icon="plus"
-                    onPress={() =>
-                      handleNextPageCategory('AddExpense', category.id)
-                    }
-                  >
-                    Adicionar despesa
-                  </Button>
-                </ButtonAddCategory>
-              </Category>
-            </Categories>
-          ))}
-
+                  <ButtonAddCategory>
+                    <Button
+                      colors={{ finished: '#E7F5ED', initial: '#E7F5ED' }}
+                      icon="plus"
+                      onPress={() =>
+                        handleNextPageCategory('AddExpense', category.id)
+                      }
+                    >
+                      Adicionar despesa
+                    </Button>
+                  </ButtonAddCategory>
+                </Category>
+              </Categories>
+            ))}
+        </ContentCategory>
         <AddCategoryButtonWraper>
           <AddCategory>
             <Button
@@ -362,7 +382,11 @@ const ExpenseDetail: React.FC = () => {
           <IconFlag source={expenseDetailPageState.icon} />
         </ImageWraper>
       </Content>
-      <ScrollView contentContainerStyle={{ paddingTop: 40 }}>
+      <ScrollView
+        contentContainerStyle={{
+          paddingTop: 40,
+        }}
+      >
         <Form onSubmit={handleAddExpense} ref={formRef}>
           <InputContainer>
             <Input name="NameExpense" placeholder="Nome da despesa" />
@@ -501,8 +525,26 @@ const ExpenseCategory: React.FC = () => {
 };
 
 const MyExpenses: React.FC = () => {
-  const { salary, expenses, categories, balanceAvailable } = useMyExpenses();
+  const {
+    expenses,
+    categories,
+    balanceAvailable,
+    incomes,
+    setEditExpenseState,
+    setEditIncomeState,
+  } = useMyExpenses();
   const navigation = useNavigation();
+
+  const handleEditExpense = useCallback((expense: IExpense) => {
+    navigation.navigate('EditExpense');
+    setEditExpenseState(expense);
+  }, []);
+
+  const handleEditIncome = useCallback((income: IIncome) => {
+    navigation.navigate('Home');
+    setEditIncomeState(income);
+  }, []);
+
   const handleNextPage = useCallback(
     (route: string) => {
       navigation.navigate(route);
@@ -515,11 +557,32 @@ const MyExpenses: React.FC = () => {
       <Header>Controle de minhas despesas</Header>
       <ScrollView>
         <Content>
-          <ImageWraper colors={['#67E799', '#4AD07E']} start={{ x: 0.9, y: 0 }}>
-            <IconFlag source={cash} />
-          </ImageWraper>
+          <ButtonAlterSalary onPress={() => handleNextPage('YourSalary')}>
+            <ImageWraper
+              colors={['#67E799', '#4AD07E']}
+              start={{ x: 0.9, y: 0 }}
+            >
+              <IconFlag source={cash} />
+            </ImageWraper>
+          </ButtonAlterSalary>
+
           <TextTitle>Saldo Disponível</TextTitle>
-          <Salary editable={false} type={'money'} value={balanceAvailable()} />
+          {balanceAvailable() >= 0 ? (
+            <Salary
+              editable={false}
+              type={'money'}
+              value={balanceAvailable()}
+            />
+          ) : (
+            <Negative>
+              <NegativeIcon>-</NegativeIcon>
+              <SalaryNegative
+                editable={false}
+                type={'money'}
+                value={balanceAvailable()}
+              />
+            </Negative>
+          )}
           <ActionsContent>
             <ActionsText>Ações</ActionsText>
             <Actions>
@@ -527,8 +590,8 @@ const MyExpenses: React.FC = () => {
                 colors={['#4AD07E', '#67E799']}
                 start={{ x: 0.1, y: 1 }}
               >
-                <ButtonContent onPress={() => handleNextPage('YourSalary')}>
-                  <ButtonText>Alterar salário</ButtonText>
+                <ButtonContent onPress={() => handleNextPage('AddIncome')}>
+                  <ButtonText>Adicionar renda</ButtonText>
                 </ButtonContent>
               </Gradient>
 
@@ -545,6 +608,30 @@ const MyExpenses: React.FC = () => {
             <History>
               <HistoryTitle>Histórico de ações</HistoryTitle>
               <ExpenseContent>
+                {incomes &&
+                  incomes.map((income) => (
+                    <ButtonIncome
+                      onPress={() => handleEditIncome(income)}
+                      key={income.id}
+                    >
+                      <IncomeContainer>
+                        <IncomeIconContainer>
+                          <IncomeIconWraper>
+                            <ExpenseIcon source={cash} />
+                          </IncomeIconWraper>
+                        </IncomeIconContainer>
+                        <IncomeName>{income.NameIncome}</IncomeName>
+                        <IncomeValue>
+                          <IncomeValueInput
+                            editable={false}
+                            type={'money'}
+                            value={income.ValueIncome}
+                          />
+                        </IncomeValue>
+                      </IncomeContainer>
+                    </ButtonIncome>
+                  ))}
+
                 {categories &&
                   categories.map((category) => (
                     <Categories key={categories.indexOf(category)}>
@@ -569,13 +656,16 @@ const MyExpenses: React.FC = () => {
                               expense.idExpenseCategory === category.id,
                           )
                           .map((expense) => (
-                            <ExpenseContainer key={expense.id}>
+                            <ExpenseContainer
+                              onPress={() => handleEditExpense(expense)}
+                              key={expense.id}
+                            >
                               <ExpenseIconContainer>
                                 <ExpenseIconWraper color={expense.color}>
                                   <ExpenseIcon source={expense.icon} />
                                 </ExpenseIconWraper>
                               </ExpenseIconContainer>
-                              <ExpenseName>{expense.name}</ExpenseName>
+                              <ExpenseName>{expense.NameExpense}</ExpenseName>
                               <ExpenseValue>
                                 <ExpenseValueInput
                                   editable={false}
@@ -597,6 +687,156 @@ const MyExpenses: React.FC = () => {
   );
 };
 
+const AddIncome: React.FC = () => {
+  const formRef = useRef<FormHandles>(null);
+  const { setIncomes, incomes } = useMyExpenses();
+
+  const navigation = useNavigation();
+
+  const handleAddIncome = useCallback(
+    (data: IIncome) => {
+      const id = new Date().getTime();
+      const income: IIncome = {
+        id,
+        NameIncome: data.NameIncome,
+        DescriptionIncome: data.DescriptionIncome,
+        ValueIncome: data.ValueIncome,
+      };
+
+      setIncomes([...incomes, income]);
+      navigation.navigate('MyExpenses');
+    },
+    [navigation, setIncomes, incomes],
+  );
+
+  return (
+    <Container>
+      <Header>Controle de minhas despesas</Header>
+      <Content>
+        <ImageWraper colors={['#67E799', '#4AD07E']} start={{ x: 0.9, y: 0 }}>
+          <IconFlag source={addSalary} />
+        </ImageWraper>
+      </Content>
+      <ScrollView
+        contentContainerStyle={{
+          paddingTop: 40,
+        }}
+      >
+        <Form onSubmit={handleAddIncome} ref={formRef}>
+          <InputContainer>
+            <Input name="NameIncome" placeholder="Nome da renda" />
+            <Input
+              name="DescriptionIncome"
+              placeholder="Descrição"
+              multiline={true}
+              numberOfLines={5}
+              style={{ textAlignVertical: 'top' }}
+            />
+            <Input name="ValueIncome" placeholder="Valor" />
+          </InputContainer>
+          <Button
+            onPress={() => {
+              formRef.current?.submitForm();
+            }}
+            iconColor="white"
+            textColor="white"
+            icon="arrow-right"
+            colors={{ initial: '#4AD07E', finished: '#67E799' }}
+          >
+            Continuar
+          </Button>
+        </Form>
+      </ScrollView>
+    </Container>
+  );
+};
+
+const EditExpense: React.FC = () => {
+  const navigation = useNavigation();
+  const formRef = useRef<FormHandles>(null);
+  const { editExpenseState, setEditExpense, deleteExpense } = useMyExpenses();
+
+  const handleEditIncome = useCallback((data: IExpenseEdit) => {
+    const edit: IExpense = {
+      id: editExpenseState.id,
+      color: editExpenseState.color,
+      icon: editExpenseState.icon,
+      idExpenseCategory: editExpenseState.idExpenseCategory,
+      DescriptionExpense: data.DescriptionEdit,
+      NameExpense: data.NameEdit,
+      ValueExpense: data.ValueEdit,
+    };
+    setEditExpense(edit);
+    navigation.navigate('MyExpenses');
+  }, []);
+
+  const handleDeleteExpense = useCallback((expense: IExpense) => {
+    deleteExpense(expense);
+    navigation.navigate('MyExpenses');
+  }, []);
+
+  return (
+    <Container>
+      <Header>Controle de minhas despesas</Header>
+      <Content>
+        <ImageWraper
+          colors={[editExpenseState.color, editExpenseState.color]}
+          start={{ x: 0.9, y: 0 }}
+        >
+          <IconFlag source={editExpenseState.icon} />
+        </ImageWraper>
+      </Content>
+      <ScrollView
+        contentContainerStyle={{
+          paddingTop: 40,
+        }}
+      >
+        <Form
+          initialData={{
+            NameEdit: editExpenseState.NameExpense,
+            DescriptionEdit: editExpenseState.DescriptionExpense,
+            ValueEdit: editExpenseState.ValueExpense,
+          }}
+          onSubmit={handleEditIncome}
+          ref={formRef}
+        >
+          <InputContainer>
+            <Input name="NameEdit" placeholder="Nome da renda" />
+            <Input
+              name="DescriptionEdit"
+              placeholder="Descrição"
+              multiline={true}
+              numberOfLines={5}
+              style={{ textAlignVertical: 'top' }}
+            />
+            <Input name="ValueEdit" placeholder="Valor" />
+          </InputContainer>
+
+          <ActionsEdit>
+            <Gradient colors={['#4AD07E', '#67E799']} start={{ x: 0.1, y: 1 }}>
+              <ButtonContent
+                onPress={() => {
+                  formRef.current?.submitForm();
+                }}
+              >
+                <ButtonText>Concluir</ButtonText>
+              </ButtonContent>
+            </Gradient>
+
+            <Gradient colors={['#EB5757', '#FF6969']} start={{ x: 0.1, y: 1 }}>
+              <ButtonContent
+                onPress={() => handleDeleteExpense(editExpenseState)}
+              >
+                <ButtonText>Deletar</ButtonText>
+              </ButtonContent>
+            </Gradient>
+          </ActionsEdit>
+        </Form>
+      </ScrollView>
+    </Container>
+  );
+};
+
 const styles = StyleSheet.create({
   container: {
     elevation: 5,
@@ -610,4 +850,6 @@ export {
   AddExpense,
   YourSalary,
   ExpenseDetail,
+  AddIncome,
+  EditExpense,
 };

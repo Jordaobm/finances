@@ -1,7 +1,12 @@
 import LinearGradient from 'react-native-linear-gradient';
 import styled from 'styled-components/native';
 import { TextInputMask } from 'react-native-masked-text';
-import { RectButton } from 'react-native-gesture-handler';
+import {
+  RectButton,
+  TouchableHighlight,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+} from 'react-native-gesture-handler';
 import { css } from 'styled-components';
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -135,13 +140,21 @@ export const GoalText = styled.Text`
 `;
 
 export const IconAddExpense = styled.Image`
-  margin-left: 50px;
+  margin-left: 65px;
   width: 30px;
   height: 30px;
 `;
 
-export const Categories = styled.View`
-  padding: 10px;
+interface CategoriesProps {
+  padding?: boolean;
+}
+
+export const Categories = styled.View<CategoriesProps>`
+  margin: 10px 0;
+`;
+
+export const ContentCategory = styled.View`
+  padding: 0 10px;
 `;
 
 export const Category = styled.View`
@@ -161,8 +174,6 @@ export const CategoryTitle = styled.View`
   margin: 10px 0;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 10px;
 `;
 
 interface IconCategoryWraperProps {
@@ -197,8 +208,9 @@ export const CategoryName = styled.Text`
   font-size: 14px;
   line-height: 21px;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   color: #5d87a8;
+  text-align: center;
 `;
 export const IconArrow = styled(Icon)`
   color: #5d87a8;
@@ -207,14 +219,20 @@ export const IconArrow = styled(Icon)`
 export const IconWraper = styled.View`
   justify-content: center;
   align-items: center;
+  width: 30%;
 `;
 export const Name = styled.View`
   justify-content: center;
   align-items: center;
+  text-align: center;
+
+  width: 50%;
+  padding: 0 10px;
 `;
 export const IconArrowWraper = styled.View`
   justify-content: center;
   align-items: center;
+  width: 20%;
 `;
 
 export const AddCategoryButtonWraper = styled.View`
@@ -254,6 +272,14 @@ export const Actions = styled.View`
   justify-content: space-between;
   align-items: center;
   margin-top: 10px;
+`;
+
+export const ActionsEdit = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  padding: 0 10px;
 `;
 
 export const ButtonText = styled.Text`
@@ -319,9 +345,6 @@ export const HistoryTitle = styled.Text`
 `;
 export const ExpenseContent = styled.View`
   margin-top: 13px;
-  background: #ffffff;
-  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.03);
-  border-radius: 10px;
 `;
 
 export const ExpenseValueInput = styled(TextInputMask)`
@@ -336,7 +359,7 @@ export const ExpenseValueInput = styled(TextInputMask)`
   color: #e6492d;
 `;
 
-export const ExpenseContainer = styled.View`
+export const ExpenseContainer = styled(TouchableOpacity)`
   width: 100%;
   margin: 10px 0;
   flex-direction: row;
@@ -372,6 +395,85 @@ export const ExpenseIcon = styled.Image`
 `;
 
 export const ExpenseName = styled.Text`
+  font-family: CircularStd-Medium;
+  font-size: 14px;
+  line-height: 21px;
+  display: flex;
+  align-items: center;
+  color: #5d87a8;
+  text-align: center;
+`;
+
+export const ButtonAlterSalary = styled(TouchableOpacity)``;
+
+export const IncomeContainer = styled.View`
+  background: #ffffff;
+  border-radius: 10px;
+  width: 100%;
+  margin: 10px 0;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px 20px;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const ButtonIncome = styled(TouchableOpacity)``;
+
+export const IncomeIconContainer = styled.View``;
+export const IncomeIconWraper = styled.View`
+  width: 60px;
+  height: 60px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 25px;
+  background-color: #e0f8e9;
+`;
+
+export const IncomeName = styled.Text`
+  font-family: CircularStd-Medium;
+  font-size: 14px;
+  line-height: 21px;
+  display: flex;
+  align-items: center;
+  color: #5d87a8;
+  text-align: center;
+`;
+
+export const IncomeValue = styled.View`
   justify-content: center;
   align-items: center;
+`;
+
+export const IncomeValueInput = styled(TextInputMask)`
+  width: 100%;
+  padding: 20px;
+
+  justify-content: center;
+  align-items: center;
+  font-family: CircularStd-Bold;
+  font-size: 14px;
+  line-height: 16px;
+  color: #67e799;
+`;
+
+export const Negative = styled.View`
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  /* background-color: yellow; */
+  width: 100%;
+`;
+export const NegativeIcon = styled.Text`
+  font-size: 32px;
+  color: #eb5757;
+`;
+
+export const SalaryNegative = styled(TextInputMask)`
+  padding: 20px;
+  font-family: CircularStd-Medium;
+
+  font-size: 32px;
+  text-align: center;
+  color: #eb5757;
 `;

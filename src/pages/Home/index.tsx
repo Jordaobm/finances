@@ -1,5 +1,5 @@
 import React from 'react';
-import {StatusBar, StyleSheet} from 'react-native';
+import { StatusBar, StyleSheet } from 'react-native';
 import {
   Container,
   Content,
@@ -19,11 +19,13 @@ import flower from '../../assets/flower.png';
 import alert from '../../assets/alert.png';
 import other from '../../assets/other.png';
 import flag from '../../assets/homeIcon.png';
-import {ScrollView} from 'react-native-gesture-handler';
-import {useNavigation} from '@react-navigation/native';
+import { ScrollView } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
+import { useMyExpenses } from '../../hooks/MyExpense';
 
 const Home: React.FC = () => {
   const navigation = useNavigation();
+  const { salary } = useMyExpenses();
   return (
     <>
       <StatusBar backgroundColor="#f6f7fb" barStyle="dark-content" />
@@ -32,20 +34,36 @@ const Home: React.FC = () => {
         <Header />
         <ScrollView>
           <Content>
-            <ImageWraper colors={['#FFD481', '#FFA800']} start={{x: 0.9, y: 0}}>
+            <ImageWraper
+              colors={['#FFD481', '#FFA800']}
+              start={{ x: 0.9, y: 0 }}
+            >
               <IconFlag source={flag} />
             </ImageWraper>
             <TextTitle>Selecione seu objetivo </TextTitle>
 
             <Goals>
-              <Goal
-                style={styles.container}
-                onPress={() => navigation.navigate('MyExpenses')}>
-                <GoalIconWraper color={'#fff1f1'}>
-                  <Graphic source={graphic} />
-                </GoalIconWraper>
-                <GoalText>Controle de minhas despesas</GoalText>
-              </Goal>
+              {salary === 0 ? (
+                <Goal
+                  style={styles.container}
+                  onPress={() => navigation.navigate('YourSalary')}
+                >
+                  <GoalIconWraper color={'#fff1f1'}>
+                    <Graphic source={graphic} />
+                  </GoalIconWraper>
+                  <GoalText>Controle de minhas despesas</GoalText>
+                </Goal>
+              ) : (
+                <Goal
+                  style={styles.container}
+                  onPress={() => navigation.navigate('MyExpenses')}
+                >
+                  <GoalIconWraper color={'#fff1f1'}>
+                    <Graphic source={graphic} />
+                  </GoalIconWraper>
+                  <GoalText>Controle de minhas despesas</GoalText>
+                </Goal>
+              )}
 
               <Goal disable={true} style={styles.container}>
                 <GoalIconWraper color={'#E0F8E9'} disable={true}>

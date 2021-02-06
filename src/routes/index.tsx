@@ -10,6 +10,8 @@ import {
   AddExpense,
   YourSalary,
   ExpenseDetail,
+  AddIncome,
+  EditExpense,
 } from '../pages/MyExpenses';
 import { clearGlobalStateAndStorage } from '../utils/clearGlobalStateAndStorage';
 
@@ -28,6 +30,8 @@ const Router: React.Fc = () => {
         <Stack.Screen name="ExpenseCategory" component={ExpenseCategory} />
         <Stack.Screen name="AddExpense" component={AddExpense} />
         <Stack.Screen name="ExpenseDetail" component={ExpenseDetail} />
+        <Stack.Screen name="AddIncome" component={AddIncome} />
+        <Stack.Screen name="EditExpense" component={EditExpense} />
       </Stack.Navigator>
     </NavigationContainer>
   );
