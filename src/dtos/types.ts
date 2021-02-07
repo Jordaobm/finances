@@ -31,5 +31,11 @@ export interface IIncome {
   id: number;
   NameIncome: string;
   DescriptionIncome: string;
-  ValueIncome: string;
+  ValueIncome: number;
+}
+
+export interface IIncomeEdit {
+  NameEdit: string;
+  DescriptionEdit: string;
+  ValueEditIncome: number;
 }

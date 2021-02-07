@@ -43,6 +43,9 @@ interface MyExpensesContextData {
 
   editIncomeState: IIncome;
   setEditIncomeState(income: IIncome): void;
+
+  setEditIncome(income: IIncome): void;
+  deleteIncome(income: IIncome): void;
 }
 
 const MyExpensesContext = createContext<MyExpensesContextData>(
@@ -113,6 +116,17 @@ const MyExpensesProvider: React.FC = ({ children }) => {
     [expenses],
   );
 
+  const setEditIncome = useCallback(
+    (income: IIncome) => {
+      const filterIncomes = incomes.filter(
+        (incomeFilter) => incomeFilter.id !== income.id,
+      );
+      filterIncomes.push(income);
+      setIncomes(filterIncomes);
+    },
+    [incomes],
+  );
+
   const deleteExpense = useCallback(
     (expense: IExpense) => {
       const filterAndDeleteExpense = expenses.filter(
@@ -134,6 +148,15 @@ const MyExpensesProvider: React.FC = ({ children }) => {
       setExpenses(filterAndDeleteExpense);
     },
     [expenses, categories],
+  );
+
+  const deleteIncome = useCallback(
+    (income: IIncome) => {
+      setIncomes(
+        incomes.filter((incomeFilter) => incomeFilter.id !== income.id),
+      );
+    },
+    [incomes],
   );
 
   // BUSCANDO INFORMAÇÕES NO ASYNCSTORAGE
@@ -237,6 +260,8 @@ const MyExpensesProvider: React.FC = ({ children }) => {
         setEditIncomeState,
         setEditExpense,
         deleteExpense,
+        deleteIncome,
+        setEditIncome,
       }}
     >
       {children}

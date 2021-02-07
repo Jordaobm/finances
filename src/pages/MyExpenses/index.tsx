@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { Alert, StyleSheet, Text } from 'react-native';
 import {
   Container,
   Content,
@@ -89,6 +89,7 @@ import {
   IExpenseCategory,
   IExpenseEdit,
   IIncome,
+  IIncomeEdit,
 } from '../../dtos/types';
 import Input from '../../components/Input';
 import { Form } from '@unform/mobile';
@@ -143,7 +144,12 @@ const YourSalary: React.FC = () => {
 };
 
 const YourSpending: React.FC = () => {
-  const { categories, setCategory_id, expenses } = useMyExpenses();
+  const {
+    categories,
+    setCategory_id,
+    expenses,
+    setEditExpenseState,
+  } = useMyExpenses();
   const navigation = useNavigation();
   const handleNextPageCategory = useCallback(
     (route: string, category_id: number) => {
@@ -152,6 +158,11 @@ const YourSpending: React.FC = () => {
     },
     [navigation, setCategory_id],
   );
+
+  const handleEditExpense = useCallback((expense: IExpense) => {
+    navigation.navigate('EditExpense');
+    setEditExpenseState(expense);
+  }, []);
 
   const handleNextPage = useCallback(
     (route: string) => {
@@ -195,7 +206,10 @@ const YourSpending: React.FC = () => {
                       (expense) => expense.idExpenseCategory === category.id,
                     )
                     .map((expense) => (
-                      <ExpenseContainer key={expense.id}>
+                      <ExpenseContainer
+                        key={expense.id}
+                        onPress={() => handleEditExpense(expense)}
+                      >
                         <ExpenseIconContainer>
                           <ExpenseIconWraper color={expense.color}>
                             <ExpenseIcon source={expense.icon} />
@@ -345,6 +359,14 @@ const ExpenseDetail: React.FC = () => {
   const navigation = useNavigation();
   const handleAddExpense = useCallback(
     (data: IExpense) => {
+      if (data.NameExpense === '' || data.ValueExpense === '') {
+        Alert.alert(
+          'Preencha todos os campos',
+          'Preencha um nome para sua despesa e um valor',
+        );
+        return;
+      }
+
       const id = new Date().getTime();
       const expense: IExpense = {
         id,
@@ -541,7 +563,7 @@ const MyExpenses: React.FC = () => {
   }, []);
 
   const handleEditIncome = useCallback((income: IIncome) => {
-    navigation.navigate('Home');
+    navigation.navigate('EditIncome');
     setEditIncomeState(income);
   }, []);
 
@@ -695,6 +717,14 @@ const AddIncome: React.FC = () => {
 
   const handleAddIncome = useCallback(
     (data: IIncome) => {
+      if (data.NameIncome === '' || data.ValueIncome === '') {
+        Alert.alert(
+          'Preencha todos os campos',
+          'Preencha um nome para sua renda e um valor',
+        );
+        return;
+      }
+
       const id = new Date().getTime();
       const income: IIncome = {
         id,
@@ -756,7 +786,15 @@ const EditExpense: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const { editExpenseState, setEditExpense, deleteExpense } = useMyExpenses();
 
-  const handleEditIncome = useCallback((data: IExpenseEdit) => {
+  const handleEditExpense = useCallback((data: IExpenseEdit) => {
+    if (data.NameEdit === '' || data.ValueEdit === '') {
+      Alert.alert(
+        'Preencha todos os campos',
+        'Preencha um nome para sua despesa e um valor',
+      );
+      return;
+    }
+
     const edit: IExpense = {
       id: editExpenseState.id,
       color: editExpenseState.color,
@@ -797,7 +835,7 @@ const EditExpense: React.FC = () => {
             DescriptionEdit: editExpenseState.DescriptionExpense,
             ValueEdit: editExpenseState.ValueExpense,
           }}
-          onSubmit={handleEditIncome}
+          onSubmit={handleEditExpense}
           ref={formRef}
         >
           <InputContainer>
@@ -837,6 +875,93 @@ const EditExpense: React.FC = () => {
   );
 };
 
+const EditIncome: React.FC = () => {
+  const navigation = useNavigation();
+  const formRef = useRef<FormHandles>(null);
+  const { editIncomeState, deleteIncome, setEditIncome } = useMyExpenses();
+
+  const handleEditIncome = useCallback((income: IIncomeEdit) => {
+    if (income.NameEdit === '' || income.ValueEditIncome === '') {
+      Alert.alert(
+        'Preencha todos os campos',
+        'Preencha um nome para sua renda e um valor',
+      );
+      return;
+    }
+
+    setEditIncome({
+      id: editIncomeState.id,
+      NameIncome: income.NameEdit,
+      DescriptionIncome: income.DescriptionEdit,
+      ValueIncome: income.ValueEditIncome,
+    });
+    navigation.navigate('MyExpenses');
+  }, []);
+
+  const handleDeleteIncome = useCallback((income: IIncome) => {
+    deleteIncome(income);
+    navigation.navigate('MyExpenses');
+  }, []);
+
+  return (
+    <Container>
+      <Header>Controle de minhas despesas</Header>
+      <Content>
+        <ImageWraper colors={['#67E799', '#4AD07E']} start={{ x: 0.9, y: 0 }}>
+          <IconFlag source={addSalary} />
+        </ImageWraper>
+      </Content>
+      <ScrollView
+        contentContainerStyle={{
+          paddingTop: 40,
+        }}
+      >
+        <Form
+          initialData={{
+            NameEdit: editIncomeState.NameIncome,
+            DescriptionEdit: editIncomeState.DescriptionIncome,
+            ValueEditIncome: editIncomeState.ValueIncome,
+          }}
+          onSubmit={handleEditIncome}
+          ref={formRef}
+        >
+          <InputContainer>
+            <Input name="NameEdit" placeholder="Nome da renda" />
+            <Input
+              name="DescriptionEdit"
+              placeholder="Descrição"
+              multiline={true}
+              numberOfLines={5}
+              style={{ textAlignVertical: 'top' }}
+            />
+            <Input name="ValueEditIncome" placeholder="Valor" />
+          </InputContainer>
+
+          <ActionsEdit>
+            <Gradient colors={['#4AD07E', '#67E799']} start={{ x: 0.1, y: 1 }}>
+              <ButtonContent
+                onPress={() => {
+                  formRef.current?.submitForm();
+                }}
+              >
+                <ButtonText>Concluir</ButtonText>
+              </ButtonContent>
+            </Gradient>
+
+            <Gradient colors={['#EB5757', '#FF6969']} start={{ x: 0.1, y: 1 }}>
+              <ButtonContent
+                onPress={() => handleDeleteIncome(editIncomeState)}
+              >
+                <ButtonText>Deletar</ButtonText>
+              </ButtonContent>
+            </Gradient>
+          </ActionsEdit>
+        </Form>
+      </ScrollView>
+    </Container>
+  );
+};
+
 const styles = StyleSheet.create({
   container: {
     elevation: 5,
@@ -852,4 +977,5 @@ export {
   ExpenseDetail,
   AddIncome,
   EditExpense,
+  EditIncome,
 };

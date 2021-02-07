@@ -6,14 +6,15 @@ import { useMyExpenses } from '../../hooks/MyExpense';
 
 interface InputProps extends TextInputProps {
   name: string;
+  inputErr?: boolean;
 }
 
 interface InputValueReference {
   value: string;
 }
 
-const Input: React.FC<InputProps> = ({ name, ...rest }) => {
-  const { editExpenseState } = useMyExpenses();
+const Input: React.FC<InputProps> = ({ name, inputErr, ...rest }) => {
+  const { editExpenseState, editIncomeState } = useMyExpenses();
   const { registerField, fieldName, defaultValue = '' } = useField(name);
   const inputElementRef = useRef<any>(null);
   const inputValueRef = useRef<InputValueReference>({ value: defaultValue });
@@ -21,6 +22,9 @@ const Input: React.FC<InputProps> = ({ name, ...rest }) => {
   const [inputCoin, setInputCoin] = useState('0');
   const [inputCoinValue, setInputCoinValue] = useState(
     `${editExpenseState.ValueExpense}`,
+  );
+  const [inputCoinValueIncome, setInputCoinValueIncome] = useState(
+    `${editIncomeState.ValueIncome}`,
   );
 
   useEffect(() => {
@@ -61,7 +65,7 @@ const Input: React.FC<InputProps> = ({ name, ...rest }) => {
 
   if (name === 'ValueIncome') {
     return (
-      <Container inputFocus={inputFocus}>
+      <Container inputFocus={inputFocus} inputErr={inputErr}>
         <InputValueSalary
           ref={inputElementRef}
           type={'money'}
@@ -99,8 +103,28 @@ const Input: React.FC<InputProps> = ({ name, ...rest }) => {
     );
   }
 
+  if (name === 'ValueEditIncome') {
+    return (
+      <Container inputFocus={inputFocus}>
+        <InputValueSalary
+          value={inputCoinValueIncome}
+          ref={inputElementRef}
+          type={'money'}
+          maxLength={18}
+          onChangeText={(value) => {
+            setInputCoinValueIncome(value);
+            value = value.replace('R$', '');
+            value = value.replace('.', '');
+            value = value.replace(',', '.');
+            inputValueRef.current.value = value;
+          }}
+        />
+      </Container>
+    );
+  }
+
   return (
-    <Container inputFocus={inputFocus}>
+    <Container inputFocus={inputFocus} inputErr={inputErr}>
       <InputStyle
         {...rest}
         ref={inputElementRef}

@@ -5,6 +5,7 @@ import styled from 'styled-components/native';
 
 interface ContainerProps {
   inputFocus: boolean;
+  inputErr: boolean;
 }
 
 export const Container = styled.View<ContainerProps>`
@@ -19,6 +20,12 @@ export const Container = styled.View<ContainerProps>`
     css`
       border: 2px solid #4ad07e;
     `}
+
+  ${(props) =>
+    props.inputErr &&
+    css`
+      border: 2px solid #ff96b1;
+    `}
 `;
 
 export const InputStyle = styled(TextInput)`
@@ -27,7 +34,7 @@ export const InputStyle = styled(TextInput)`
   line-height: 26px;
   display: flex;
   align-items: flex-end;
-  color: #5d87a8;
+  color: #172635;
 `;
 
 export const InputValueSalary = styled(TextInputMask)`
