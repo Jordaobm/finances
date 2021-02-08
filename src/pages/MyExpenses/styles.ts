@@ -169,7 +169,7 @@ export const ButtonAddCategory = styled.View`
   width: 100%;
 `;
 
-export const CategoryTitle = styled.View`
+export const CategoryTitle = styled(TouchableOpacity)`
   width: 100%;
   margin: 10px 0;
   flex-direction: row;

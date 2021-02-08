@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { Alert, StyleSheet, Text } from 'react-native';
+import { Alert, StyleSheet } from 'react-native';
 import {
   Container,
   Content,
@@ -78,10 +78,7 @@ import luz from '../../assets/luz.png';
 import agua from '../../assets/agua.png';
 import cash from '../../assets/cash.png';
 import Button from '../../components/Button';
-import {
-  NavigationRouteContext,
-  useNavigation,
-} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { Graphic } from '../Home/styles';
 import { useMyExpenses } from '../../hooks/MyExpense';
 import {
@@ -149,6 +146,7 @@ const YourSpending: React.FC = () => {
     setCategory_id,
     expenses,
     setEditExpenseState,
+    setDetailsCategoryState,
   } = useMyExpenses();
   const navigation = useNavigation();
   const handleNextPageCategory = useCallback(
@@ -159,16 +157,27 @@ const YourSpending: React.FC = () => {
     [navigation, setCategory_id],
   );
 
-  const handleEditExpense = useCallback((expense: IExpense) => {
-    navigation.navigate('EditExpense');
-    setEditExpenseState(expense);
-  }, []);
+  const handleEditExpense = useCallback(
+    (expense: IExpense) => {
+      navigation.navigate('EditExpense');
+      setEditExpenseState(expense);
+    },
+    [navigation, setEditExpenseState],
+  );
 
   const handleNextPage = useCallback(
     (route: string) => {
       navigation.navigate(route);
     },
     [navigation],
+  );
+
+  const handleDetailsCategory = useCallback(
+    (category: IExpenseCategory) => {
+      navigation.navigate('DetailsCategory');
+      setDetailsCategoryState(category);
+    },
+    [navigation, setDetailsCategoryState],
   );
 
   return (
@@ -187,7 +196,9 @@ const YourSpending: React.FC = () => {
             categories.map((category) => (
               <Categories key={categories.indexOf(category)}>
                 <Category>
-                  <CategoryTitle>
+                  <CategoryTitle
+                    onPress={() => handleDetailsCategory(category)}
+                  >
                     <IconWraper>
                       <IconCategoryWraper color={category.color}>
                         <IconCategory source={category.icon} />
@@ -554,6 +565,7 @@ const MyExpenses: React.FC = () => {
     incomes,
     setEditExpenseState,
     setEditIncomeState,
+    setDetailsCategoryState,
   } = useMyExpenses();
   const navigation = useNavigation();
 
@@ -572,6 +584,14 @@ const MyExpenses: React.FC = () => {
       navigation.navigate(route);
     },
     [navigation],
+  );
+
+  const handleDetailsCategory = useCallback(
+    (category: IExpenseCategory) => {
+      navigation.navigate('DetailsCategory');
+      setDetailsCategoryState(category);
+    },
+    [navigation, setDetailsCategoryState],
   );
 
   return (
@@ -658,7 +678,9 @@ const MyExpenses: React.FC = () => {
                   categories.map((category) => (
                     <Categories key={categories.indexOf(category)}>
                       <Category>
-                        <CategoryTitle>
+                        <CategoryTitle
+                          onPress={() => handleDetailsCategory(category)}
+                        >
                           <IconWraper>
                             <IconCategoryWraper color={category.color}>
                               <IconCategory source={category.icon} />
