@@ -18,6 +18,9 @@ interface MyExpensesContextData {
   salary: number;
   setSalary(salary: number): void;
 
+  payDay: number;
+  setPayDay(day: number): void;
+
   addCategoryInExpenses(category: IExpenseCategory): void;
   categories: IExpenseCategory[];
 
@@ -61,6 +64,8 @@ const MyExpensesProvider: React.FC = ({ children }) => {
   //DECLARAÇÃO DE FUNÇÕES E FUNCIONALIDADES
 
   const [salary, setSalary] = useState(0);
+
+  const [payDay, setPayDay] = useState(0);
 
   const [
     expenseDetailPageState,
@@ -195,6 +200,14 @@ const MyExpensesProvider: React.FC = ({ children }) => {
       }
     }
 
+    async function loadPayDay() {
+      const load = await AsyncStorage.getItem('@finances:payday');
+      if (load) {
+        const parsed = JSON.parse(load);
+        setPayDay(parsed);
+      }
+    }
+
     async function loadCategory() {
       const load = await AsyncStorage.getItem('@finances:categories');
       if (load) {
@@ -220,6 +233,7 @@ const MyExpensesProvider: React.FC = ({ children }) => {
     }
 
     loadSalary();
+    loadPayDay();
     loadCategory();
     loadExpenses();
     loadIncome();
@@ -233,6 +247,13 @@ const MyExpensesProvider: React.FC = ({ children }) => {
     }
     setSalary();
   }, [salary]);
+
+  useEffect(() => {
+    async function setPayDayLocal() {
+      await AsyncStorage.setItem('@finances:payday', JSON.stringify(payDay));
+    }
+    setPayDayLocal();
+  }, [payDay]);
 
   useEffect(() => {
     async function setCategory() {
@@ -267,6 +288,8 @@ const MyExpensesProvider: React.FC = ({ children }) => {
     <MyExpensesContext.Provider
       value={{
         salary,
+        payDay,
+        setPayDay,
         setSalary,
         addCategoryInExpenses,
         categories,

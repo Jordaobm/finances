@@ -61,6 +61,9 @@ import {
   ButtonIncome,
   ContentCategory,
   ActionsEdit,
+  ValueAndDate,
+  InputValue,
+  InputDate,
 } from './styles';
 import Header from '../../components/Header';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -91,6 +94,7 @@ import {
 import Input from '../../components/Input';
 import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
+import { Calendar } from '../../components/Calendar';
 
 const YourSalary: React.FC = () => {
   const navigation = useNavigation();
@@ -99,10 +103,13 @@ const YourSalary: React.FC = () => {
   const [inputCoin, setInputCoin] = useState('0');
   const [salaryValue, setSalaryValue] = useState(0);
 
-  const handleConfirmSalaryValue = useCallback((salaryValue: number) => {
-    setSalary(salaryValue);
-    navigation.navigate('MyExpenses');
-  }, []);
+  const handleConfirmSalaryValue = useCallback(
+    (salaryValue: number) => {
+      setSalary(salaryValue);
+      navigation.navigate('PayDay');
+    },
+    [navigation, setSalary],
+  );
 
   return (
     <Container>
@@ -388,6 +395,7 @@ const ExpenseDetail: React.FC = () => {
         DescriptionExpense: data.DescriptionExpense,
         ValueExpense: data.ValueExpense,
         idExpenseCategory: category_id,
+        DateExpense: data.DateExpense,
       };
 
       setExpenses([...expenses, expense]);
@@ -430,7 +438,14 @@ const ExpenseDetail: React.FC = () => {
               numberOfLines={5}
               style={{ textAlignVertical: 'top' }}
             />
-            <Input name="ValueExpense" placeholder="Valor" />
+            <ValueAndDate>
+              <InputValue>
+                <Input name="ValueExpense" placeholder="Valor" />
+              </InputValue>
+              <InputDate>
+                <Input name="DateExpense" placeholder="Data da despesa" />
+              </InputDate>
+            </ValueAndDate>
           </InputContainer>
           <Button
             onPress={() => {
@@ -569,10 +584,13 @@ const MyExpenses: React.FC = () => {
   } = useMyExpenses();
   const navigation = useNavigation();
 
-  const handleEditExpense = useCallback((expense: IExpense) => {
-    navigation.navigate('EditExpense');
-    setEditExpenseState(expense);
-  }, []);
+  const handleEditExpense = useCallback(
+    (expense: IExpense) => {
+      navigation.navigate('EditExpense');
+      setEditExpenseState(expense);
+    },
+    [navigation, setEditExpenseState],
+  );
 
   const handleEditIncome = useCallback((income: IIncome) => {
     navigation.navigate('EditIncome');
@@ -625,6 +643,9 @@ const MyExpenses: React.FC = () => {
               />
             </Negative>
           )}
+
+          <Calendar />
+
           <ActionsContent>
             <ActionsText>Ações</ActionsText>
             <Actions>
@@ -816,7 +837,6 @@ const EditExpense: React.FC = () => {
       );
       return;
     }
-
     const edit: IExpense = {
       id: editExpenseState.id,
       color: editExpenseState.color,
@@ -825,6 +845,7 @@ const EditExpense: React.FC = () => {
       DescriptionExpense: data.DescriptionEdit,
       NameExpense: data.NameEdit,
       ValueExpense: data.ValueEdit,
+      DateExpense: data.EditDateExpense,
     };
     setEditExpense(edit);
     navigation.navigate('MyExpenses');
@@ -856,6 +877,7 @@ const EditExpense: React.FC = () => {
             NameEdit: editExpenseState.NameExpense,
             DescriptionEdit: editExpenseState.DescriptionExpense,
             ValueEdit: editExpenseState.ValueExpense,
+            EditDateExpense: editExpenseState.DateExpense,
           }}
           onSubmit={handleEditExpense}
           ref={formRef}
@@ -869,7 +891,14 @@ const EditExpense: React.FC = () => {
               numberOfLines={5}
               style={{ textAlignVertical: 'top' }}
             />
-            <Input name="ValueEdit" placeholder="Valor" />
+            <ValueAndDate>
+              <InputValue>
+                <Input name="ValueEdit" placeholder="Valor" />
+              </InputValue>
+              <InputDate>
+                <Input name="EditDateExpense" placeholder="Data da despesa" />
+              </InputDate>
+            </ValueAndDate>
           </InputContainer>
 
           <ActionsEdit>

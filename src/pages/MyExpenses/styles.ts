@@ -319,6 +319,19 @@ export const InputContainer = styled.View`
   padding: 12px;
 `;
 
+export const ValueAndDate = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const InputValue = styled.View`
+  width: 48%;
+`;
+export const InputDate = styled.View`
+  width: 48%;
+`;
+
 export const ExpenseValue = styled.View`
   justify-content: center;
   align-items: center;

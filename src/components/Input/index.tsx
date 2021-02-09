@@ -13,6 +13,10 @@ interface InputValueReference {
   value: string;
 }
 
+interface StateDate {
+  dt: string;
+}
+
 const Input: React.FC<InputProps> = ({ name, inputErr, ...rest }) => {
   const { editExpenseState, editIncomeState } = useMyExpenses();
   const { registerField, fieldName, defaultValue = '' } = useField(name);
@@ -25,6 +29,11 @@ const Input: React.FC<InputProps> = ({ name, inputErr, ...rest }) => {
   );
   const [inputCoinValueIncome, setInputCoinValueIncome] = useState(
     `${editIncomeState.ValueIncome}`,
+  );
+
+  const [day, setDay] = useState<StateDate>({ dt: '' });
+  const [inputDateValueExpense, setInputDateValueExpense] = useState<StateDate>(
+    { dt: editExpenseState.DateExpense },
   );
 
   useEffect(() => {
@@ -57,6 +66,50 @@ const Input: React.FC<InputProps> = ({ name, inputErr, ...rest }) => {
             value = value.replace('.', '');
             value = value.replace(',', '.');
             inputValueRef.current.value = value;
+          }}
+        />
+      </Container>
+    );
+  }
+
+  if (name === 'DateExpense') {
+    return (
+      <Container inputFocus={inputFocus}>
+        <InputValueSalary
+          ref={inputElementRef}
+          placeholder="Data da despesa"
+          type={'datetime'}
+          options={{
+            format: 'DD/MM/YYYY',
+          }}
+          value={day.dt}
+          onChangeText={(text) => {
+            inputValueRef.current.value = text;
+            setDay({
+              dt: text,
+            });
+          }}
+        />
+      </Container>
+    );
+  }
+
+  if (name === 'EditDateExpense') {
+    return (
+      <Container inputFocus={inputFocus}>
+        <InputValueSalary
+          ref={inputElementRef}
+          placeholder="Data da despesa"
+          type={'datetime'}
+          options={{
+            format: 'DD/MM/YYYY',
+          }}
+          value={inputDateValueExpense.dt}
+          onChangeText={(text) => {
+            inputValueRef.current.value = text;
+            setInputDateValueExpense({
+              dt: text,
+            });
           }}
         />
       </Container>
