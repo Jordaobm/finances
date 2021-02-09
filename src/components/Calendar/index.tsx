@@ -10,9 +10,16 @@ import {
   ExpenseName,
   ExpenseValue,
   ExpenseValueInput,
+  ButtonIncome,
+  IncomeIconContainer,
+  IncomeIconWraper,
+  IncomeName,
+  IncomeValue,
+  IncomeValueInput,
+  IncomeContainer,
 } from './styles';
 import Icon from 'react-native-vector-icons/Feather';
-import { IExpense } from '../../dtos/types';
+import { IExpense, IIncome } from '../../dtos/types';
 import { useMyExpenses } from '../../hooks/MyExpense';
 import { useNavigation } from '@react-navigation/native';
 import addSalary from '../../assets/addsalary.png';
@@ -28,18 +35,22 @@ import gas from '../../assets/gas.png';
 import luz from '../../assets/luz.png';
 import agua from '../../assets/agua.png';
 import cash from '../../assets/cash.png';
-import {
-  transformDateInString,
-  transformDateStringInDate,
-} from '../../utils/format';
+import { transformDateStringInDate } from '../../utils/format';
+import { format } from 'date-fns';
 
 export const Calendar: React.FC = () => {
-  const { setEditExpenseState, expenses } = useMyExpenses();
-  const navigation = useNavigation();
+  const actualDate = new Date();
 
-  const [findExpensesDayState, setFindExpensesDayState] = useState<IExpense[]>(
-    [],
-  );
+  const parsedActualDate = format(actualDate, "dd'/'MM'/'yyyy");
+
+  const [data, setData] = useState(parsedActualDate);
+  const {
+    setEditExpenseState,
+    expenses,
+    incomes,
+    setEditIncomeState,
+  } = useMyExpenses();
+  const navigation = useNavigation();
 
   const handleEditExpense = useCallback(
     (expense: IExpense) => {
@@ -49,17 +60,12 @@ export const Calendar: React.FC = () => {
     [navigation, setEditExpenseState],
   );
 
-  const showMeWhatsOnDate = useCallback(
-    (data: string) => {
-      const findExpensesDay = expenses.filter(
-        (expense) => expense.DateExpense === data,
-      );
-
-      if (findExpensesDay) {
-        setFindExpensesDayState(findExpensesDay);
-      }
+  const handleEditIncome = useCallback(
+    (income: IIncome) => {
+      navigation.navigate('EditIncome');
+      setEditIncomeState(income);
     },
-    [expenses],
+    [navigation, setEditIncomeState],
   );
 
   let customDatesStyles: any = [];
@@ -72,26 +78,22 @@ export const Calendar: React.FC = () => {
         textStyle: { color: '#fff' },
       });
     });
-  }, [customDatesStyles, expenses]);
+
+    incomes.map((income) => {
+      customDatesStyles.push({
+        date: transformDateStringInDate(income.DateIncome),
+        style: { backgroundColor: '#4CCC81' },
+        textStyle: { color: '#fff' },
+      });
+    });
+  }, [customDatesStyles, expenses, incomes]);
 
   load();
 
-  // let customDatesStyles = [
-  //   {
-  //     date: new Date(2021, 1, 15),
-  //     style: { backgroundColor: '#EB5757' },
-  //     textStyle: { color: '#fff' },
-  //   },
-  //   {
-  //     date: new Date(2021, 1, 11),
-  //     style: { backgroundColor: '#4CCC81' },
-  //     textStyle: { color: '#fff' },
-  //   },
-  // ];
   return (
     <Container>
       <CalendarPicker
-        onDateChange={(data) => showMeWhatsOnDate(data.format('DD/MM/yyyy'))}
+        onDateChange={(data) => setData(data.format('DD/MM/yyyy'))}
         customDatesStyles={customDatesStyles}
         weekdays={['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom']}
         months={[
@@ -113,18 +115,44 @@ export const Calendar: React.FC = () => {
           color: '#000',
         }}
         todayBackgroundColor="#5D87A8"
-        selectedDayColor="#8E35FF"
+        selectedDayColor="#40AAFF"
         previousComponent={<Icon name="arrow-left" size={20} />}
         previousTitleStyle={{ fontFamily: 'CircularStd-Book' }}
         nextComponent={<Icon name="arrow-right" size={20} />}
         nextTitleStyle={{ fontFamily: 'CircularStd-Book' }}
         selectedDayTextColor="#fff"
         width={330}
-        height={350}
+        height={330}
       />
 
-      {findExpensesDayState &&
-        findExpensesDayState.map((expense) => (
+      {incomes
+        .filter((income) => income.DateIncome === data)
+        .map((income) => (
+          <ButtonIncome
+            onPress={() => handleEditIncome(income)}
+            key={income.id}
+          >
+            <IncomeContainer>
+              <IncomeIconContainer>
+                <IncomeIconWraper>
+                  <ExpenseIcon source={cash} />
+                </IncomeIconWraper>
+              </IncomeIconContainer>
+              <IncomeName>{income.NameIncome}</IncomeName>
+              <IncomeValue>
+                <IncomeValueInput
+                  editable={false}
+                  type={'money'}
+                  value={income.ValueIncome}
+                />
+              </IncomeValue>
+            </IncomeContainer>
+          </ButtonIncome>
+        ))}
+
+      {expenses
+        .filter((expense) => expense.DateExpense === data)
+        .map((expense) => (
           <SelectedDateInformations key={expense.id}>
             <ExpenseContainer onPress={() => handleEditExpense(expense)}>
               <ExpenseIconContainer>

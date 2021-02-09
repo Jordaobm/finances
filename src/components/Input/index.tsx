@@ -36,6 +36,10 @@ const Input: React.FC<InputProps> = ({ name, inputErr, ...rest }) => {
     { dt: editExpenseState.DateExpense },
   );
 
+  const [inputDateValueIncome, setInputDateValueIncome] = useState<StateDate>({
+    dt: editIncomeState.DateIncome,
+  });
+
   useEffect(() => {
     registerField<string>({
       name: fieldName,
@@ -136,6 +140,28 @@ const Input: React.FC<InputProps> = ({ name, inputErr, ...rest }) => {
     );
   }
 
+  if (name === 'DateIncome') {
+    return (
+      <Container inputFocus={inputFocus}>
+        <InputValueSalary
+          ref={inputElementRef}
+          placeholder="Data da renda"
+          type={'datetime'}
+          options={{
+            format: 'DD/MM/YYYY',
+          }}
+          value={day.dt}
+          onChangeText={(text) => {
+            inputValueRef.current.value = text;
+            setDay({
+              dt: text,
+            });
+          }}
+        />
+      </Container>
+    );
+  }
+
   if (name === 'ValueEdit') {
     return (
       <Container inputFocus={inputFocus}>
@@ -170,6 +196,28 @@ const Input: React.FC<InputProps> = ({ name, inputErr, ...rest }) => {
             value = value.replace('.', '');
             value = value.replace(',', '.');
             inputValueRef.current.value = value;
+          }}
+        />
+      </Container>
+    );
+  }
+
+  if (name === 'EditDateIncome') {
+    return (
+      <Container inputFocus={inputFocus}>
+        <InputValueSalary
+          ref={inputElementRef}
+          placeholder="Data da renda"
+          type={'datetime'}
+          options={{
+            format: 'DD/MM/YYYY',
+          }}
+          value={inputDateValueIncome.dt}
+          onChangeText={(text) => {
+            inputValueRef.current.value = text;
+            setInputDateValueIncome({
+              dt: text,
+            });
           }}
         />
       </Container>

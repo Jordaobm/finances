@@ -34,10 +34,12 @@ export interface IIncome {
   NameIncome: string;
   DescriptionIncome: string;
   ValueIncome: number;
+  DateIncome: string;
 }
 
 export interface IIncomeEdit {
   NameEdit: string;
   DescriptionEdit: string;
   ValueEditIncome: number;
+  EditDateIncome: string;
 }

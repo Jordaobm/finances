@@ -12,7 +12,7 @@ export const Content = styled.View`
 `;
 
 export const ImageWraper = styled.View`
-  width: 80px;
+  width: 85px;
   height: 120px;
 `;
 export const ImageIcon = styled.Image`

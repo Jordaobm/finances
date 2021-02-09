@@ -644,8 +644,6 @@ const MyExpenses: React.FC = () => {
             </Negative>
           )}
 
-          <Calendar />
-
           <ActionsContent>
             <ActionsText>Ações</ActionsText>
             <Actions>
@@ -667,6 +665,8 @@ const MyExpenses: React.FC = () => {
                 </ButtonContent>
               </Gradient>
             </Actions>
+
+            <Calendar />
 
             <History>
               <HistoryTitle>Histórico de ações</HistoryTitle>
@@ -774,6 +774,7 @@ const AddIncome: React.FC = () => {
         NameIncome: data.NameIncome,
         DescriptionIncome: data.DescriptionIncome,
         ValueIncome: data.ValueIncome,
+        DateIncome: data.DateIncome,
       };
 
       setIncomes([...incomes, income]);
@@ -805,7 +806,14 @@ const AddIncome: React.FC = () => {
               numberOfLines={5}
               style={{ textAlignVertical: 'top' }}
             />
-            <Input name="ValueIncome" placeholder="Valor" />
+            <ValueAndDate>
+              <InputValue>
+                <Input name="ValueIncome" placeholder="Valor" />
+              </InputValue>
+              <InputDate>
+                <Input name="DateIncome" placeholder="Data da despesa" />
+              </InputDate>
+            </ValueAndDate>
           </InputContainer>
           <Button
             onPress={() => {
@@ -945,6 +953,7 @@ const EditIncome: React.FC = () => {
       NameIncome: income.NameEdit,
       DescriptionIncome: income.DescriptionEdit,
       ValueIncome: income.ValueEditIncome,
+      DateIncome: income.EditDateIncome,
     });
     navigation.navigate('MyExpenses');
   }, []);
@@ -972,6 +981,7 @@ const EditIncome: React.FC = () => {
             NameEdit: editIncomeState.NameIncome,
             DescriptionEdit: editIncomeState.DescriptionIncome,
             ValueEditIncome: editIncomeState.ValueIncome,
+            EditDateIncome: editIncomeState.DateIncome,
           }}
           onSubmit={handleEditIncome}
           ref={formRef}
@@ -985,7 +995,14 @@ const EditIncome: React.FC = () => {
               numberOfLines={5}
               style={{ textAlignVertical: 'top' }}
             />
-            <Input name="ValueEditIncome" placeholder="Valor" />
+            <ValueAndDate>
+              <InputValue>
+                <Input name="ValueEditIncome" placeholder="Valor" />
+              </InputValue>
+              <InputDate>
+                <Input name="EditDateIncome" placeholder="Data da despesa" />
+              </InputDate>
+            </ValueAndDate>
           </InputContainer>
 
           <ActionsEdit>

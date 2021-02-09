@@ -5,9 +5,9 @@ import styled from 'styled-components/native';
 
 export const Container = styled.View`
   background-color: #fff;
-  margin: 20px 15px;
-  padding: 15px;
+  margin-top: 15px;
   border-radius: 15px;
+  padding: 10px;
 `;
 
 export const SelectedDateInformations = styled.View``;
@@ -80,4 +80,55 @@ export const ExpenseValueInput = styled(TextInputMask)`
   font-size: 14px;
   line-height: 16px;
   color: #e6492d;
+`;
+
+export const ButtonIncome = styled(TouchableOpacity)``;
+
+export const IncomeIconContainer = styled.View``;
+export const IncomeIconWraper = styled.View`
+  width: 60px;
+  height: 60px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 25px;
+  background-color: #e0f8e9;
+`;
+
+export const IncomeName = styled.Text`
+  font-family: CircularStd-Medium;
+  font-size: 14px;
+  line-height: 21px;
+  display: flex;
+  align-items: center;
+  color: #5d87a8;
+  text-align: center;
+`;
+
+export const IncomeValue = styled.View`
+  justify-content: center;
+  align-items: center;
+`;
+
+export const IncomeValueInput = styled(TextInputMask)`
+  width: 100%;
+  padding: 20px;
+
+  justify-content: center;
+  align-items: center;
+  font-family: CircularStd-Bold;
+  font-size: 14px;
+  line-height: 16px;
+  color: #67e799;
+`;
+
+export const IncomeContainer = styled.View`
+  background: #ffffff;
+  border-radius: 10px;
+  width: 100%;
+  margin: 10px 0;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px 20px;
+  align-items: center;
+  justify-content: space-between;
 `;
