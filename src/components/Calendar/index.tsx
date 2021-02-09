@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import CalendarPicker from 'react-native-calendar-picker';
 import {
   Container,
@@ -43,13 +43,15 @@ export const Calendar: React.FC = () => {
 
   const parsedActualDate = format(actualDate, "dd'/'MM'/'yyyy");
 
-  const [data, setData] = useState(parsedActualDate);
   const {
     setEditExpenseState,
     expenses,
     incomes,
     setEditIncomeState,
   } = useMyExpenses();
+
+  const [data, setData] = useState(parsedActualDate);
+
   const navigation = useNavigation();
 
   const handleEditExpense = useCallback(
@@ -89,7 +91,6 @@ export const Calendar: React.FC = () => {
   }, [customDatesStyles, expenses, incomes]);
 
   load();
-
   return (
     <Container>
       <CalendarPicker

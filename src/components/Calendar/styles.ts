@@ -2,7 +2,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { TextInputMask } from 'react-native-masked-text';
 import { css } from 'styled-components';
 import styled from 'styled-components/native';
-
+import Icon from 'react-native-vector-icons/Feather';
 export const Container = styled.View`
   background-color: #fff;
   margin-top: 15px;

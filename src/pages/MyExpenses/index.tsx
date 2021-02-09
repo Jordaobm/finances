@@ -98,17 +98,17 @@ import { Calendar } from '../../components/Calendar';
 
 const YourSalary: React.FC = () => {
   const navigation = useNavigation();
-  const { setSalary } = useMyExpenses();
+  const { setInitialBalance } = useMyExpenses();
 
   const [inputCoin, setInputCoin] = useState('0');
   const [salaryValue, setSalaryValue] = useState(0);
 
   const handleConfirmSalaryValue = useCallback(
-    (salaryValue: number) => {
-      setSalary(salaryValue);
-      navigation.navigate('PayDay');
+    (initialBalance: number) => {
+      setInitialBalance(initialBalance);
+      navigation.navigate('MyExpenses');
     },
-    [navigation, setSalary],
+    [navigation, setInitialBalance],
   );
 
   return (
@@ -119,7 +119,7 @@ const YourSalary: React.FC = () => {
           <ImageWraper colors={['#67E799', '#4AD07E']} start={{ x: 0.9, y: 0 }}>
             <IconFlag source={addSalary} />
           </ImageWraper>
-          <TextTitle>Estabeleça seu salário ou outra renda</TextTitle>
+          <TextTitle>Estabeleça seu saldo atual disponível</TextTitle>
           <InputValueSalary
             type={'money'}
             value={inputCoin}

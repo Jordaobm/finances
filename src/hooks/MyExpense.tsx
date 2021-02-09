@@ -6,7 +6,6 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import { exp } from 'react-native-reanimated';
 import {
   IExpense,
   IExpenseCategory,
@@ -15,11 +14,8 @@ import {
 } from '../dtos/types';
 
 interface MyExpensesContextData {
-  salary: number;
-  setSalary(salary: number): void;
-
-  payDay: number;
-  setPayDay(day: number): void;
+  initialBalance: number;
+  setInitialBalance(initialBalance: number): void;
 
   addCategoryInExpenses(category: IExpenseCategory): void;
   categories: IExpenseCategory[];
@@ -63,9 +59,7 @@ const MyExpensesContext = createContext<MyExpensesContextData>(
 const MyExpensesProvider: React.FC = ({ children }) => {
   //DECLARAÇÃO DE FUNÇÕES E FUNCIONALIDADES
 
-  const [salary, setSalary] = useState(0);
-
-  const [payDay, setPayDay] = useState(0);
+  const [initialBalance, setInitialBalance] = useState(0);
 
   const [
     expenseDetailPageState,
@@ -110,10 +104,10 @@ const MyExpensesProvider: React.FC = ({ children }) => {
     incomes.map((income) => {
       sumIncomes = sumIncomes + Number(income.ValueIncome);
     });
-    const available = salary + sumIncomes - sumExpense;
+    const available = initialBalance + sumIncomes - sumExpense;
 
     return available;
-  }, [expenses, salary, incomes]);
+  }, [expenses, initialBalance, incomes]);
 
   const setEditExpense = useCallback(
     (expense: IExpense) => {
@@ -192,19 +186,11 @@ const MyExpensesProvider: React.FC = ({ children }) => {
   // BUSCANDO INFORMAÇÕES NO ASYNCSTORAGE
 
   useEffect(() => {
-    async function loadSalary() {
-      const load = await AsyncStorage.getItem('@finances:salary');
+    async function loadinitialBalance() {
+      const load = await AsyncStorage.getItem('@finances:initialBalance');
       if (load) {
         const parsed = JSON.parse(load);
-        setSalary(parsed);
-      }
-    }
-
-    async function loadPayDay() {
-      const load = await AsyncStorage.getItem('@finances:payday');
-      if (load) {
-        const parsed = JSON.parse(load);
-        setPayDay(parsed);
+        setInitialBalance(parsed);
       }
     }
 
@@ -232,8 +218,7 @@ const MyExpensesProvider: React.FC = ({ children }) => {
       }
     }
 
-    loadSalary();
-    loadPayDay();
+    loadinitialBalance();
     loadCategory();
     loadExpenses();
     loadIncome();
@@ -242,18 +227,14 @@ const MyExpensesProvider: React.FC = ({ children }) => {
   //GUARDANDO NOVAS INFORMAÇÕES NO ASYNCSTORAGE
 
   useEffect(() => {
-    async function setSalary() {
-      await AsyncStorage.setItem('@finances:salary', JSON.stringify(salary));
+    async function setinitialBalance() {
+      await AsyncStorage.setItem(
+        '@finances:initialBalance',
+        JSON.stringify(initialBalance),
+      );
     }
-    setSalary();
-  }, [salary]);
-
-  useEffect(() => {
-    async function setPayDayLocal() {
-      await AsyncStorage.setItem('@finances:payday', JSON.stringify(payDay));
-    }
-    setPayDayLocal();
-  }, [payDay]);
+    setinitialBalance();
+  }, [initialBalance]);
 
   useEffect(() => {
     async function setCategory() {
@@ -287,10 +268,8 @@ const MyExpensesProvider: React.FC = ({ children }) => {
   return (
     <MyExpensesContext.Provider
       value={{
-        salary,
-        payDay,
-        setPayDay,
-        setSalary,
+        initialBalance,
+        setInitialBalance,
         addCategoryInExpenses,
         categories,
         expenseDetailPageState,

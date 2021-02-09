@@ -16,7 +16,6 @@ import {
 } from '../pages/MyExpenses';
 import { clearGlobalStateAndStorage } from '../utils/clearGlobalStateAndStorage';
 import DetailsCategory from '../pages/MyExpenses/DetailsCategory';
-import PayDay from '../pages/MyExpenses/PayDay';
 
 const Router: React.Fc = () => {
   const Stack = createStackNavigator();
@@ -37,7 +36,6 @@ const Router: React.Fc = () => {
         <Stack.Screen name="EditExpense" component={EditExpense} />
         <Stack.Screen name="EditIncome" component={EditIncome} />
         <Stack.Screen name="DetailsCategory" component={DetailsCategory} />
-        <Stack.Screen name="PayDay" component={PayDay} />
       </Stack.Navigator>
     </NavigationContainer>
   );
