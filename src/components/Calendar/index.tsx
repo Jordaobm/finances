@@ -73,18 +73,18 @@ export const Calendar: React.FC = () => {
   let customDatesStyles: any = [];
 
   const load = useCallback(() => {
-    expenses.map((expense) => {
-      customDatesStyles.push({
-        date: transformDateStringInDate(expense.DateExpense),
-        style: { backgroundColor: '#EB5757' },
-        textStyle: { color: '#fff' },
-      });
-    });
-
     incomes.map((income) => {
       customDatesStyles.push({
         date: transformDateStringInDate(income.DateIncome),
         style: { backgroundColor: '#4CCC81' },
+        textStyle: { color: '#fff' },
+      });
+    });
+
+    expenses.map((expense) => {
+      customDatesStyles.push({
+        date: transformDateStringInDate(expense.DateExpense),
+        style: { backgroundColor: '#EB5757' },
         textStyle: { color: '#fff' },
       });
     });

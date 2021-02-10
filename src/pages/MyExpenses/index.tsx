@@ -95,10 +95,11 @@ import Input from '../../components/Input';
 import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
 import { Calendar } from '../../components/Calendar';
+import { compareDate } from '../../utils/format';
 
 const YourSalary: React.FC = () => {
   const navigation = useNavigation();
-  const { setInitialBalance } = useMyExpenses();
+  const { setInitialBalance, setFirst } = useMyExpenses();
 
   const [inputCoin, setInputCoin] = useState('0');
   const [salaryValue, setSalaryValue] = useState(0);
@@ -106,9 +107,10 @@ const YourSalary: React.FC = () => {
   const handleConfirmSalaryValue = useCallback(
     (initialBalance: number) => {
       setInitialBalance(initialBalance);
+      setFirst(false);
       navigation.navigate('MyExpenses');
     },
-    [navigation, setInitialBalance],
+    [navigation, setInitialBalance, setFirst],
   );
 
   return (
@@ -667,84 +669,6 @@ const MyExpenses: React.FC = () => {
             </Actions>
 
             <Calendar />
-
-            <History>
-              <HistoryTitle>Histórico de ações</HistoryTitle>
-              <ExpenseContent>
-                {incomes &&
-                  incomes.map((income) => (
-                    <ButtonIncome
-                      onPress={() => handleEditIncome(income)}
-                      key={income.id}
-                    >
-                      <IncomeContainer>
-                        <IncomeIconContainer>
-                          <IncomeIconWraper>
-                            <ExpenseIcon source={cash} />
-                          </IncomeIconWraper>
-                        </IncomeIconContainer>
-                        <IncomeName>{income.NameIncome}</IncomeName>
-                        <IncomeValue>
-                          <IncomeValueInput
-                            editable={false}
-                            type={'money'}
-                            value={income.ValueIncome}
-                          />
-                        </IncomeValue>
-                      </IncomeContainer>
-                    </ButtonIncome>
-                  ))}
-
-                {categories &&
-                  categories.map((category) => (
-                    <Categories key={categories.indexOf(category)}>
-                      <Category>
-                        <CategoryTitle
-                          onPress={() => handleDetailsCategory(category)}
-                        >
-                          <IconWraper>
-                            <IconCategoryWraper color={category.color}>
-                              <IconCategory source={category.icon} />
-                            </IconCategoryWraper>
-                          </IconWraper>
-                          <Name>
-                            <CategoryName>{category.name}</CategoryName>
-                          </Name>
-                          <IconArrowWraper>
-                            <IconArrow name="chevron-down" size={20} />
-                          </IconArrowWraper>
-                        </CategoryTitle>
-
-                        {expenses
-                          .filter(
-                            (expense) =>
-                              expense.idExpenseCategory === category.id,
-                          )
-                          .map((expense) => (
-                            <ExpenseContainer
-                              onPress={() => handleEditExpense(expense)}
-                              key={expense.id}
-                            >
-                              <ExpenseIconContainer>
-                                <ExpenseIconWraper color={expense.color}>
-                                  <ExpenseIcon source={expense.icon} />
-                                </ExpenseIconWraper>
-                              </ExpenseIconContainer>
-                              <ExpenseName>{expense.NameExpense}</ExpenseName>
-                              <ExpenseValue>
-                                <ExpenseValueInput
-                                  editable={false}
-                                  type={'money'}
-                                  value={expense.ValueExpense}
-                                />
-                              </ExpenseValue>
-                            </ExpenseContainer>
-                          ))}
-                      </Category>
-                    </Categories>
-                  ))}
-              </ExpenseContent>
-            </History>
           </ActionsContent>
         </Content>
       </ScrollView>

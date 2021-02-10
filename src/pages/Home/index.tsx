@@ -25,7 +25,7 @@ import { useMyExpenses } from '../../hooks/MyExpense';
 
 const Home: React.FC = () => {
   const navigation = useNavigation();
-  const { initialBalance } = useMyExpenses();
+  const { first } = useMyExpenses();
   return (
     <>
       <StatusBar backgroundColor="#f6f7fb" barStyle="dark-content" />
@@ -43,7 +43,7 @@ const Home: React.FC = () => {
             <TextTitle>Selecione seu objetivo </TextTitle>
 
             <Goals>
-              {initialBalance === 0 ? (
+              {first ? (
                 <Goal
                   style={styles.container}
                   onPress={() => navigation.navigate('YourSalary')}

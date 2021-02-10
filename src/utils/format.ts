@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { format, isAfter } from 'date-fns';
 
 export function formatValue(value: number) {
   const formattedValue = value.toLocaleString('pt-BR', {
@@ -20,4 +20,12 @@ export function transformDateStringInDate(dateString: string) {
   // console.log(date);
 
   return date;
+}
+
+export function compareDate(dateString: string): boolean {
+  const month = new Date().getMonth() + 1;
+  const parsed = dateString.split('/');
+
+  const compare = Number(parsed[1]) === month;
+  return compare;
 }

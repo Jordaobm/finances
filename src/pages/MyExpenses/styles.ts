@@ -374,12 +374,14 @@ export const ExpenseValueInput = styled(TextInputMask)`
 
 export const ExpenseContainer = styled(TouchableOpacity)`
   width: 100%;
-  margin: 10px 0;
+  margin: 5px 0;
   flex-direction: row;
   align-items: center;
   padding: 10px 20px;
   align-items: center;
   justify-content: space-between;
+  background-color: #fff;
+  border-radius: 10px;
 `;
 
 interface ExpenseIconWraperProps {

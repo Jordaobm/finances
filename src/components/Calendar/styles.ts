@@ -5,7 +5,7 @@ import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/Feather';
 export const Container = styled.View`
   background-color: #fff;
-  margin-top: 15px;
+  margin: 15px 0;
   border-radius: 15px;
   padding: 10px;
 `;

@@ -14,6 +14,9 @@ import {
 } from '../dtos/types';
 
 interface MyExpensesContextData {
+  first: boolean;
+  setFirst(first: boolean): void;
+
   initialBalance: number;
   setInitialBalance(initialBalance: number): void;
 
@@ -57,6 +60,7 @@ const MyExpensesContext = createContext<MyExpensesContextData>(
 );
 
 const MyExpensesProvider: React.FC = ({ children }) => {
+  const [first, setFirst] = useState(true);
   //DECLARAÇÃO DE FUNÇÕES E FUNCIONALIDADES
 
   const [initialBalance, setInitialBalance] = useState(0);
@@ -186,6 +190,14 @@ const MyExpensesProvider: React.FC = ({ children }) => {
   // BUSCANDO INFORMAÇÕES NO ASYNCSTORAGE
 
   useEffect(() => {
+    async function loadFirst() {
+      const load = await AsyncStorage.getItem('@finances:first');
+      if (load) {
+        const parsed = JSON.parse(load);
+        setFirst(parsed);
+      }
+    }
+
     async function loadinitialBalance() {
       const load = await AsyncStorage.getItem('@finances:initialBalance');
       if (load) {
@@ -217,7 +229,7 @@ const MyExpensesProvider: React.FC = ({ children }) => {
         setIncomes(parsed);
       }
     }
-
+    loadFirst();
     loadinitialBalance();
     loadCategory();
     loadExpenses();
@@ -225,6 +237,13 @@ const MyExpensesProvider: React.FC = ({ children }) => {
   }, []);
 
   //GUARDANDO NOVAS INFORMAÇÕES NO ASYNCSTORAGE
+
+  useEffect(() => {
+    async function setFirst() {
+      await AsyncStorage.setItem('@finances:first', JSON.stringify(first));
+    }
+    setFirst();
+  }, [first]);
 
   useEffect(() => {
     async function setinitialBalance() {
@@ -268,6 +287,8 @@ const MyExpensesProvider: React.FC = ({ children }) => {
   return (
     <MyExpensesContext.Provider
       value={{
+        first,
+        setFirst,
         initialBalance,
         setInitialBalance,
         addCategoryInExpenses,
