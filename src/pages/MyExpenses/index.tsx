@@ -61,6 +61,9 @@ import {
   ButtonIncome,
   ContentCategory,
   ActionsEdit,
+  ValueAndDate,
+  InputValue,
+  InputDate,
 } from './styles';
 import Header from '../../components/Header';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -91,18 +94,24 @@ import {
 import Input from '../../components/Input';
 import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
+import { Calendar } from '../../components/Calendar';
+import { compareDate } from '../../utils/format';
 
 const YourSalary: React.FC = () => {
   const navigation = useNavigation();
-  const { setSalary } = useMyExpenses();
+  const { setInitialBalance, setFirst } = useMyExpenses();
 
   const [inputCoin, setInputCoin] = useState('0');
   const [salaryValue, setSalaryValue] = useState(0);
 
-  const handleConfirmSalaryValue = useCallback((salaryValue: number) => {
-    setSalary(salaryValue);
-    navigation.navigate('MyExpenses');
-  }, []);
+  const handleConfirmSalaryValue = useCallback(
+    (initialBalance: number) => {
+      setInitialBalance(initialBalance);
+      setFirst(false);
+      navigation.navigate('MyExpenses');
+    },
+    [navigation, setInitialBalance, setFirst],
+  );
 
   return (
     <Container>
@@ -112,7 +121,7 @@ const YourSalary: React.FC = () => {
           <ImageWraper colors={['#67E799', '#4AD07E']} start={{ x: 0.9, y: 0 }}>
             <IconFlag source={addSalary} />
           </ImageWraper>
-          <TextTitle>Estabeleça seu salário ou outra renda</TextTitle>
+          <TextTitle>Estabeleça seu saldo atual disponível</TextTitle>
           <InputValueSalary
             type={'money'}
             value={inputCoin}
@@ -388,6 +397,7 @@ const ExpenseDetail: React.FC = () => {
         DescriptionExpense: data.DescriptionExpense,
         ValueExpense: data.ValueExpense,
         idExpenseCategory: category_id,
+        DateExpense: data.DateExpense,
       };
 
       setExpenses([...expenses, expense]);
@@ -430,7 +440,14 @@ const ExpenseDetail: React.FC = () => {
               numberOfLines={5}
               style={{ textAlignVertical: 'top' }}
             />
-            <Input name="ValueExpense" placeholder="Valor" />
+            <ValueAndDate>
+              <InputValue>
+                <Input name="ValueExpense" placeholder="Valor" />
+              </InputValue>
+              <InputDate>
+                <Input name="DateExpense" placeholder="Data da despesa" />
+              </InputDate>
+            </ValueAndDate>
           </InputContainer>
           <Button
             onPress={() => {
@@ -569,10 +586,13 @@ const MyExpenses: React.FC = () => {
   } = useMyExpenses();
   const navigation = useNavigation();
 
-  const handleEditExpense = useCallback((expense: IExpense) => {
-    navigation.navigate('EditExpense');
-    setEditExpenseState(expense);
-  }, []);
+  const handleEditExpense = useCallback(
+    (expense: IExpense) => {
+      navigation.navigate('EditExpense');
+      setEditExpenseState(expense);
+    },
+    [navigation, setEditExpenseState],
+  );
 
   const handleEditIncome = useCallback((income: IIncome) => {
     navigation.navigate('EditIncome');
@@ -625,6 +645,7 @@ const MyExpenses: React.FC = () => {
               />
             </Negative>
           )}
+
           <ActionsContent>
             <ActionsText>Ações</ActionsText>
             <Actions>
@@ -647,83 +668,7 @@ const MyExpenses: React.FC = () => {
               </Gradient>
             </Actions>
 
-            <History>
-              <HistoryTitle>Histórico de ações</HistoryTitle>
-              <ExpenseContent>
-                {incomes &&
-                  incomes.map((income) => (
-                    <ButtonIncome
-                      onPress={() => handleEditIncome(income)}
-                      key={income.id}
-                    >
-                      <IncomeContainer>
-                        <IncomeIconContainer>
-                          <IncomeIconWraper>
-                            <ExpenseIcon source={cash} />
-                          </IncomeIconWraper>
-                        </IncomeIconContainer>
-                        <IncomeName>{income.NameIncome}</IncomeName>
-                        <IncomeValue>
-                          <IncomeValueInput
-                            editable={false}
-                            type={'money'}
-                            value={income.ValueIncome}
-                          />
-                        </IncomeValue>
-                      </IncomeContainer>
-                    </ButtonIncome>
-                  ))}
-
-                {categories &&
-                  categories.map((category) => (
-                    <Categories key={categories.indexOf(category)}>
-                      <Category>
-                        <CategoryTitle
-                          onPress={() => handleDetailsCategory(category)}
-                        >
-                          <IconWraper>
-                            <IconCategoryWraper color={category.color}>
-                              <IconCategory source={category.icon} />
-                            </IconCategoryWraper>
-                          </IconWraper>
-                          <Name>
-                            <CategoryName>{category.name}</CategoryName>
-                          </Name>
-                          <IconArrowWraper>
-                            <IconArrow name="chevron-down" size={20} />
-                          </IconArrowWraper>
-                        </CategoryTitle>
-
-                        {expenses
-                          .filter(
-                            (expense) =>
-                              expense.idExpenseCategory === category.id,
-                          )
-                          .map((expense) => (
-                            <ExpenseContainer
-                              onPress={() => handleEditExpense(expense)}
-                              key={expense.id}
-                            >
-                              <ExpenseIconContainer>
-                                <ExpenseIconWraper color={expense.color}>
-                                  <ExpenseIcon source={expense.icon} />
-                                </ExpenseIconWraper>
-                              </ExpenseIconContainer>
-                              <ExpenseName>{expense.NameExpense}</ExpenseName>
-                              <ExpenseValue>
-                                <ExpenseValueInput
-                                  editable={false}
-                                  type={'money'}
-                                  value={expense.ValueExpense}
-                                />
-                              </ExpenseValue>
-                            </ExpenseContainer>
-                          ))}
-                      </Category>
-                    </Categories>
-                  ))}
-              </ExpenseContent>
-            </History>
+            <Calendar />
           </ActionsContent>
         </Content>
       </ScrollView>
@@ -753,6 +698,7 @@ const AddIncome: React.FC = () => {
         NameIncome: data.NameIncome,
         DescriptionIncome: data.DescriptionIncome,
         ValueIncome: data.ValueIncome,
+        DateIncome: data.DateIncome,
       };
 
       setIncomes([...incomes, income]);
@@ -784,7 +730,14 @@ const AddIncome: React.FC = () => {
               numberOfLines={5}
               style={{ textAlignVertical: 'top' }}
             />
-            <Input name="ValueIncome" placeholder="Valor" />
+            <ValueAndDate>
+              <InputValue>
+                <Input name="ValueIncome" placeholder="Valor" />
+              </InputValue>
+              <InputDate>
+                <Input name="DateIncome" placeholder="Data da despesa" />
+              </InputDate>
+            </ValueAndDate>
           </InputContainer>
           <Button
             onPress={() => {
@@ -816,7 +769,6 @@ const EditExpense: React.FC = () => {
       );
       return;
     }
-
     const edit: IExpense = {
       id: editExpenseState.id,
       color: editExpenseState.color,
@@ -825,6 +777,7 @@ const EditExpense: React.FC = () => {
       DescriptionExpense: data.DescriptionEdit,
       NameExpense: data.NameEdit,
       ValueExpense: data.ValueEdit,
+      DateExpense: data.EditDateExpense,
     };
     setEditExpense(edit);
     navigation.navigate('MyExpenses');
@@ -856,6 +809,7 @@ const EditExpense: React.FC = () => {
             NameEdit: editExpenseState.NameExpense,
             DescriptionEdit: editExpenseState.DescriptionExpense,
             ValueEdit: editExpenseState.ValueExpense,
+            EditDateExpense: editExpenseState.DateExpense,
           }}
           onSubmit={handleEditExpense}
           ref={formRef}
@@ -869,7 +823,14 @@ const EditExpense: React.FC = () => {
               numberOfLines={5}
               style={{ textAlignVertical: 'top' }}
             />
-            <Input name="ValueEdit" placeholder="Valor" />
+            <ValueAndDate>
+              <InputValue>
+                <Input name="ValueEdit" placeholder="Valor" />
+              </InputValue>
+              <InputDate>
+                <Input name="EditDateExpense" placeholder="Data da despesa" />
+              </InputDate>
+            </ValueAndDate>
           </InputContainer>
 
           <ActionsEdit>
@@ -916,6 +877,7 @@ const EditIncome: React.FC = () => {
       NameIncome: income.NameEdit,
       DescriptionIncome: income.DescriptionEdit,
       ValueIncome: income.ValueEditIncome,
+      DateIncome: income.EditDateIncome,
     });
     navigation.navigate('MyExpenses');
   }, []);
@@ -943,6 +905,7 @@ const EditIncome: React.FC = () => {
             NameEdit: editIncomeState.NameIncome,
             DescriptionEdit: editIncomeState.DescriptionIncome,
             ValueEditIncome: editIncomeState.ValueIncome,
+            EditDateIncome: editIncomeState.DateIncome,
           }}
           onSubmit={handleEditIncome}
           ref={formRef}
@@ -956,7 +919,14 @@ const EditIncome: React.FC = () => {
               numberOfLines={5}
               style={{ textAlignVertical: 'top' }}
             />
-            <Input name="ValueEditIncome" placeholder="Valor" />
+            <ValueAndDate>
+              <InputValue>
+                <Input name="ValueEditIncome" placeholder="Valor" />
+              </InputValue>
+              <InputDate>
+                <Input name="EditDateIncome" placeholder="Data da despesa" />
+              </InputDate>
+            </ValueAndDate>
           </InputContainer>
 
           <ActionsEdit>

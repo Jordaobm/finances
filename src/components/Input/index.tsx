@@ -13,6 +13,10 @@ interface InputValueReference {
   value: string;
 }
 
+interface StateDate {
+  dt: string;
+}
+
 const Input: React.FC<InputProps> = ({ name, inputErr, ...rest }) => {
   const { editExpenseState, editIncomeState } = useMyExpenses();
   const { registerField, fieldName, defaultValue = '' } = useField(name);
@@ -26,6 +30,15 @@ const Input: React.FC<InputProps> = ({ name, inputErr, ...rest }) => {
   const [inputCoinValueIncome, setInputCoinValueIncome] = useState(
     `${editIncomeState.ValueIncome}`,
   );
+
+  const [day, setDay] = useState<StateDate>({ dt: '' });
+  const [inputDateValueExpense, setInputDateValueExpense] = useState<StateDate>(
+    { dt: editExpenseState.DateExpense },
+  );
+
+  const [inputDateValueIncome, setInputDateValueIncome] = useState<StateDate>({
+    dt: editIncomeState.DateIncome,
+  });
 
   useEffect(() => {
     registerField<string>({
@@ -63,6 +76,50 @@ const Input: React.FC<InputProps> = ({ name, inputErr, ...rest }) => {
     );
   }
 
+  if (name === 'DateExpense') {
+    return (
+      <Container inputFocus={inputFocus}>
+        <InputValueSalary
+          ref={inputElementRef}
+          placeholder="Data da despesa"
+          type={'datetime'}
+          options={{
+            format: 'DD/MM/YYYY',
+          }}
+          value={day.dt}
+          onChangeText={(text) => {
+            inputValueRef.current.value = text;
+            setDay({
+              dt: text,
+            });
+          }}
+        />
+      </Container>
+    );
+  }
+
+  if (name === 'EditDateExpense') {
+    return (
+      <Container inputFocus={inputFocus}>
+        <InputValueSalary
+          ref={inputElementRef}
+          placeholder="Data da despesa"
+          type={'datetime'}
+          options={{
+            format: 'DD/MM/YYYY',
+          }}
+          value={inputDateValueExpense.dt}
+          onChangeText={(text) => {
+            inputValueRef.current.value = text;
+            setInputDateValueExpense({
+              dt: text,
+            });
+          }}
+        />
+      </Container>
+    );
+  }
+
   if (name === 'ValueIncome') {
     return (
       <Container inputFocus={inputFocus} inputErr={inputErr}>
@@ -77,6 +134,28 @@ const Input: React.FC<InputProps> = ({ name, inputErr, ...rest }) => {
             value = value.replace('.', '');
             value = value.replace(',', '.');
             inputValueRef.current.value = value;
+          }}
+        />
+      </Container>
+    );
+  }
+
+  if (name === 'DateIncome') {
+    return (
+      <Container inputFocus={inputFocus}>
+        <InputValueSalary
+          ref={inputElementRef}
+          placeholder="Data da renda"
+          type={'datetime'}
+          options={{
+            format: 'DD/MM/YYYY',
+          }}
+          value={day.dt}
+          onChangeText={(text) => {
+            inputValueRef.current.value = text;
+            setDay({
+              dt: text,
+            });
           }}
         />
       </Container>
@@ -117,6 +196,28 @@ const Input: React.FC<InputProps> = ({ name, inputErr, ...rest }) => {
             value = value.replace('.', '');
             value = value.replace(',', '.');
             inputValueRef.current.value = value;
+          }}
+        />
+      </Container>
+    );
+  }
+
+  if (name === 'EditDateIncome') {
+    return (
+      <Container inputFocus={inputFocus}>
+        <InputValueSalary
+          ref={inputElementRef}
+          placeholder="Data da renda"
+          type={'datetime'}
+          options={{
+            format: 'DD/MM/YYYY',
+          }}
+          value={inputDateValueIncome.dt}
+          onChangeText={(text) => {
+            inputValueRef.current.value = text;
+            setInputDateValueIncome({
+              dt: text,
+            });
           }}
         />
       </Container>

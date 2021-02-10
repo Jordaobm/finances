@@ -319,6 +319,19 @@ export const InputContainer = styled.View`
   padding: 12px;
 `;
 
+export const ValueAndDate = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const InputValue = styled.View`
+  width: 48%;
+`;
+export const InputDate = styled.View`
+  width: 48%;
+`;
+
 export const ExpenseValue = styled.View`
   justify-content: center;
   align-items: center;
@@ -361,12 +374,14 @@ export const ExpenseValueInput = styled(TextInputMask)`
 
 export const ExpenseContainer = styled(TouchableOpacity)`
   width: 100%;
-  margin: 10px 0;
+  margin: 5px 0;
   flex-direction: row;
   align-items: center;
   padding: 10px 20px;
   align-items: center;
   justify-content: space-between;
+  background-color: #fff;
+  border-radius: 10px;
 `;
 
 interface ExpenseIconWraperProps {

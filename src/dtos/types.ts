@@ -19,12 +19,14 @@ export interface IExpense {
   DescriptionExpense: string;
   ValueExpense: number;
   idExpenseCategory: number;
+  DateExpense: string;
 }
 
 export interface IExpenseEdit {
   NameEdit: string;
   DescriptionEdit: string;
   ValueEdit: number;
+  EditDateExpense: string;
 }
 
 export interface IIncome {
@@ -32,10 +34,12 @@ export interface IIncome {
   NameIncome: string;
   DescriptionIncome: string;
   ValueIncome: number;
+  DateIncome: string;
 }
 
 export interface IIncomeEdit {
   NameEdit: string;
   DescriptionEdit: string;
   ValueEditIncome: number;
+  EditDateIncome: string;
 }
