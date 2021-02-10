@@ -7,4 +7,5 @@ export async function clearGlobalStateAndStorage() {
   await AsyncStorage.removeItem('@finances:expenses');
   await AsyncStorage.removeItem('@finances:incomes');
   await AsyncStorage.removeItem('@finances:balanceAvailableState');
+  await AsyncStorage.removeItem('@finances:first');
 }

@@ -46,7 +46,7 @@ const Home: React.FC = () => {
               {first ? (
                 <Goal
                   style={styles.container}
-                  onPress={() => navigation.navigate('YourSalary')}
+                  onPress={() => navigation.navigate('MyInitialBalance')}
                 >
                   <GoalIconWraper color={'#fff1f1'}>
                     <Graphic source={graphic} />
