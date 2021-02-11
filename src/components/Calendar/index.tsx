@@ -1,40 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import CalendarPicker from 'react-native-calendar-picker';
-import {
-  Container,
-  SelectedDateInformations,
-  ExpenseContainer,
-  ExpenseIcon,
-  ExpenseIconContainer,
-  ExpenseIconWraper,
-  ExpenseName,
-  ExpenseValue,
-  ExpenseValueInput,
-  ButtonIncome,
-  IncomeIconContainer,
-  IncomeIconWraper,
-  IncomeName,
-  IncomeValue,
-  IncomeValueInput,
-  IncomeContainer,
-} from './styles';
+import { Container, SelectedDateInformations } from './styles';
 import Icon from 'react-native-vector-icons/Feather';
-import { IExpense, IIncome } from '../../dtos/types';
 import { useMyExpenses } from '../../hooks/MyExpense';
-import { useNavigation } from '@react-navigation/native';
-import addSalary from '../../assets/addsalary.png';
-import removeSalaty from '../../assets/removesalary.png';
-import arrowDown from '../../assets/arrowDown.png';
-import ArrendamentosEdividendos from '../../assets/ArrendamentosEdividendos.png';
-import basicServices from '../../assets/basicServices.png';
-import creditosESeguros from '../../assets/creditosESeguros.png';
-import cartoesDeCredito from '../../assets/cartoesDeCredito.png';
-import other from '../../assets/other.png';
-import pencil from '../../assets/pencil.png';
-import gas from '../../assets/gas.png';
-import luz from '../../assets/luz.png';
-import agua from '../../assets/agua.png';
-import cash from '../../assets/cash.png';
 import { transformDateStringInDate } from '../../utils/format';
 import { format } from 'date-fns';
 import Card from '../Card';
@@ -44,32 +12,11 @@ export const Calendar: React.FC = () => {
 
   const parsedActualDate = format(actualDate, "dd'/'MM'/'yyyy");
 
-  const {
-    setEditExpenseState,
-    expenses,
-    incomes,
-    setEditIncomeState,
-  } = useMyExpenses();
+  const { expenses, incomes } = useMyExpenses();
 
   const [data, setData] = useState(parsedActualDate);
 
-  const navigation = useNavigation();
-
-  const handleEditExpense = useCallback(
-    (expense: IExpense) => {
-      navigation.navigate('EditExpense');
-      setEditExpenseState(expense);
-    },
-    [navigation, setEditExpenseState],
-  );
-
-  const handleEditIncome = useCallback(
-    (income: IIncome) => {
-      navigation.navigate('EditIncome');
-      setEditIncomeState(income);
-    },
-    [navigation, setEditIncomeState],
-  );
+  const [alreadyLoaded, setAlreadyLoaded] = useState(true);
 
   let customDatesStyles: any = [];
 
@@ -92,12 +39,23 @@ export const Calendar: React.FC = () => {
   }, [customDatesStyles, expenses, incomes]);
 
   load();
+
+  const loadingExpensesAndIncomes = useCallback((data) => {
+    setAlreadyLoaded(false);
+    setData(data.format('DD/MM/yyyy'));
+
+    setTimeout(function () {
+      setAlreadyLoaded(true);
+    }, 2000);
+  }, []);
+
   return (
     <Container>
       <CalendarPicker
-        onDateChange={(data) => setData(data.format('DD/MM/yyyy'))}
+        onMonthChange={() => setData('')}
+        onDateChange={(data) => loadingExpensesAndIncomes(data)}
         customDatesStyles={customDatesStyles}
-        weekdays={['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom']}
+        weekdays={['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab']}
         months={[
           'Janeiro',
           'Fevereiro',
@@ -127,19 +85,25 @@ export const Calendar: React.FC = () => {
         height={330}
       />
 
-      {incomes
-        .filter((income) => income.DateIncome === data)
-        .map((income) => (
-          <Card key={income.id} income={income} />
-        ))}
+      {alreadyLoaded ? (
+        incomes
+          .filter((income) => income.DateIncome === data)
+          .map((income) => <Card key={income.id} income={income} />)
+      ) : (
+        <Card visible={alreadyLoaded} />
+      )}
 
-      {expenses
-        .filter((expense) => expense.DateExpense === data)
-        .map((expense) => (
-          <SelectedDateInformations key={expense.id}>
-            <Card expense={expense} />
-          </SelectedDateInformations>
-        ))}
+      {alreadyLoaded ? (
+        expenses
+          .filter((expense) => expense.DateExpense === data)
+          .map((expense) => (
+            <SelectedDateInformations key={expense.id}>
+              <Card expense={expense} />
+            </SelectedDateInformations>
+          ))
+      ) : (
+        <Card visible={alreadyLoaded} />
+      )}
     </Container>
   );
 };

@@ -51,8 +51,6 @@ export const Name = styled.Text`
 export const ExpenseContainer = styled.View`
   padding: 0px 20px;
 `;
-export const ValueAndDate = styled.View``;
-
 export const Value = styled.View`
   justify-content: center;
   align-items: center;
@@ -130,4 +128,52 @@ export const ExpenseValueInput = styled(TextInputMask)`
 export const IncomeValueInput = styled(TextInputMask)`
   width: 100%;
   color: #4ccc81;
+`;
+
+export const Placeholder = styled.View`
+  margin: 5px 0;
+  padding: 10px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const BackgroundIconPlaceholder = styled.View`
+  background-color: #ededed;
+  width: 50px;
+  height: 50px;
+  border-radius: 20px;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const IconImgPlaceholder = styled.Image`
+  opacity: 0.5;
+  width: 20px;
+  height: 20px;
+  position: relative;
+  top: 2px;
+`;
+
+export const NamePlaceholder = styled.Text`
+  font-family: CircularStd-Book;
+  font-size: 14px;
+  line-height: 21px;
+  display: flex;
+  align-items: flex-end;
+  background-color: #ededed;
+  width: 50%;
+`;
+
+export const ValuePlaceHolder = styled.View`
+  background-color: #ededed;
+  width: 60px;
+  height: 15px;
+`;
+
+export const DatePlaceHolder = styled.View`
+  margin-top: 5px;
+  background-color: #ededed;
+  width: 45px;
+  height: 8px;
 `;

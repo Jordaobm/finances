@@ -22,6 +22,28 @@ export const Content = styled.View`
   margin-top: 4%;
 `;
 
+export const History = styled.View`
+  flex-direction: row;
+  align-items: center;
+  padding: 0 10px;
+  margin-top: 30px;
+`;
+
+export const HistoryText = styled.Text`
+  font-family: CircularStd-Medium;
+  font-size: 17px;
+  line-height: 19px;
+  color: #172635;
+`;
+
+export const HistoryInput = styled(TextInputMask)`
+  width: 70px;
+  font-family: CircularStd-Medium;
+  font-size: 17px;
+  line-height: 19px;
+  color: #6d8399;
+`;
+
 export const ImageWraper = styled(LinearGradient)`
   width: 80px;
   height: 80px;
@@ -203,7 +225,7 @@ export const ButtonAddCategory = styled.View`
 
 export const AddCategoryButtonWraper = styled.View`
   width: 100%;
-  margin-top: 15px;
+  margin: 15px 0;
   justify-content: center;
   align-items: center;
 `;

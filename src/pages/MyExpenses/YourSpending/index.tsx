@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { IExpense, IExpenseCategory } from '../../../dtos/types';
 import { useMyExpenses } from '../../../hooks/MyExpense';
 import {
@@ -33,13 +33,27 @@ import {
   Next,
   ExpenseValueInput,
   ContainerCategory,
+  HistoryText,
+  History,
+  HistoryInput,
 } from './styles';
 import Header from '../../../components/Header';
 import Button from '../../../components/Button';
 import { ScrollView } from 'react-native-gesture-handler';
 import { removeSalaty } from '../../../utils/images';
 import Card from '../../../components/Card';
-import { compareMonth } from '../../../utils/format';
+import {
+  compareDateStringAndDate,
+  compareMonth,
+  getMonthDate,
+} from '../../../utils/format';
+import { Text } from 'react-native';
+import { format } from 'date-fns';
+import { TextInputMask } from 'react-native-masked-text';
+
+interface StateDate {
+  dt: string;
+}
 
 const YourSpending: React.FC = () => {
   const {
@@ -58,7 +72,11 @@ const YourSpending: React.FC = () => {
     [navigation],
   );
 
-  const date = new Date();
+  const month = new Date().getMonth() + 1;
+  const year = new Date().getFullYear();
+
+  const MonthYear = `${month}/${year}`;
+  const [initalDate, setInitialDate] = useState<StateDate>({ dt: MonthYear });
 
   return (
     <Container>
@@ -70,16 +88,30 @@ const YourSpending: React.FC = () => {
           </ImageWraper>
           <TextTitle>Insira suas despesas </TextTitle>
         </Content>
+        <History>
+          <HistoryText>Ações no mês de: </HistoryText>
+          <HistoryInput
+            placeholder="data"
+            type={'datetime'}
+            value={initalDate.dt}
+            options={{
+              format: 'M/YYYY',
+            }}
+            onChangeText={(text) => setInitialDate({ dt: text })}
+          />
+        </History>
 
-        {categories.map((category) => (
-          <ContainerCategory
-            key={categories.findIndex((index) => index.id === category.id)}
-          >
-            <Card category={category} />
-          </ContainerCategory>
-        ))}
-
-        <ContentCategory />
+        <ContentCategory>
+          {categories
+            .filter((category) => getMonthDate(category.date) === initalDate.dt)
+            .map((category) => (
+              <ContainerCategory
+                key={categories.findIndex((index) => index.id === category.id)}
+              >
+                <Card category={category} />
+              </ContainerCategory>
+            ))}
+        </ContentCategory>
         <AddCategoryButtonWraper>
           <AddCategory>
             <Button icon="plus" onPress={() => handleNextPage('ListCategory')}>

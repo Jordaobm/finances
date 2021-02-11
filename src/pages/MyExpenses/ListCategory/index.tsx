@@ -36,6 +36,7 @@ const ListCategory: React.FC = () => {
         color,
         name,
         icon,
+        date: new Date(),
       };
       addCategoryInExpenses(category);
       navigation.navigate('YourSpending');

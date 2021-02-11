@@ -284,6 +284,8 @@ const MyExpensesProvider: React.FC = ({ children }) => {
     setIncomeState();
   }, [incomes]);
 
+  // console.log(categories);
+
   return (
     <MyExpensesContext.Provider
       value={{

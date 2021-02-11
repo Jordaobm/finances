@@ -1,4 +1,4 @@
-import { format, isAfter } from 'date-fns';
+import { format, isAfter, parseISO } from 'date-fns';
 
 export function formatValue(value: number) {
   const formattedValue = value.toLocaleString('pt-BR', {
@@ -32,4 +32,13 @@ export function compareDate(dateString: string): boolean {
 export function compareMonth(dateString: string) {
   const parsed = dateString.split('/');
   return Number(parsed[1]);
+}
+
+export function getMonthDate(date: Date) {
+  const newDate = new Date(date);
+  const month = newDate.getMonth() + 1;
+  const year = newDate.getFullYear();
+
+  const MonthYear = `${month}/${year}`;
+  return MonthYear;
 }

@@ -3,6 +3,7 @@ export interface IExpenseCategory {
   color: string;
   name: string;
   icon: Object;
+  date: Date;
 }
 
 export interface IExpenseDetailPageState {

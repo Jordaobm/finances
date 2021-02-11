@@ -3,13 +3,12 @@ import React, { useCallback } from 'react';
 import { Text } from 'react-native';
 import { IExpense, IExpenseCategory, IIncome } from '../../dtos/types';
 import { useMyExpenses } from '../../hooks/MyExpense';
-import { addSalary, cash } from '../../utils/images';
+import { cash, cashPlaceholder } from '../../utils/images';
 import Button from '../Button';
 import {
   Container,
   BackgroundIcon,
   IconImg,
-  ValueAndDate,
   Name,
   Date,
   Value,
@@ -24,15 +23,25 @@ import {
   BackgroundIconIncome,
   Income,
   IncomeValueInput,
+  Placeholder,
+  BackgroundIconPlaceholder,
+  IconImgPlaceholder,
+  NamePlaceholder,
+  ValuePlaceHolder,
+  DatePlaceHolder,
 } from './styles';
+import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
+import LinearGradient from 'react-native-linear-gradient';
 
 interface CardProps {
   category?: IExpenseCategory;
   expense?: IExpense;
   income?: IIncome;
+  visible?: boolean;
 }
 
-const Card: React.FC<CardProps> = ({ expense, income, category }) => {
+const Card: React.FC<CardProps> = ({ expense, income, category, visible }) => {
+  const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
   const navigation = useNavigation();
   const {
     setDetailsCategoryState,
@@ -41,6 +50,7 @@ const Card: React.FC<CardProps> = ({ expense, income, category }) => {
     setEditExpenseState,
     setEditIncomeState,
   } = useMyExpenses();
+
   const handleDetailsCategory = useCallback(
     (category: IExpenseCategory) => {
       navigation.navigate('DetailsCategory');
@@ -55,7 +65,6 @@ const Card: React.FC<CardProps> = ({ expense, income, category }) => {
     },
     [navigation, setCategory_id],
   );
-
   const handleEditExpense = useCallback(
     (expense: IExpense) => {
       navigation.navigate('EditExpense');
@@ -108,6 +117,7 @@ const Card: React.FC<CardProps> = ({ expense, income, category }) => {
       </Income>
     );
   }
+
   if (category) {
     return (
       <Container>
@@ -154,7 +164,30 @@ const Card: React.FC<CardProps> = ({ expense, income, category }) => {
     );
   }
 
-  return <Text>Card undefined</Text>;
+  return (
+    <>
+      <Placeholder>
+        <ShimmerPlaceHolder
+          visible={visible}
+          style={{ width: 50, height: 50, borderRadius: 20 }}
+        />
+        <ShimmerPlaceHolder
+          visible={visible}
+          style={{ width: '50%', height: 20 }}
+        />
+        <Value>
+          <ShimmerPlaceHolder
+            visible={visible}
+            style={{ width: 60, height: 15 }}
+          />
+          <ShimmerPlaceHolder
+            visible={visible}
+            style={{ width: 45, height: 8, marginTop: 5 }}
+          />
+        </Value>
+      </Placeholder>
+    </>
+  );
 };
 
 export default Card;

@@ -11,6 +11,7 @@ import gas from '../assets/gas.png';
 import luz from '../assets/luz.png';
 import agua from '../assets/agua.png';
 import cash from '../assets/cash.png';
+import cashPlaceholder from '../assets/cashPlaceholder.png';
 
 export {
   ArrendamentosEdividendos,
@@ -26,4 +27,5 @@ export {
   gas,
   luz,
   cash,
+  cashPlaceholder,
 };
