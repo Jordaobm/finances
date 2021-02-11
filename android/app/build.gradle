@@ -145,10 +145,10 @@ android {
     }
     signingConfigs {
         debug {
-            storeFile file('finances.keystore')
-            storePassword 'finances'
-            keyAlias 'finances'
-            keyPassword 'finances'
+            storeFile file('financesApp.keystore')
+            storePassword 'financesapp'
+            keyAlias 'financesapp'
+            keyPassword 'financesapp'
         }
         release {
             if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {

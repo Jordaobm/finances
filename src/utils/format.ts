@@ -29,3 +29,7 @@ export function compareDate(dateString: string): boolean {
   const compare = Number(parsed[1]) === month;
   return compare;
 }
+export function compareMonth(dateString: string) {
+  const parsed = dateString.split('/');
+  return Number(parsed[1]);
+}

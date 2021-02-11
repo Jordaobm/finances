@@ -42,6 +42,9 @@ import {
   ButtonText,
   Gradient,
 } from './styles';
+import { ContainerCategory } from '../YourSpending/styles';
+import Card from '../../../components/Card';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const DetailsCategory: React.FC = () => {
   const navigation = useNavigation();
@@ -79,63 +82,13 @@ const DetailsCategory: React.FC = () => {
   return (
     <Container>
       <Header>Controle de minhas despesas</Header>
-
-      <ContentCategory>
-        <Category>
-          <CategoryTitle>
-            <IconWraper>
-              <IconCategoryWraper color={detailsCategoryState.color}>
-                <IconCategory source={detailsCategoryState.icon} />
-              </IconCategoryWraper>
-            </IconWraper>
-            <Name>
-              <CategoryName>{detailsCategoryState.name}</CategoryName>
-            </Name>
-            <IconArrowWraper>
-              <IconArrow name="chevron-down" size={20} />
-            </IconArrowWraper>
-          </CategoryTitle>
-
-          {expenses
-            .filter(
-              (expense) =>
-                expense.idExpenseCategory === detailsCategoryState.id,
-            )
-            .map((expense) => (
-              <ExpenseContainer
-                key={expense.id}
-                onPress={() => handleEditExpense(expense)}
-              >
-                <ExpenseIconContainer>
-                  <ExpenseIconWraper color={expense.color}>
-                    <ExpenseIcon source={expense.icon} />
-                  </ExpenseIconWraper>
-                </ExpenseIconContainer>
-                <ExpenseName>{expense.NameExpense}</ExpenseName>
-                <ExpenseValue>
-                  <ExpenseValueInput
-                    editable={false}
-                    type={'money'}
-                    value={expense.ValueExpense}
-                  />
-                </ExpenseValue>
-              </ExpenseContainer>
-            ))}
-
-          <ButtonAddCategory>
-            <Button
-              colors={{ finished: '#E7F5ED', initial: '#E7F5ED' }}
-              icon="plus"
-              onPress={() =>
-                handleNextPageCategory('AddExpense', detailsCategoryState.id)
-              }
-            >
-              Adicionar despesa
-            </Button>
-          </ButtonAddCategory>
-        </Category>
-      </ContentCategory>
-
+      <ScrollView>
+        <ContentCategory>
+          <ContainerCategory>
+            <Card category={detailsCategoryState} />
+          </ContainerCategory>
+        </ContentCategory>
+      </ScrollView>
       <ActionsEdit>
         <Gradient colors={['#4AD07E', '#67E799']} start={{ x: 0.1, y: 1 }}>
           <ButtonContent

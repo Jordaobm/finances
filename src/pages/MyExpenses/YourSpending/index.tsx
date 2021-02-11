@@ -32,11 +32,14 @@ import {
   AddCategoryButtonWraper,
   Next,
   ExpenseValueInput,
+  ContainerCategory,
 } from './styles';
 import Header from '../../../components/Header';
 import Button from '../../../components/Button';
 import { ScrollView } from 'react-native-gesture-handler';
 import { removeSalaty } from '../../../utils/images';
+import Card from '../../../components/Card';
+import { compareMonth } from '../../../utils/format';
 
 const YourSpending: React.FC = () => {
   const {
@@ -48,22 +51,6 @@ const YourSpending: React.FC = () => {
   } = useMyExpenses();
   const navigation = useNavigation();
 
-  const handleNextPageCategory = useCallback(
-    (route: string, category_id: number) => {
-      navigation.navigate(route);
-      setCategory_id(category_id);
-    },
-    [navigation, setCategory_id],
-  );
-
-  const handleEditExpense = useCallback(
-    (expense: IExpense) => {
-      navigation.navigate('EditExpense');
-      setEditExpenseState(expense);
-    },
-    [navigation, setEditExpenseState],
-  );
-
   const handleNextPage = useCallback(
     (route: string) => {
       navigation.navigate(route);
@@ -71,13 +58,7 @@ const YourSpending: React.FC = () => {
     [navigation],
   );
 
-  const handleDetailsCategory = useCallback(
-    (category: IExpenseCategory) => {
-      navigation.navigate('DetailsCategory');
-      setDetailsCategoryState(category);
-    },
-    [navigation, setDetailsCategoryState],
-  );
+  const date = new Date();
 
   return (
     <Container>
@@ -90,67 +71,15 @@ const YourSpending: React.FC = () => {
           <TextTitle>Insira suas despesas </TextTitle>
         </Content>
 
-        <ContentCategory>
-          {categories &&
-            categories.map((category) => (
-              <Categories key={categories.indexOf(category)}>
-                <Category>
-                  <CategoryTitle
-                    onPress={() => handleDetailsCategory(category)}
-                  >
-                    <IconWraper>
-                      <IconCategoryWraper color={category.color}>
-                        <IconCategory source={category.icon} />
-                      </IconCategoryWraper>
-                    </IconWraper>
-                    <Name>
-                      <CategoryName>{category.name}</CategoryName>
-                    </Name>
-                    <IconArrowWraper>
-                      <IconArrow name="chevron-down" size={20} />
-                    </IconArrowWraper>
-                  </CategoryTitle>
+        {categories.map((category) => (
+          <ContainerCategory
+            key={categories.findIndex((index) => index.id === category.id)}
+          >
+            <Card category={category} />
+          </ContainerCategory>
+        ))}
 
-                  {expenses
-                    .filter(
-                      (expense) => expense.idExpenseCategory === category.id,
-                    )
-                    .map((expense) => (
-                      <ExpenseContainer
-                        key={expense.id}
-                        onPress={() => handleEditExpense(expense)}
-                      >
-                        <ExpenseIconContainer>
-                          <ExpenseIconWraper color={expense.color}>
-                            <ExpenseIcon source={expense.icon} />
-                          </ExpenseIconWraper>
-                        </ExpenseIconContainer>
-                        <ExpenseName>{expense.NameExpense}</ExpenseName>
-                        <ExpenseValue>
-                          <ExpenseValueInput
-                            editable={false}
-                            type={'money'}
-                            value={expense.ValueExpense}
-                          />
-                        </ExpenseValue>
-                      </ExpenseContainer>
-                    ))}
-
-                  <ButtonAddCategory>
-                    <Button
-                      colors={{ finished: '#E7F5ED', initial: '#E7F5ED' }}
-                      icon="plus"
-                      onPress={() =>
-                        handleNextPageCategory('ListExpenses', category.id)
-                      }
-                    >
-                      Adicionar despesa
-                    </Button>
-                  </ButtonAddCategory>
-                </Category>
-              </Categories>
-            ))}
-        </ContentCategory>
+        <ContentCategory />
         <AddCategoryButtonWraper>
           <AddCategory>
             <Button icon="plus" onPress={() => handleNextPage('ListCategory')}>

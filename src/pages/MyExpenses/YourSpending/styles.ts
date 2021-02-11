@@ -48,6 +48,8 @@ export const ContentCategory = styled.View`
   padding: 0 10px;
 `;
 
+export const ContainerCategory = styled.View``;
+
 export const Category = styled.View`
   background-color: #fff;
   border-radius: 10px;

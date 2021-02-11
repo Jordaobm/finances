@@ -37,6 +37,7 @@ import agua from '../../assets/agua.png';
 import cash from '../../assets/cash.png';
 import { transformDateStringInDate } from '../../utils/format';
 import { format } from 'date-fns';
+import Card from '../Card';
 
 export const Calendar: React.FC = () => {
   const actualDate = new Date();
@@ -129,47 +130,14 @@ export const Calendar: React.FC = () => {
       {incomes
         .filter((income) => income.DateIncome === data)
         .map((income) => (
-          <ButtonIncome
-            onPress={() => handleEditIncome(income)}
-            key={income.id}
-          >
-            <IncomeContainer>
-              <IncomeIconContainer>
-                <IncomeIconWraper>
-                  <ExpenseIcon source={cash} />
-                </IncomeIconWraper>
-              </IncomeIconContainer>
-              <IncomeName>{income.NameIncome}</IncomeName>
-              <IncomeValue>
-                <IncomeValueInput
-                  editable={false}
-                  type={'money'}
-                  value={income.ValueIncome}
-                />
-              </IncomeValue>
-            </IncomeContainer>
-          </ButtonIncome>
+          <Card key={income.id} income={income} />
         ))}
 
       {expenses
         .filter((expense) => expense.DateExpense === data)
         .map((expense) => (
           <SelectedDateInformations key={expense.id}>
-            <ExpenseContainer onPress={() => handleEditExpense(expense)}>
-              <ExpenseIconContainer>
-                <ExpenseIconWraper color={expense.color}>
-                  <ExpenseIcon source={expense.icon} />
-                </ExpenseIconWraper>
-              </ExpenseIconContainer>
-              <ExpenseName>{expense.NameExpense}</ExpenseName>
-              <ExpenseValue>
-                <ExpenseValueInput
-                  editable={false}
-                  type={'money'}
-                  value={expense.ValueExpense}
-                />
-              </ExpenseValue>
-            </ExpenseContainer>
+            <Card expense={expense} />
           </SelectedDateInformations>
         ))}
     </Container>

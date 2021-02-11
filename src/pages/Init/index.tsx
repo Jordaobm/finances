@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, { useCallback } from 'react';
 import {
   Container,
   Content,
@@ -12,7 +12,7 @@ import {
 } from './styles';
 import logo from '../../assets/logo1.png';
 import Button from '../../components/Button';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 const Init: React.FC = () => {
   const navigation = useNavigation();

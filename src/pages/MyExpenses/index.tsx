@@ -19,7 +19,6 @@ import {
 } from './styles';
 import Header from '../../components/Header';
 import { ScrollView } from 'react-native-gesture-handler';
-import { IExpense, IExpenseCategory, IIncome } from '../../dtos/types';
 import { Calendar } from '../../components/Calendar';
 import { useMyExpenses } from '../../hooks/MyExpense';
 import { useNavigation } from '@react-navigation/native';
