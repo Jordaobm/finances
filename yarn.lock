@@ -12105,6 +12105,11 @@ react-native-screens@^2.17.1:
   resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-2.17.1.tgz#c3c0ac750af48741c5b1635511e6af2a27b74309"
   integrity sha512-B4gD5e4csvlVwlhf+RNqjQZ9mHTwe/iL3rXondgZxnKz4oW0QAmtLnLRKOrYVxoaJaF9Fy7jhjo//24/472APQ==
 
+react-native-shimmer-placeholder@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/react-native-shimmer-placeholder/-/react-native-shimmer-placeholder-2.0.6.tgz#a6626d955945edb1aa01f8863f3e039a738d53d1"
+  integrity sha512-eq0Jxi/j/WseijfSeNjoAsaz1164XUCDvKpG/+My+c5YeVMfjTnl9SwoVAIr9uOpuDXXia67j8xME+eFJZvBXw==
+
 react-native-splash-screen@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/react-native-splash-screen/-/react-native-splash-screen-3.2.0.tgz#d47ec8557b1ba988ee3ea98d01463081b60fff45"

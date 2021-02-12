@@ -239,10 +239,10 @@ const MyExpensesProvider: React.FC = ({ children }) => {
   //GUARDANDO NOVAS INFORMAÇÕES NO ASYNCSTORAGE
 
   useEffect(() => {
-    async function setFirst() {
+    async function setFirstStorage() {
       await AsyncStorage.setItem('@finances:first', JSON.stringify(first));
     }
-    setFirst();
+    setFirstStorage();
   }, [first]);
 
   useEffect(() => {
@@ -266,14 +266,14 @@ const MyExpensesProvider: React.FC = ({ children }) => {
   }, [categories]);
 
   useEffect(() => {
-    async function setExpenses() {
+    async function setExpensesStorage() {
       await AsyncStorage.setItem(
         '@finances:expenses',
         JSON.stringify(expenses),
       );
     }
 
-    setExpenses();
+    setExpensesStorage();
   }, [expenses]);
 
   useEffect(() => {
@@ -283,6 +283,8 @@ const MyExpensesProvider: React.FC = ({ children }) => {
 
     setIncomeState();
   }, [incomes]);
+
+  // console.log(categories);
 
   return (
     <MyExpensesContext.Provider

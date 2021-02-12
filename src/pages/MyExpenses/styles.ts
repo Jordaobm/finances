@@ -43,17 +43,6 @@ export const TextTitle = styled.Text`
   color: #172635;
 `;
 
-export const InputValueSalary = styled(TextInputMask)`
-  margin-top: 40px;
-  width: 100%;
-  padding: 20px;
-  font-family: CircularStd-Medium;
-
-  font-size: 32px;
-  text-align: center;
-  color: #172635;
-`;
-
 export const SkipStepButton = styled.View`
   width: 100%;
   justify-content: center;
@@ -77,178 +66,14 @@ export const SkipStepText = styled.Text`
   color: #5d87a8;
 `;
 
-export const ArrowDown = styled.Image`
-  width: 43px;
-  height: 9px;
-`;
-export const HeaderImage = styled.View`
-  justify-content: center;
-  align-items: center;
-  padding: 15px;
-`;
-export const ContentxpenseCategory = styled.View`
-  width: 100%;
-  padding: 15px;
-  justify-content: center;
-  align-items: center;
-`;
-export const TitleExpenseCategory = styled.Text`
-  font-family: CircularStd-Bold;
-  font-size: 20px;
-  line-height: 25px;
-  text-align: center;
-  color: #172635;
-`;
-
-export const Goals = styled.View`
-  margin-top: 13px;
-  width: 100%;
-`;
-
-export const Goal = styled(RectButton)`
-  margin: 8px 0px;
-  width: 100%;
-  background-color: #fff;
-  box-shadow: 10px 10px 20px #0000;
-  border-radius: 10px;
-  flex-direction: row;
-  align-items: center;
-  padding: 15px;
-`;
-
-interface GoalIconWraperProps {
-  color?: string;
-}
-export const GoalIconWraper = styled.View<GoalIconWraperProps>`
-  width: 80px;
-  height: 80px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 35px;
-
-  ${(props) =>
-    props.color &&
-    css`
-      background-color: ${props.color};
-    `}
-`;
-export const GoalText = styled.Text`
-  color: #5d87a8;
-  font-family: CircularStd-Medium;
-  margin-left: 14px;
-  font-size: 14px;
-`;
-
-export const IconAddExpense = styled.Image`
-  margin-left: 65px;
-  width: 30px;
-  height: 30px;
-`;
-
 interface CategoriesProps {
   padding?: boolean;
 }
-
-export const Categories = styled.View<CategoriesProps>`
-  margin: 10px 0;
-`;
-
-export const ContentCategory = styled.View`
-  padding: 0 10px;
-`;
-
-export const Category = styled.View`
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 10px 10px 20px #0000;
-  padding: 15px 0;
-`;
-
-export const ButtonAddCategory = styled.View`
-  margin-top: 20px;
-  width: 100%;
-`;
-
-export const CategoryTitle = styled(TouchableOpacity)`
-  width: 100%;
-  margin: 10px 0;
-  flex-direction: row;
-  align-items: center;
-`;
 
 interface IconCategoryWraperProps {
   color?: string;
   disable?: boolean;
 }
-
-export const IconCategoryWraper = styled.View<IconCategoryWraperProps>`
-  width: 80px;
-  height: 80px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 35px;
-
-  ${(props) =>
-    props.color &&
-    css`
-      background-color: ${props.color};
-    `}
-  ${(props) =>
-    props.disable &&
-    css`
-      background-color: #dddee2;
-    `}
-`;
-export const IconCategory = styled.Image`
-  width: 40px;
-  height: 40px;
-`;
-export const CategoryName = styled.Text`
-  font-family: CircularStd-Medium;
-  font-size: 14px;
-  line-height: 21px;
-  display: flex;
-  align-items: center;
-  color: #5d87a8;
-  text-align: center;
-`;
-export const IconArrow = styled(Icon)`
-  color: #5d87a8;
-`;
-
-export const IconWraper = styled.View`
-  justify-content: center;
-  align-items: center;
-  width: 30%;
-`;
-export const Name = styled.View`
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-
-  width: 50%;
-  padding: 0 10px;
-`;
-export const IconArrowWraper = styled.View`
-  justify-content: center;
-  align-items: center;
-  width: 20%;
-`;
-
-export const AddCategoryButtonWraper = styled.View`
-  width: 100%;
-  margin-top: 15px;
-  justify-content: center;
-  align-items: center;
-`;
-
-export const AddCategory = styled.View`
-  width: 300px;
-`;
-
-export const Next = styled.View`
-  margin-bottom: 30px;
-`;
 
 export const BalanceAvailable = styled.Text`
   margin: 27px 0;
@@ -272,14 +97,6 @@ export const Actions = styled.View`
   justify-content: space-between;
   align-items: center;
   margin-top: 10px;
-`;
-
-export const ActionsEdit = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
-  padding: 0 10px;
 `;
 
 export const ButtonText = styled.Text`
@@ -314,28 +131,6 @@ export const Salary = styled(TextInputMask)`
   color: #172635;
 `;
 
-export const InputContainer = styled.View`
-  flex: 1;
-  padding: 12px;
-`;
-
-export const ValueAndDate = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-export const InputValue = styled.View`
-  width: 48%;
-`;
-export const InputDate = styled.View`
-  width: 48%;
-`;
-
-export const ExpenseValue = styled.View`
-  justify-content: center;
-  align-items: center;
-`;
 export const Value = styled.Text`
   justify-content: center;
   align-items: center;
@@ -345,132 +140,11 @@ export const Value = styled.Text`
   color: #e6492d;
 `;
 
-export const History = styled.View`
-  width: 100%;
-  margin-top: 30px;
-`;
-
-export const HistoryTitle = styled.Text`
-  font-family: CircularStd-Medium;
-  font-size: 17px;
-  line-height: 19px;
-  color: #172635;
-`;
-export const ExpenseContent = styled.View`
-  margin-top: 13px;
-`;
-
-export const ExpenseValueInput = styled(TextInputMask)`
-  width: 100%;
-  padding: 20px;
-
-  justify-content: center;
-  align-items: center;
-  font-family: CircularStd-Bold;
-  font-size: 14px;
-  line-height: 16px;
-  color: #e6492d;
-`;
-
-export const ExpenseContainer = styled(TouchableOpacity)`
-  width: 100%;
-  margin: 5px 0;
-  flex-direction: row;
-  align-items: center;
-  padding: 10px 20px;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #fff;
-  border-radius: 10px;
-`;
-
 interface ExpenseIconWraperProps {
   color: string;
 }
 
-export const ExpenseIconContainer = styled.View``;
-
-export const ExpenseIconWraper = styled.View<ExpenseIconWraperProps>`
-  width: 60px;
-  height: 60px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 25px;
-
-  ${(props) =>
-    props.color &&
-    css`
-      background-color: ${props.color};
-    `}
-`;
-
-export const ExpenseIcon = styled.Image`
-  width: 25px;
-  height: 25px;
-`;
-
-export const ExpenseName = styled.Text`
-  font-family: CircularStd-Medium;
-  font-size: 14px;
-  line-height: 21px;
-  display: flex;
-  align-items: center;
-  color: #5d87a8;
-  text-align: center;
-`;
-
 export const ButtonAlterSalary = styled(TouchableOpacity)``;
-
-export const IncomeContainer = styled.View`
-  background: #ffffff;
-  border-radius: 10px;
-  width: 100%;
-  margin: 10px 0;
-  flex-direction: row;
-  align-items: center;
-  padding: 10px 20px;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-export const ButtonIncome = styled(TouchableOpacity)``;
-
-export const IncomeIconContainer = styled.View``;
-export const IncomeIconWraper = styled.View`
-  width: 60px;
-  height: 60px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 25px;
-  background-color: #e0f8e9;
-`;
-
-export const IncomeName = styled.Text`
-  font-family: CircularStd-Medium;
-  font-size: 14px;
-  line-height: 21px;
-  display: flex;
-  align-items: center;
-  color: #5d87a8;
-  text-align: center;
-`;
-
-export const IncomeValue = styled.View`
-  justify-content: center;
-  align-items: center;
-`;
-
-export const IncomeValueInput = styled(TextInputMask)`
-  width: 100%;
-  padding: 20px;
-
-  justify-content: center;
-  align-items: center;
-  font-family: CircularStd-Bold;
-  font-size: 14px;
-  line-height: 16px;
-  color: #67e799;
-`;
 
 export const Negative = styled.View`
   align-items: center;
