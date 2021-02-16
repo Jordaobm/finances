@@ -1,14 +1,5 @@
 import LinearGradient from 'react-native-linear-gradient';
 import styled from 'styled-components/native';
-import { TextInputMask } from 'react-native-masked-text';
-import {
-  RectButton,
-  TouchableHighlight,
-  TouchableNativeFeedback,
-  TouchableOpacity,
-} from 'react-native-gesture-handler';
-import { css } from 'styled-components';
-import Icon from 'react-native-vector-icons/Feather';
 
 export const Container = styled.View`
   background-color: #f6f7fb;

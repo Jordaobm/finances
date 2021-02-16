@@ -1,9 +1,8 @@
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import {Text} from 'react-native';
-import {Container, IconButton, ContentButton, TextHeader} from './styles';
+import { Container, IconButton, ContentButton, TextHeader } from './styles';
 
-const Header: React.FC = ({children}) => {
+const Header: React.FC = ({ children }) => {
   const navigation = useNavigation();
   return (
     <Container>

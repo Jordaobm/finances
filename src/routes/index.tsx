@@ -14,10 +14,11 @@ import AddIncome from '../pages/MyExpenses/AddIncome';
 import EditExpense from '../pages/MyExpenses/EditExpense';
 import { clearGlobalStateAndStorage } from '../utils/clearGlobalStateAndStorage';
 import EditIncome from '../pages/MyExpenses/EditIncome';
+import AddCategory from '../pages/MyExpenses/AddCategory';
 
-const Router: React.Fc = () => {
+const Router: React.FC = () => {
   const Stack = createStackNavigator();
-  // clearGlobalStateAndStorage();
+  clearGlobalStateAndStorage();
 
   return (
     <NavigationContainer>
@@ -29,6 +30,7 @@ const Router: React.Fc = () => {
         <Stack.Screen name="MyInitialBalance" component={MyInitialBalance} />
         <Stack.Screen name="ListCategory" component={ListCategory} />
         <Stack.Screen name="ListExpenses" component={ListExpenses} />
+        <Stack.Screen name="AddCategory" component={AddCategory} />
         <Stack.Screen name="AddExpense" component={AddExpense} />
         <Stack.Screen name="AddIncome" component={AddIncome} />
         <Stack.Screen name="EditExpense" component={EditExpense} />

@@ -12,6 +12,12 @@ import luz from '../assets/luz.png';
 import agua from '../assets/agua.png';
 import cash from '../assets/cash.png';
 import cashPlaceholder from '../assets/cashPlaceholder.png';
+import graphic from '../assets/graphic3.png';
+import pandeiro from '../assets/pandeiro.png';
+import flower from '../assets/flower.png';
+import alert from '../assets/alert.png';
+import flag from '../assets/homeIcon.png';
+import logo from '../assets/logo1.png';
 
 export {
   ArrendamentosEdividendos,
@@ -28,4 +34,10 @@ export {
   luz,
   cash,
   cashPlaceholder,
+  graphic,
+  pandeiro,
+  flower,
+  alert,
+  flag,
+  logo,
 };

@@ -1,14 +1,6 @@
-import LinearGradient from 'react-native-linear-gradient';
 import styled from 'styled-components/native';
-import { TextInputMask } from 'react-native-masked-text';
-import {
-  RectButton,
-  TouchableHighlight,
-  TouchableNativeFeedback,
-  TouchableOpacity,
-} from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { css } from 'styled-components';
-import Icon from 'react-native-vector-icons/Feather';
 
 export const Container = styled.View`
   background-color: #f6f7fb;
@@ -43,7 +35,7 @@ export const Goals = styled.View`
   width: 100%;
 `;
 
-export const Goal = styled(RectButton)`
+export const Goal = styled(TouchableOpacity)`
   margin: 8px 0px;
   width: 100%;
   background-color: #fff;
