@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/Feather';
 import { css } from 'styled-components';
-import { RectButton, TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { TextInputMask } from 'react-native-masked-text';
 
 export const Container = styled.View`
@@ -136,44 +136,4 @@ export const Placeholder = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-`;
-
-export const BackgroundIconPlaceholder = styled.View`
-  background-color: #ededed;
-  width: 50px;
-  height: 50px;
-  border-radius: 20px;
-  justify-content: center;
-  align-items: center;
-`;
-
-export const IconImgPlaceholder = styled.Image`
-  opacity: 0.5;
-  width: 20px;
-  height: 20px;
-  position: relative;
-  top: 2px;
-`;
-
-export const NamePlaceholder = styled.Text`
-  font-family: CircularStd-Book;
-  font-size: 14px;
-  line-height: 21px;
-  display: flex;
-  align-items: flex-end;
-  background-color: #ededed;
-  width: 50%;
-`;
-
-export const ValuePlaceHolder = styled.View`
-  background-color: #ededed;
-  width: 60px;
-  height: 15px;
-`;
-
-export const DatePlaceHolder = styled.View`
-  margin-top: 5px;
-  background-color: #ededed;
-  width: 45px;
-  height: 8px;
 `;

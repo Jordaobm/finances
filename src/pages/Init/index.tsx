@@ -10,7 +10,7 @@ import {
   AppDescriptionText,
   ButtonWraper,
 } from './styles';
-import logo from '../../assets/logo1.png';
+import { logo } from '../../utils/images';
 import Button from '../../components/Button';
 import { useNavigation } from '@react-navigation/native';
 

@@ -13,15 +13,17 @@ import {
   Graphic,
 } from './styles';
 import Header from '../../components/Header';
-import graphic from '../../assets/graphic3.png';
-import pandeiro from '../../assets/pandeiro.png';
-import flower from '../../assets/flower.png';
-import alert from '../../assets/alert.png';
-import other from '../../assets/other.png';
-import flag from '../../assets/homeIcon.png';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import { useMyExpenses } from '../../hooks/MyExpense';
+import {
+  flag,
+  graphic,
+  pandeiro,
+  flower,
+  alert,
+  other,
+} from '../../utils/images';
 
 const Home: React.FC = () => {
   const navigation = useNavigation();

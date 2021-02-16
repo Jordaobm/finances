@@ -1,7 +1,5 @@
-import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {Text} from 'react-native';
-import {RectButtonProperties} from 'react-native-gesture-handler';
+import { RectButtonProperties } from 'react-native-gesture-handler';
 import {
   Container,
   TextButton,
@@ -33,7 +31,8 @@ const Button: React.FC<ButtonProps> = ({
       <Container>
         <GradienteColor
           colors={[colors.initial, colors.finished]}
-          start={{x: 0.1, y: 1}}>
+          start={{ x: 0.1, y: 1 }}
+        >
           <Content {...rest} colors={colors}>
             <TextButton color={textColor}>{children}</TextButton>
             <IconButton color={iconColor} name={icon} size={24} />

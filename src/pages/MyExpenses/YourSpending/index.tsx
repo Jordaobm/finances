@@ -1,6 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useState } from 'react';
-import { IExpense, IExpenseCategory } from '../../../dtos/types';
 import { useMyExpenses } from '../../../hooks/MyExpense';
 import {
   Container,
@@ -8,30 +7,10 @@ import {
   ImageWraper,
   IconFlag,
   TextTitle,
-  Category,
   ContentCategory,
-  Categories,
-  CategoryTitle,
-  IconCategoryWraper,
-  IconArrowWraper,
-  IconWraper,
-  Name,
-  IconCategory,
-  CategoryName,
-  IconArrow,
-  ButtonAlterSalary,
-  ExpenseContainer,
-  ExpenseIcon,
-  ExpenseIconContainer,
-  ExpenseIconWraper,
-  ExpenseName,
-  ExpenseValue,
-  Value,
-  ButtonAddCategory,
   AddCategory,
   AddCategoryButtonWraper,
   Next,
-  ExpenseValueInput,
   ContainerCategory,
   HistoryText,
   History,
@@ -42,27 +21,14 @@ import Button from '../../../components/Button';
 import { ScrollView } from 'react-native-gesture-handler';
 import { removeSalaty } from '../../../utils/images';
 import Card from '../../../components/Card';
-import {
-  compareDateStringAndDate,
-  compareMonth,
-  getMonthDate,
-} from '../../../utils/format';
-import { Text } from 'react-native';
-import { format } from 'date-fns';
-import { TextInputMask } from 'react-native-masked-text';
+import { getMonthDate } from '../../../utils/format';
 
 interface StateDate {
   dt: string;
 }
 
 const YourSpending: React.FC = () => {
-  const {
-    categories,
-    setCategory_id,
-    expenses,
-    setEditExpenseState,
-    setDetailsCategoryState,
-  } = useMyExpenses();
+  const { categories } = useMyExpenses();
   const navigation = useNavigation();
 
   const handleNextPage = useCallback(

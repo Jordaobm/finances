@@ -29,10 +29,14 @@ const AddExpense: React.FC = () => {
 
   const handleAddIncome = useCallback(
     (data: IIncome) => {
-      if (data.NameIncome === '' || data.ValueIncome === '') {
+      if (
+        data.NameIncome === '' ||
+        data.ValueIncome === '' ||
+        data.DateIncome === ''
+      ) {
         Alert.alert(
           'Preencha todos os campos',
-          'Preencha um nome para sua renda e um valor',
+          'Preencha um nome para sua renda, um valor e uma data válida',
         );
         return;
       }

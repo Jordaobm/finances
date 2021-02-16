@@ -31,10 +31,14 @@ const AddExpense: React.FC = () => {
   const navigation = useNavigation();
   const handleAddExpense = useCallback(
     (data: IExpense) => {
-      if (data.NameExpense === '' || data.ValueExpense === '') {
+      if (
+        data.NameExpense === '' ||
+        data.ValueExpense === '' ||
+        data.DateExpense === ''
+      ) {
         Alert.alert(
           'Preencha todos os campos',
-          'Preencha um nome para sua despesa e um valor',
+          'Preencha um nome para sua despesa, um valor e uma data válida',
         );
         return;
       }

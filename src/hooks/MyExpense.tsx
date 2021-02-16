@@ -20,39 +20,33 @@ interface MyExpensesContextData {
   initialBalance: number;
   setInitialBalance(initialBalance: number): void;
 
+  setDetailsCategoryState(category: IExpenseCategory): void;
+  detailsCategoryState: IExpenseCategory;
+  category_id: number;
+  setCategory_id(category_id: number): void;
   addCategoryInExpenses(category: IExpenseCategory): void;
   categories: IExpenseCategory[];
+  categoryPage: IExpenseCategory;
+  setCategoryPage(category: IExpenseCategory): void;
+  deleteCategory(category: IExpenseCategory): void;
 
   expenseDetailPageState: IExpenseDetailPageState;
   setExpenseDetailPageState(expenseDetaill: IExpenseDetailPageState): void;
-
-  category_id: number;
-  setCategory_id(category_id: number): void;
-
   expenses: IExpense[];
   setExpenses(expenses: IExpense[]): void;
-
-  balanceAvailable(): number;
-
-  incomes: IIncome[];
-  setIncomes(incomes: IIncome[]): void;
-
   editExpenseState: IExpense;
   setEditExpenseState(expense: IExpense): void;
-
   setEditExpense(expense: IExpense): void;
   deleteExpense(expense: IExpense): void;
 
+  incomes: IIncome[];
+  setIncomes(incomes: IIncome[]): void;
   editIncomeState: IIncome;
   setEditIncomeState(income: IIncome): void;
-
   setEditIncome(income: IIncome): void;
   deleteIncome(income: IIncome): void;
 
-  setDetailsCategoryState(category: IExpenseCategory): void;
-  detailsCategoryState: IExpenseCategory;
-
-  deleteCategory(category: IExpenseCategory): void;
+  balanceAvailable(): number;
 }
 
 const MyExpensesContext = createContext<MyExpensesContextData>(
@@ -61,7 +55,6 @@ const MyExpensesContext = createContext<MyExpensesContextData>(
 
 const MyExpensesProvider: React.FC = ({ children }) => {
   const [first, setFirst] = useState(true);
-  //DECLARAÇÃO DE FUNÇÕES E FUNCIONALIDADES
 
   const [initialBalance, setInitialBalance] = useState(0);
 
@@ -77,7 +70,7 @@ const MyExpensesProvider: React.FC = ({ children }) => {
   const addCategoryInExpenses = useCallback(
     (category: IExpenseCategory) => {
       const alreadyExistCategory = categories.find(
-        (findCategory) => findCategory.name === category.name,
+        (findCategory) => findCategory.date === category.date,
       );
 
       if (alreadyExistCategory) {
@@ -145,8 +138,6 @@ const MyExpensesProvider: React.FC = ({ children }) => {
         (filter) => filter.idExpenseCategory === expense.idExpenseCategory,
       );
 
-      console.log(find.length);
-
       if (find.length === 1) {
         const filterAndDeleteCategory = categories.filter(
           (filter) => filter.id !== expense.idExpenseCategory,
@@ -180,6 +171,10 @@ const MyExpensesProvider: React.FC = ({ children }) => {
       setCategories(filterCategory);
     },
     [expenses, categories],
+  );
+
+  const [categoryPage, setCategoryPage] = useState<IExpenseCategory>(
+    {} as IExpenseCategory,
   );
 
   const [
@@ -284,8 +279,6 @@ const MyExpensesProvider: React.FC = ({ children }) => {
     setIncomeState();
   }, [incomes]);
 
-  // console.log(categories);
-
   return (
     <MyExpensesContext.Provider
       value={{
@@ -315,6 +308,8 @@ const MyExpensesProvider: React.FC = ({ children }) => {
         detailsCategoryState,
         setDetailsCategoryState,
         deleteCategory,
+        categoryPage,
+        setCategoryPage,
       }}
     >
       {children}

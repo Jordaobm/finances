@@ -27,9 +27,11 @@ import {
 
 const ListCategory: React.FC = () => {
   const navigation = useNavigation();
-  const { addCategoryInExpenses } = useMyExpenses();
-  const handleselectCategory = useCallback(
+  const { setCategoryPage } = useMyExpenses();
+
+  const handleNavigatePageAddCategory = useCallback(
     (color: string, name: string, icon: object) => {
+      navigation.navigate('AddCategory');
       const id = new Date().getTime();
       const category: IExpenseCategory = {
         id,
@@ -38,10 +40,9 @@ const ListCategory: React.FC = () => {
         icon,
         date: new Date(),
       };
-      addCategoryInExpenses(category);
-      navigation.navigate('YourSpending');
+      setCategoryPage(category);
     },
-    [addCategoryInExpenses, navigation],
+    [navigation, setCategoryPage],
   );
 
   return (
@@ -56,7 +57,7 @@ const ListCategory: React.FC = () => {
           <Goals>
             <Goal
               onPress={() =>
-                handleselectCategory(
+                handleNavigatePageAddCategory(
                   '#E7F8EE',
                   'Arrendamentos e dividendos',
                   ArrendamentosEdividendos,
@@ -72,7 +73,7 @@ const ListCategory: React.FC = () => {
 
             <Goal
               onPress={() =>
-                handleselectCategory(
+                handleNavigatePageAddCategory(
                   '#FFEDFA',
                   'Serviços básicos',
                   basicServices,
@@ -88,7 +89,7 @@ const ListCategory: React.FC = () => {
 
             <Goal
               onPress={() =>
-                handleselectCategory(
+                handleNavigatePageAddCategory(
                   '#E5F4FF',
                   'Créditos e Seguros',
                   creditosESeguros,
@@ -104,7 +105,7 @@ const ListCategory: React.FC = () => {
 
             <Goal
               onPress={() =>
-                handleselectCategory(
+                handleNavigatePageAddCategory(
                   '#FFE9E3',
                   'Cartões de Crédito',
                   cartoesDeCredito,
@@ -119,7 +120,9 @@ const ListCategory: React.FC = () => {
             </Goal>
 
             <Goal
-              onPress={() => handleselectCategory('#F0F7FD', 'Outros', other)}
+              onPress={() =>
+                handleNavigatePageAddCategory('#F0F7FD', 'Outros', other)
+              }
               style={styles.container}
             >
               <GoalIconWraper color={'#F0F7FD'}>

@@ -1,9 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useCallback } from 'react';
-import { Text } from 'react-native';
 import { IExpense, IExpenseCategory, IIncome } from '../../dtos/types';
 import { useMyExpenses } from '../../hooks/MyExpense';
-import { cash, cashPlaceholder } from '../../utils/images';
+import { cash } from '../../utils/images';
 import Button from '../Button';
 import {
   Container,
@@ -24,11 +23,6 @@ import {
   Income,
   IncomeValueInput,
   Placeholder,
-  BackgroundIconPlaceholder,
-  IconImgPlaceholder,
-  NamePlaceholder,
-  ValuePlaceHolder,
-  DatePlaceHolder,
 } from './styles';
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
 import LinearGradient from 'react-native-linear-gradient';

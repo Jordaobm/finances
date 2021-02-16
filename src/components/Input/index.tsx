@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Text, TextInputProps } from 'react-native';
+import { TextInputProps } from 'react-native';
 import { Container, InputStyle, InputValueSalary } from './styles';
 import { useField } from '@unform/core';
 import { useMyExpenses } from '../../hooks/MyExpense';
