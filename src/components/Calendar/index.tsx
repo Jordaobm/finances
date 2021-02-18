@@ -103,7 +103,7 @@ export const Calendar: React.FC = () => {
           />
         }
         nextTitleStyle={{ fontFamily: 'CircularStd-Book' }}
-        selectedDayTextColor={`${switchState ? '#fff' : '#000'}`}
+        selectedDayTextColor="#fff"
         width={330}
         height={330}
       />
