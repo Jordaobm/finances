@@ -1,17 +1,10 @@
 import LinearGradient from 'react-native-linear-gradient';
 import styled from 'styled-components/native';
 import { TextInputMask } from 'react-native-masked-text';
-import {
-  RectButton,
-  TouchableHighlight,
-  TouchableNativeFeedback,
-  TouchableOpacity,
-} from 'react-native-gesture-handler';
-import { css } from 'styled-components';
-import Icon from 'react-native-vector-icons/Feather';
+import { RectButton, TouchableOpacity } from 'react-native-gesture-handler';
 
 export const Container = styled.View`
-  background-color: #f6f7fb;
+  background-color: ${(props) => props.theme.background};
   flex: 1;
 `;
 export const Content = styled.View`
@@ -40,7 +33,7 @@ export const TextTitle = styled.Text`
   font-size: 25px;
   line-height: 25px;
   text-align: center;
-  color: #172635;
+  color: ${(props) => props.theme.textColor};
 `;
 
 export const SkipStepButton = styled.View`
@@ -80,7 +73,7 @@ export const BalanceAvailable = styled.Text`
   font-family: CircularStd-Medium;
   font-size: 32px;
   text-align: center;
-  color: #172635;
+  color: ${(props) => props.theme.textColor};
 `;
 
 export const ActionsContent = styled.View`
@@ -90,7 +83,7 @@ export const ActionsText = styled.Text`
   font-family: CircularStd-Medium;
   font-size: 17px;
   line-height: 19px;
-  color: #172635;
+  color: ${(props) => props.theme.textColor};
 `;
 export const Actions = styled.View`
   flex-direction: row;
@@ -128,7 +121,7 @@ export const Salary = styled(TextInputMask)`
 
   font-size: 32px;
   text-align: center;
-  color: #172635;
+  color: ${(props) => props.theme.textColor};
 `;
 
 export const Value = styled.Text`

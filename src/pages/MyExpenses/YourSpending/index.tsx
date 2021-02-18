@@ -22,12 +22,15 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { removeSalaty } from '../../../utils/images';
 import Card from '../../../components/Card';
 import { getMonthDate } from '../../../utils/format';
+import { useTheme } from '../../../hooks/themes';
+import { shade } from 'polished';
 
 interface StateDate {
   dt: string;
 }
 
 const YourSpending: React.FC = () => {
+  const { switchState } = useTheme();
   const { categories } = useMyExpenses();
   const navigation = useNavigation();
 
@@ -49,7 +52,12 @@ const YourSpending: React.FC = () => {
       <Header>Controle de minhas despesas</Header>
       <ScrollView>
         <Content>
-          <ImageWraper colors={['#F97474', '#E15050']} start={{ x: 0.9, y: 0 }}>
+          <ImageWraper
+            colors={
+              !switchState ? ['#F97474', '#E15050'] : ['#4d4d4d', '#333333']
+            }
+            start={{ x: 0.9, y: 0 }}
+          >
             <IconFlag source={removeSalaty} />
           </ImageWraper>
           <TextTitle>Insira suas despesas </TextTitle>

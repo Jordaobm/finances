@@ -1,17 +1,9 @@
 import LinearGradient from 'react-native-linear-gradient';
 import styled from 'styled-components/native';
 import { TextInputMask } from 'react-native-masked-text';
-import {
-  RectButton,
-  TouchableHighlight,
-  TouchableNativeFeedback,
-  TouchableOpacity,
-} from 'react-native-gesture-handler';
-import { css } from 'styled-components';
-import Icon from 'react-native-vector-icons/Feather';
 
 export const Container = styled.View`
-  background-color: #f6f7fb;
+  background-color: ${(props) => props.theme.background};
   flex: 1;
 `;
 
@@ -33,7 +25,7 @@ export const HistoryText = styled.Text`
   font-family: CircularStd-Medium;
   font-size: 17px;
   line-height: 19px;
-  color: #172635;
+  color: ${(props) => props.theme.textColor};
 `;
 
 export const HistoryInput = styled(TextInputMask)`
@@ -41,7 +33,7 @@ export const HistoryInput = styled(TextInputMask)`
   font-family: CircularStd-Medium;
   font-size: 17px;
   line-height: 19px;
-  color: #6d8399;
+  color: ${(props) => props.theme.backgroundText};
 `;
 
 export const ImageWraper = styled(LinearGradient)`
@@ -63,7 +55,7 @@ export const TextTitle = styled.Text`
   font-size: 25px;
   line-height: 25px;
   text-align: center;
-  color: #172635;
+  color: ${(props) => props.theme.textColor};
 `;
 
 export const ContentCategory = styled.View`

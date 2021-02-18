@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import { StatusBar } from 'react-native';
 import { MyExpensesProvider } from './hooks/MyExpense';
 import Router from './routes';
 import SplashScreen from 'react-native-splash-screen';
+import { ThemeContextProvider } from './hooks/themes';
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -11,8 +11,9 @@ const App: React.FC = () => {
 
   return (
     <MyExpensesProvider>
-      <StatusBar backgroundColor="#4ad07e" />
-      <Router />
+      <ThemeContextProvider>
+        <Router />
+      </ThemeContextProvider>
     </MyExpensesProvider>
   );
 };

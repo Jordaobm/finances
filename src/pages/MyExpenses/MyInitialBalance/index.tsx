@@ -13,8 +13,11 @@ import Header from '../../../components/Header';
 import { ScrollView } from 'react-native-gesture-handler';
 import { addSalary } from '../../../utils/images';
 import Button from '../../../components/Button';
+import { useTheme } from '../../../hooks/themes';
+import { shade } from 'polished';
 
 const MyInitialBalance: React.FC = () => {
+  const { switchState } = useTheme();
   const navigation = useNavigation();
   const { setInitialBalance, setFirst } = useMyExpenses();
 
@@ -35,7 +38,12 @@ const MyInitialBalance: React.FC = () => {
       <Header>Controle de minhas despesas</Header>
       <ScrollView contentContainerStyle={{ flex: 1, paddingBottom: 30 }}>
         <Content>
-          <ImageWraper colors={['#67E799', '#4AD07E']} start={{ x: 0.9, y: 0 }}>
+          <ImageWraper
+            colors={
+              !switchState ? ['#67E799', '#4AD07E'] : ['#4d4d4d', '#333333']
+            }
+            start={{ x: 0.9, y: 0 }}
+          >
             <IconFlag source={addSalary} />
           </ImageWraper>
           <TextTitle>Estabeleça seu saldo atual disponível</TextTitle>

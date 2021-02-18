@@ -24,20 +24,28 @@ import {
   alert,
   other,
 } from '../../utils/images';
+import { useTheme } from '../../hooks/themes';
 
 const Home: React.FC = () => {
   const navigation = useNavigation();
   const { first } = useMyExpenses();
+  const { switchState } = useTheme();
   return (
     <>
-      <StatusBar backgroundColor="#f6f7fb" barStyle="dark-content" />
+      <StatusBar
+        backgroundColor={switchState ? '#1a1a1a' : '#fff'}
+        barStyle={switchState ? 'light-content' : 'dark-content'}
+      />
 
       <Container>
         <Header />
         <ScrollView>
           <Content>
             <ImageWraper
-              colors={['#FFD481', '#FFA800']}
+              colors={[
+                `${!switchState ? '#FFD481' : '#4d4d4d'}`,
+                `${!switchState ? '#FFA800' : '#333333'}`,
+              ]}
               start={{ x: 0.9, y: 0 }}
             >
               <IconFlag source={flag} />
@@ -50,7 +58,9 @@ const Home: React.FC = () => {
                   style={styles.container}
                   onPress={() => navigation.navigate('MyInitialBalance')}
                 >
-                  <GoalIconWraper color={'#fff1f1'}>
+                  <GoalIconWraper
+                    color={`${!switchState ? '#fff1f1' : '#333333'}`}
+                  >
                     <Graphic source={graphic} />
                   </GoalIconWraper>
                   <GoalText>Controle de minhas despesas</GoalText>
@@ -60,7 +70,9 @@ const Home: React.FC = () => {
                   style={styles.container}
                   onPress={() => navigation.navigate('MyExpenses')}
                 >
-                  <GoalIconWraper color={'#fff1f1'}>
+                  <GoalIconWraper
+                    color={`${!switchState ? '#fff1f1' : '#333333'}`}
+                  >
                     <Graphic source={graphic} />
                   </GoalIconWraper>
                   <GoalText>Controle de minhas despesas</GoalText>

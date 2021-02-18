@@ -6,8 +6,11 @@ import { useMyExpenses } from '../../hooks/MyExpense';
 import { transformDateStringInDate } from '../../utils/format';
 import { format } from 'date-fns';
 import Card from '../Card';
+import { useTheme } from '../../hooks/themes';
+import { shade } from 'polished';
 
 export const Calendar: React.FC = () => {
+  const { switchState } = useTheme();
   const actualDate = new Date();
 
   const parsedActualDate = format(actualDate, "dd'/'MM'/'yyyy");
@@ -24,7 +27,11 @@ export const Calendar: React.FC = () => {
     incomes.map((income) => {
       customDatesStyles.push({
         date: transformDateStringInDate(income.DateIncome),
-        style: { backgroundColor: '#4CCC81' },
+        style: {
+          backgroundColor: `${
+            !switchState ? '#4CCC81' : shade(0.5, '#4CCC81')
+          }`,
+        },
         textStyle: { color: '#fff' },
       });
     });
@@ -32,11 +39,15 @@ export const Calendar: React.FC = () => {
     expenses.map((expense) => {
       customDatesStyles.push({
         date: transformDateStringInDate(expense.DateExpense),
-        style: { backgroundColor: '#EB5757' },
+        style: {
+          backgroundColor: `${
+            !switchState ? '#EB5757' : shade(0.5, '#EB5757')
+          }`,
+        },
         textStyle: { color: '#fff' },
       });
     });
-  }, [customDatesStyles, expenses, incomes]);
+  }, [customDatesStyles, expenses, incomes, switchState]);
 
   load();
 
@@ -72,15 +83,27 @@ export const Calendar: React.FC = () => {
         ]}
         textStyle={{
           fontFamily: 'CircularStd-Medium',
-          color: '#000',
+          color: `${switchState ? '#fff' : '#000'}`,
         }}
         todayBackgroundColor="#5D87A8"
         selectedDayColor="#40AAFF"
-        previousComponent={<Icon name="arrow-left" size={20} />}
+        previousComponent={
+          <Icon
+            name="arrow-left"
+            size={20}
+            color={`${switchState ? '#fff' : '#000'}`}
+          />
+        }
         previousTitleStyle={{ fontFamily: 'CircularStd-Book' }}
-        nextComponent={<Icon name="arrow-right" size={20} />}
+        nextComponent={
+          <Icon
+            name="arrow-right"
+            size={20}
+            color={`${switchState ? '#fff' : '#000'}`}
+          />
+        }
         nextTitleStyle={{ fontFamily: 'CircularStd-Book' }}
-        selectedDayTextColor="#fff"
+        selectedDayTextColor={`${switchState ? '#fff' : '#000'}`}
         width={330}
         height={330}
       />

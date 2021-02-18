@@ -10,8 +10,8 @@ interface ContainerProps {
 
 export const Container = styled.View<ContainerProps>`
   margin: 6px 0;
-  background: #ffffff;
-  border: 2px solid #d4dfef;
+  background: ${(props) => props.theme.backgroundCard};
+  border: 2px solid ${(props) => props.theme.borderInputColor};
   border-radius: 10px;
   padding: 0px 10px;
 
@@ -34,12 +34,12 @@ export const InputStyle = styled(TextInput)`
   line-height: 26px;
   display: flex;
   align-items: flex-end;
-  color: #172635;
+  color: ${(props) => props.theme.textColor};
 `;
 
 export const InputValueSalary = styled(TextInputMask)`
   width: 100%;
   font-family: CircularStd-Medium;
 
-  color: #172635;
+  color: ${(props) => props.theme.textColor};
 `;

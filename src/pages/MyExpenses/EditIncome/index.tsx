@@ -23,7 +23,11 @@ import Input from '../../../components/Input';
 import { ScrollView } from 'react-native-gesture-handler';
 import { addSalary } from '../../../utils/images';
 import { Form } from '@unform/mobile';
+import { useTheme } from '../../../hooks/themes';
+import { shade } from 'polished';
+
 const EditIncome: React.FC = () => {
+  const { switchState } = useTheme();
   const navigation = useNavigation();
   const formRef = useRef<FormHandles>(null);
   const { editIncomeState, deleteIncome, setEditIncome } = useMyExpenses();
@@ -62,7 +66,12 @@ const EditIncome: React.FC = () => {
     <Container>
       <Header>Controle de minhas despesas</Header>
       <Content>
-        <ImageWraper colors={['#67E799', '#4AD07E']} start={{ x: 0.9, y: 0 }}>
+        <ImageWraper
+          colors={
+            !switchState ? ['#67E799', '#4AD07E'] : ['#4d4d4d', '#333333']
+          }
+          start={{ x: 0.9, y: 0 }}
+        >
           <IconFlag source={addSalary} />
         </ImageWraper>
       </Content>
@@ -101,7 +110,14 @@ const EditIncome: React.FC = () => {
           </InputContainer>
 
           <ActionsEdit>
-            <Gradient colors={['#4AD07E', '#67E799']} start={{ x: 0.1, y: 1 }}>
+            <Gradient
+              colors={
+                !switchState
+                  ? ['#67E799', '#4AD07E']
+                  : [`${shade(0.5, '#67E799')}`, `${shade(0.5, '#4AD07E')}`]
+              }
+              start={{ x: 0.1, y: 1 }}
+            >
               <ButtonContent
                 onPress={() => {
                   formRef.current?.submitForm();
@@ -111,7 +127,14 @@ const EditIncome: React.FC = () => {
               </ButtonContent>
             </Gradient>
 
-            <Gradient colors={['#EB5757', '#FF6969']} start={{ x: 0.1, y: 1 }}>
+            <Gradient
+              colors={
+                !switchState
+                  ? ['#EB5757', '#FF6969']
+                  : [`${shade(0.5, '#EB5757')}`, `${shade(0.5, '#FF6969')}`]
+              }
+              start={{ x: 0.1, y: 1 }}
+            >
               <ButtonContent
                 onPress={() => handleDeleteIncome(editIncomeState)}
               >

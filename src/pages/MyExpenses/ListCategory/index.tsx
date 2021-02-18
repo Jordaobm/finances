@@ -24,8 +24,10 @@ import {
   Goals,
   Graphic,
 } from './styles';
+import { useTheme } from '../../../hooks/themes';
 
 const ListCategory: React.FC = () => {
+  const { switchState } = useTheme();
   const navigation = useNavigation();
   const { setCategoryPage } = useMyExpenses();
 
@@ -65,7 +67,7 @@ const ListCategory: React.FC = () => {
               }
               style={styles.container}
             >
-              <GoalIconWraper color={'#E7F8EE'}>
+              <GoalIconWraper color={!switchState ? '#E7F8EE' : '#333333'}>
                 <Graphic source={ArrendamentosEdividendos} />
               </GoalIconWraper>
               <GoalText>Arrendamentos e dividendos </GoalText>
@@ -81,7 +83,7 @@ const ListCategory: React.FC = () => {
               }
               style={styles.container}
             >
-              <GoalIconWraper color={'#FFEDFA'}>
+              <GoalIconWraper color={!switchState ? '#FFEDFA' : '#333333'}>
                 <Graphic source={basicServices} />
               </GoalIconWraper>
               <GoalText>Serviços básicos</GoalText>
@@ -97,7 +99,7 @@ const ListCategory: React.FC = () => {
               }
               style={styles.container}
             >
-              <GoalIconWraper color={'#E5F4FF'}>
+              <GoalIconWraper color={!switchState ? '#E5F4FF' : '#333333'}>
                 <Graphic source={creditosESeguros} />
               </GoalIconWraper>
               <GoalText>Créditos e Seguros</GoalText>
@@ -113,7 +115,7 @@ const ListCategory: React.FC = () => {
               }
               style={styles.container}
             >
-              <GoalIconWraper color={'#FFE9E3'}>
+              <GoalIconWraper color={!switchState ? '#FFE9E3' : '#333333'}>
                 <Graphic source={cartoesDeCredito} />
               </GoalIconWraper>
               <GoalText>Cartões de Crédito</GoalText>
@@ -125,7 +127,7 @@ const ListCategory: React.FC = () => {
               }
               style={styles.container}
             >
-              <GoalIconWraper color={'#F0F7FD'}>
+              <GoalIconWraper color={!switchState ? '#F0F7FD' : '#333333'}>
                 <Graphic source={other} />
               </GoalIconWraper>
               <GoalText>Outros</GoalText>

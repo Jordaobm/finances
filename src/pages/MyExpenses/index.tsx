@@ -23,9 +23,12 @@ import { Calendar } from '../../components/Calendar';
 import { useMyExpenses } from '../../hooks/MyExpense';
 import { useNavigation } from '@react-navigation/native';
 import { cash } from '../../utils/images';
+import { useTheme } from '../../hooks/themes';
+import { shade } from 'polished';
 
 const MyExpenses: React.FC = () => {
   const { balanceAvailable } = useMyExpenses();
+  const { switchState } = useTheme();
   const navigation = useNavigation();
 
   const handleNextPage = useCallback(
@@ -42,7 +45,9 @@ const MyExpenses: React.FC = () => {
         <Content>
           <ButtonAlterSalary onPress={() => handleNextPage('MyInitialBalance')}>
             <ImageWraper
-              colors={['#67E799', '#4AD07E']}
+              colors={
+                !switchState ? ['#67E799', '#4AD07E'] : ['#4d4d4d', '#333333']
+              }
               start={{ x: 0.9, y: 0 }}
             >
               <IconFlag source={cash} />
@@ -71,7 +76,11 @@ const MyExpenses: React.FC = () => {
             <ActionsText>Ações</ActionsText>
             <Actions>
               <Gradient
-                colors={['#4AD07E', '#67E799']}
+                colors={
+                  !switchState
+                    ? ['#67E799', '#4AD07E']
+                    : [`${shade(0.5, '#67E799')}`, `${shade(0.5, '#4AD07E')}`]
+                }
                 start={{ x: 0.1, y: 1 }}
               >
                 <ButtonContent onPress={() => handleNextPage('AddIncome')}>
@@ -80,7 +89,11 @@ const MyExpenses: React.FC = () => {
               </Gradient>
 
               <Gradient
-                colors={['#EB5757', '#FF6969']}
+                colors={
+                  !switchState
+                    ? ['#EB5757', '#FF6969']
+                    : [`${shade(0.5, '#EB5757')}`, `${shade(0.5, '#FF6969')}`]
+                }
                 start={{ x: 0.1, y: 1 }}
               >
                 <ButtonContent onPress={() => handleNextPage('YourSpending')}>

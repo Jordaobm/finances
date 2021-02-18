@@ -26,6 +26,8 @@ import {
 } from './styles';
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
 import LinearGradient from 'react-native-linear-gradient';
+import { useTheme } from '../../hooks/themes';
+import { shade } from 'polished';
 
 interface CardProps {
   category?: IExpenseCategory;
@@ -35,6 +37,7 @@ interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({ expense, income, category, visible }) => {
+  const { switchState } = useTheme();
   const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
   const navigation = useNavigation();
   const {
@@ -77,7 +80,9 @@ const Card: React.FC<CardProps> = ({ expense, income, category, visible }) => {
   if (expense) {
     return (
       <Expense onPress={() => handleEditExpense(expense)}>
-        <BackgroundIconExpense color={expense.color}>
+        <BackgroundIconExpense
+          color={`${!switchState ? expense.color : '#333333'}`}
+        >
           <IconImgExpense source={expense.icon} />
         </BackgroundIconExpense>
         <Name>{expense.NameExpense}</Name>
@@ -96,7 +101,7 @@ const Card: React.FC<CardProps> = ({ expense, income, category, visible }) => {
   if (income) {
     return (
       <Income onPress={() => handleEditIncome(income)}>
-        <BackgroundIconIncome>
+        <BackgroundIconIncome color={switchState && '#333333'}>
           <IconImgExpense source={cash} />
         </BackgroundIconIncome>
         <Name>{income.NameIncome}</Name>
@@ -116,7 +121,7 @@ const Card: React.FC<CardProps> = ({ expense, income, category, visible }) => {
     return (
       <Container>
         <Content onPress={() => handleDetailsCategory(category)}>
-          <BackgroundIcon color={category.color}>
+          <BackgroundIcon color={!switchState ? category.color : '#333333'}>
             <IconImg source={category.icon} />
           </BackgroundIcon>
           <Name>{category.name}</Name>
@@ -130,7 +135,9 @@ const Card: React.FC<CardProps> = ({ expense, income, category, visible }) => {
                 key={expense.id}
                 onPress={() => handleEditExpense(expense)}
               >
-                <BackgroundIconExpense color={expense.color}>
+                <BackgroundIconExpense
+                  color={!switchState ? expense.color : '#333333'}
+                >
                   <IconImgExpense source={expense.icon} />
                 </BackgroundIconExpense>
                 <Name>{expense.NameExpense}</Name>

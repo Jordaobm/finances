@@ -1,17 +1,9 @@
 import LinearGradient from 'react-native-linear-gradient';
 import styled from 'styled-components/native';
 import { TextInputMask } from 'react-native-masked-text';
-import {
-  RectButton,
-  TouchableHighlight,
-  TouchableNativeFeedback,
-  TouchableOpacity,
-} from 'react-native-gesture-handler';
-import { css } from 'styled-components';
-import Icon from 'react-native-vector-icons/Feather';
 
 export const Container = styled.View`
-  background-color: #f6f7fb;
+  background-color: ${(props) => props.theme.background};
   flex: 1;
 `;
 export const Content = styled.View`
@@ -40,7 +32,7 @@ export const TextTitle = styled.Text`
   font-size: 25px;
   line-height: 25px;
   text-align: center;
-  color: #172635;
+  color: ${(props) => props.theme.textColor};
 `;
 
 export const InputValueSalary = styled(TextInputMask)`
@@ -51,5 +43,5 @@ export const InputValueSalary = styled(TextInputMask)`
 
   font-size: 32px;
   text-align: center;
-  color: #172635;
+  color: ${(props) => props.theme.textColor};
 `;

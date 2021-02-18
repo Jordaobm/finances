@@ -19,8 +19,10 @@ import Button from '../../../components/Button';
 import Input from '../../../components/Input';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Form } from '@unform/mobile';
+import { useTheme } from '../../../hooks/themes';
 
 const AddExpense: React.FC = () => {
+  const { switchState } = useTheme();
   const formRef = useRef<FormHandles>(null);
   const {
     expenseDetailPageState,
@@ -75,7 +77,11 @@ const AddExpense: React.FC = () => {
       <Header>Controle de minhas despesas</Header>
       <Content>
         <ImageWraper
-          colors={[expenseDetailPageState.color, expenseDetailPageState.color]}
+          colors={
+            !switchState
+              ? [expenseDetailPageState.color, expenseDetailPageState.color]
+              : ['#333333', '#333333']
+          }
           start={{ x: 0.9, y: 0 }}
         >
           <IconFlag source={expenseDetailPageState.icon} />

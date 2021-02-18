@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import Init from '../pages/Init';
@@ -15,29 +15,39 @@ import EditExpense from '../pages/MyExpenses/EditExpense';
 import { clearGlobalStateAndStorage } from '../utils/clearGlobalStateAndStorage';
 import EditIncome from '../pages/MyExpenses/EditIncome';
 import AddCategory from '../pages/MyExpenses/AddCategory';
+import { ThemeProvider } from 'styled-components';
+import { light } from '../styles/themes/light';
+import { dark } from '../styles/themes/dark';
+import { useTheme } from '../hooks/themes';
+import { StatusBar } from 'react-native';
 
 const Router: React.FC = () => {
   const Stack = createStackNavigator();
-  clearGlobalStateAndStorage();
+  // clearGlobalStateAndStorage();
+  const { switchState } = useTheme();
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Init" component={Init} />
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="MyExpenses" component={MyExpenses} />
-        <Stack.Screen name="YourSpending" component={YourSpending} />
-        <Stack.Screen name="MyInitialBalance" component={MyInitialBalance} />
-        <Stack.Screen name="ListCategory" component={ListCategory} />
-        <Stack.Screen name="ListExpenses" component={ListExpenses} />
-        <Stack.Screen name="AddCategory" component={AddCategory} />
-        <Stack.Screen name="AddExpense" component={AddExpense} />
-        <Stack.Screen name="AddIncome" component={AddIncome} />
-        <Stack.Screen name="EditExpense" component={EditExpense} />
-        <Stack.Screen name="EditIncome" component={EditIncome} />
-        <Stack.Screen name="DetailsCategory" component={DetailsCategory} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <ThemeProvider theme={switchState ? dark : light}>
+      <StatusBar backgroundColor={!switchState ? '#4ccc81' : '#1a1a1a'} />
+
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Init" component={Init} />
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="MyExpenses" component={MyExpenses} />
+          <Stack.Screen name="YourSpending" component={YourSpending} />
+          <Stack.Screen name="MyInitialBalance" component={MyInitialBalance} />
+          <Stack.Screen name="ListCategory" component={ListCategory} />
+          <Stack.Screen name="ListExpenses" component={ListExpenses} />
+          <Stack.Screen name="AddCategory" component={AddCategory} />
+          <Stack.Screen name="AddExpense" component={AddExpense} />
+          <Stack.Screen name="AddIncome" component={AddIncome} />
+          <Stack.Screen name="EditExpense" component={EditExpense} />
+          <Stack.Screen name="EditIncome" component={EditIncome} />
+          <Stack.Screen name="DetailsCategory" component={DetailsCategory} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </ThemeProvider>
   );
 };
 
