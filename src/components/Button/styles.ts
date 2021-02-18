@@ -1,7 +1,7 @@
-import {RectButton, RectButtonProperties} from 'react-native-gesture-handler';
+import { RectButton, RectButtonProperties } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/Feather';
-import {css} from 'styled-components';
+import { css } from 'styled-components';
 import LinearGradient from 'react-native-linear-gradient';
 
 export const Container = styled.View`
@@ -23,7 +23,7 @@ export const Content = styled<ButtonContentProps>(RectButton)`
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
-  background-color: #fff;
+  background-color: ${(props) => props.theme.backgroundCard};
 
   ${(props) =>
     props.colors &&

@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import LinearGradient from 'react-native-linear-gradient';
 
 export const Container = styled.View`
-  background-color: #f6f7fb;
+  background-color: ${(props) => props.theme.background};
   flex: 1;
 `;
 

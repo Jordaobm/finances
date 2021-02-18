@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 export const Container = styled.View`
-  background-color: #fff;
+  background-color: ${(props) => props.theme.backgroundCard};
   margin: 15px 0;
   border-radius: 15px;
   padding: 10px;

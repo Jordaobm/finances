@@ -1,17 +1,9 @@
 import LinearGradient from 'react-native-linear-gradient';
 import styled from 'styled-components/native';
-import { TextInputMask } from 'react-native-masked-text';
-import {
-  RectButton,
-  TouchableHighlight,
-  TouchableNativeFeedback,
-  TouchableOpacity,
-} from 'react-native-gesture-handler';
-import { css } from 'styled-components';
-import Icon from 'react-native-vector-icons/Feather';
+import { RectButton } from 'react-native-gesture-handler';
 
 export const Container = styled.View`
-  background-color: #f6f7fb;
+  background-color: ${(props) => props.theme.background};
   flex: 1;
 `;
 export const Content = styled.View`
@@ -77,6 +69,6 @@ export const ButtonText = styled.Text`
   line-height: 15px;
   display: flex;
   align-items: flex-end;
-  color: #ffffff;
+  color: #fff;
   font-family: CircularStd-Medium;
 `;

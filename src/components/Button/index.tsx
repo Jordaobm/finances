@@ -7,6 +7,8 @@ import {
   IconButton,
   GradienteColor,
 } from './styles';
+import { shade } from 'polished';
+import { useTheme } from '../../hooks/themes';
 
 interface ButtonProps extends RectButtonProperties {
   iconColor?: string;
@@ -26,11 +28,19 @@ const Button: React.FC<ButtonProps> = ({
   iconColor,
   ...rest
 }) => {
+  const { switchState } = useTheme();
   if (colors) {
     return (
       <Container>
         <GradienteColor
-          colors={[colors.initial, colors.finished]}
+          colors={
+            !switchState
+              ? [colors.initial, colors.finished]
+              : [
+                  `${shade(0.5, colors.initial)}`,
+                  `${shade(0.5, colors.finished)}`,
+                ]
+          }
           start={{ x: 0.1, y: 1 }}
         >
           <Content {...rest} colors={colors}>

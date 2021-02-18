@@ -20,10 +20,13 @@ import Button from '../../../components/Button';
 import Input from '../../../components/Input';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Form } from '@unform/mobile';
+import { useTheme } from '../../../hooks/themes';
+import { shade } from 'polished';
 
 const AddExpense: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const { setIncomes, incomes } = useMyExpenses();
+  const { switchState } = useTheme();
 
   const navigation = useNavigation();
 
@@ -60,7 +63,12 @@ const AddExpense: React.FC = () => {
     <Container>
       <Header>Controle de minhas despesas</Header>
       <Content>
-        <ImageWraper colors={['#67E799', '#4AD07E']} start={{ x: 0.9, y: 0 }}>
+        <ImageWraper
+          colors={
+            !switchState ? ['#67E799', '#4AD07E'] : ['#4d4d4d', '#333333']
+          }
+          start={{ x: 0.9, y: 0 }}
+        >
           <IconFlag source={addSalary} />
         </ImageWraper>
       </Content>
@@ -71,7 +79,12 @@ const AddExpense: React.FC = () => {
       >
         <Form onSubmit={handleAddIncome} ref={formRef}>
           <InputContainer>
-            <Input name="NameIncome" placeholder="Nome da renda" />
+            <Input
+              name="NameIncome"
+              placeholder="Nome da renda"
+              keyboardAppearance="dark"
+              returnKeyType="next"
+            />
             <Input
               name="DescriptionIncome"
               placeholder="Descrição"

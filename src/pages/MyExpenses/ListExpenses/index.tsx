@@ -3,6 +3,7 @@ import React, { useCallback } from 'react';
 import { StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useMyExpenses } from '../../../hooks/MyExpense';
+import { useTheme } from '../../../hooks/themes';
 import {
   agua,
   arrowDown,
@@ -24,8 +25,10 @@ import {
   IconAddExpense,
   Graphic,
 } from './styles';
+import { shade } from 'polished';
 
 const ListExpenses: React.FC = () => {
+  const { switchState } = useTheme();
   const navigation = useNavigation();
   const { setExpenseDetailPageState } = useMyExpenses();
   const handleNavigateExpenseDetailPage = useCallback(
@@ -56,7 +59,7 @@ const ListExpenses: React.FC = () => {
                 )
               }
             >
-              <GoalIconWraper color={'#F0F7FD'}>
+              <GoalIconWraper color={!switchState ? '#F0F7FD' : '#333333'}>
                 <Graphic source={other} />
               </GoalIconWraper>
               <GoalText>Personalizado</GoalText>
@@ -69,7 +72,7 @@ const ListExpenses: React.FC = () => {
                 handleNavigateExpenseDetailPage('#FFEFEF', 'Gás', gas)
               }
             >
-              <GoalIconWraper color={'#FFEFEF'}>
+              <GoalIconWraper color={!switchState ? '#FFEFEF' : '#333333'}>
                 <Graphic source={gas} />
               </GoalIconWraper>
               <GoalText>Gás</GoalText>
@@ -81,7 +84,7 @@ const ListExpenses: React.FC = () => {
                 handleNavigateExpenseDetailPage('#FFF6D9', 'Luz', luz)
               }
             >
-              <GoalIconWraper color={'#FFF6D9'}>
+              <GoalIconWraper color={!switchState ? '#FFF6D9' : '#333333'}>
                 <Graphic source={luz} />
               </GoalIconWraper>
               <GoalText>Luz</GoalText>
@@ -93,7 +96,7 @@ const ListExpenses: React.FC = () => {
                 handleNavigateExpenseDetailPage('#E5F4FF', 'Água', agua)
               }
             >
-              <GoalIconWraper color={'#E5F4FF'}>
+              <GoalIconWraper color={!switchState ? '#E5F4FF' : '#333333'}>
                 <Graphic source={agua} />
               </GoalIconWraper>
               <GoalText>Água</GoalText>

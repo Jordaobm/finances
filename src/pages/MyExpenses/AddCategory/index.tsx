@@ -6,6 +6,7 @@ import { Alert } from 'react-native';
 import Button from '../../../components/Button';
 import Header from '../../../components/Header';
 import { useMyExpenses } from '../../../hooks/MyExpense';
+import { useTheme } from '../../../hooks/themes';
 import { cartoesDeCredito } from '../../../utils/images';
 import {
   Container,
@@ -25,6 +26,7 @@ interface inputDateValueData {
 }
 
 const AddCategory: React.FC = () => {
+  const { switchState } = useTheme();
   const navigation = useNavigation();
 
   const { categoryPage, addCategoryInExpenses } = useMyExpenses();
@@ -72,7 +74,7 @@ const AddCategory: React.FC = () => {
       <Header>Controle de minhas despesas</Header>
       <Content>
         <ContentIcon>
-          <IconBackground color={categoryPage.color}>
+          <IconBackground color={!switchState ? categoryPage.color : '#333333'}>
             <IconCategory source={categoryPage.icon} />
           </IconBackground>
         </ContentIcon>

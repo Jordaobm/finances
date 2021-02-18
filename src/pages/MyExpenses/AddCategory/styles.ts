@@ -3,7 +3,7 @@ import { css } from 'styled-components';
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
-  background-color: #f6f7fb;
+  background-color: ${(props) => props.theme.background};
   flex: 1;
 `;
 
@@ -40,7 +40,7 @@ export const NameTitle = styled.Text`
   font-family: CircularStd-Book;
   font-size: 18px;
   line-height: 18px;
-  color: #5d87a8;
+  color: ${(props) => props.theme.textColor};
 `;
 
 export const IconCategory = styled.Image`
@@ -52,8 +52,8 @@ export const ContainerInput = styled.View`
   text-align: center;
   width: 35%;
   margin: 20px 0;
-  background: #ffffff;
-  border: 2px solid #d4dfef;
+  background: ${(props) => props.theme.backgroundCard};
+  border: 2px solid ${(props) => props.theme.borderInputColor};
   border-radius: 10px;
   padding: 0px 10px;
 `;
@@ -64,7 +64,7 @@ export const InputDate = styled(TextInputMask)`
   width: 100%;
   font-family: CircularStd-Medium;
 
-  color: #172635;
+  color: ${(props) => props.theme.textColor};
 `;
 
 export const Description = styled.Text`
@@ -74,7 +74,7 @@ export const Description = styled.Text`
   font-family: CircularStd-Book;
   font-size: 15px;
   line-height: 15px;
-  color: #172635;
+  color: ${(props) => props.theme.textColor};
 `;
 
 export const Finances = styled.Text`

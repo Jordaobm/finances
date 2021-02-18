@@ -8,7 +8,7 @@ export const Container = styled.View`
   width: 100%;
   margin: 5px 0;
 
-  background-color: #fff;
+  background-color: ${(props) => props.theme.backgroundCard};
   border-radius: 10px;
 `;
 
@@ -46,7 +46,7 @@ export const Name = styled.Text`
   line-height: 21px;
   display: flex;
   align-items: flex-end;
-  color: #5d87a8;
+  color: ${(props) => props.theme.textColor};
 `;
 export const ExpenseContainer = styled.View`
   padding: 0px 20px;
@@ -60,10 +60,10 @@ export const Date = styled.Text`
   top: -10px;
   font-family: CircularStd-Book;
   font-size: 10px;
-  color: #5d87a8;
+  color: ${(props) => props.theme.textColor};
 `;
 export const IconArrowDown = styled(Icon)`
-  color: #5d87a8;
+  color: ${(props) => props.theme.textColor};
 `;
 
 export const Expense = styled(TouchableOpacity)`
@@ -100,13 +100,22 @@ export const BackgroundIconExpense = styled.View<BackgroundIconExpenseProps>`
   align-items: center;
 `;
 
-export const BackgroundIconIncome = styled.View`
+interface BackgroundIconIncomeProps {
+  color?: string;
+}
+
+export const BackgroundIconIncome = styled.View<BackgroundIconIncomeProps>`
   background-color: #e0f8e9;
   width: 50px;
   height: 50px;
   border-radius: 20px;
   justify-content: center;
   align-items: center;
+  ${(props) =>
+    props.color &&
+    css`
+      background-color: ${props.color};
+    `}
 `;
 
 export const IconImgExpense = styled.Image`

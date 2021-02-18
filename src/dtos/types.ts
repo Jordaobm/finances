@@ -44,3 +44,15 @@ export interface IIncomeEdit {
   ValueEditIncome: number;
   EditDateIncome: string;
 }
+
+export interface Theme {
+  backgroundInit: string;
+  background: string;
+  backgroundCard: string;
+  backgroundCardDisable: string;
+  textColor: string;
+  backgroundButton: string;
+  backgroundText: string;
+  borderInputColor: string;
+  textBlue: string;
+}

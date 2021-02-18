@@ -22,7 +22,11 @@ import Header from '../../../components/Header';
 import Input from '../../../components/Input';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Form } from '@unform/mobile';
+import { useTheme } from '../../../hooks/themes';
+import { shade } from 'polished';
+
 const EditExpense: React.FC = () => {
+  const { switchState } = useTheme();
   const navigation = useNavigation();
   const formRef = useRef<FormHandles>(null);
   const { editExpenseState, setEditExpense, deleteExpense } = useMyExpenses();
@@ -72,7 +76,11 @@ const EditExpense: React.FC = () => {
       <Header>Controle de minhas despesas</Header>
       <Content>
         <ImageWraper
-          colors={[editExpenseState.color, editExpenseState.color]}
+          colors={
+            !switchState
+              ? [editExpenseState.color, editExpenseState.color]
+              : ['#333333', '#333333']
+          }
           start={{ x: 0.9, y: 0 }}
         >
           <IconFlag source={editExpenseState.icon} />
@@ -113,7 +121,14 @@ const EditExpense: React.FC = () => {
           </InputContainer>
 
           <ActionsEdit>
-            <Gradient colors={['#4AD07E', '#67E799']} start={{ x: 0.1, y: 1 }}>
+            <Gradient
+              colors={
+                !switchState
+                  ? ['#4AD07E', '#67E799']
+                  : [`${shade(0.5, '#4AD07E')}`, `${shade(0.5, '#67E799')}`]
+              }
+              start={{ x: 0.1, y: 1 }}
+            >
               <ButtonContent
                 onPress={() => {
                   formRef.current?.submitForm();
@@ -123,7 +138,14 @@ const EditExpense: React.FC = () => {
               </ButtonContent>
             </Gradient>
 
-            <Gradient colors={['#EB5757', '#FF6969']} start={{ x: 0.1, y: 1 }}>
+            <Gradient
+              colors={
+                !switchState
+                  ? ['#EB5757', '#FF6969']
+                  : [`${shade(0.5, '#EB5757')}`, `${shade(0.5, '#FF6969')}`]
+              }
+              start={{ x: 0.1, y: 1 }}
+            >
               <ButtonContent
                 onPress={() => handleDeleteExpense(editExpenseState)}
               >

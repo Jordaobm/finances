@@ -124,6 +124,8 @@ const Input: React.FC<InputProps> = ({ name, inputErr, ...rest }) => {
     return (
       <Container inputFocus={inputFocus} inputErr={inputErr}>
         <InputValueSalary
+          onFocus={() => setInputFocus(true)}
+          onBlur={() => setInputFocus(false)}
           ref={inputElementRef}
           type={'money'}
           value={inputCoin}
@@ -144,6 +146,8 @@ const Input: React.FC<InputProps> = ({ name, inputErr, ...rest }) => {
     return (
       <Container inputFocus={inputFocus}>
         <InputValueSalary
+          onFocus={() => setInputFocus(true)}
+          onBlur={() => setInputFocus(false)}
           ref={inputElementRef}
           placeholder="Data da renda"
           type={'datetime'}
@@ -186,6 +190,8 @@ const Input: React.FC<InputProps> = ({ name, inputErr, ...rest }) => {
     return (
       <Container inputFocus={inputFocus}>
         <InputValueSalary
+          onFocus={() => setInputFocus(true)}
+          onBlur={() => setInputFocus(false)}
           value={inputCoinValueIncome}
           ref={inputElementRef}
           type={'money'}
@@ -206,6 +212,8 @@ const Input: React.FC<InputProps> = ({ name, inputErr, ...rest }) => {
     return (
       <Container inputFocus={inputFocus}>
         <InputValueSalary
+          onFocus={() => setInputFocus(true)}
+          onBlur={() => setInputFocus(false)}
           ref={inputElementRef}
           placeholder="Data da renda"
           type={'datetime'}
