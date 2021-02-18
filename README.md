@@ -1,5 +1,10 @@
 # Finances 
 
+<h1 align="center">
+  <img alt="icone" title="Finances Dark" src="https://github.com/Jordaobm/finances/blob/main/src/assets/documentation/1.jpg" />
+  <img alt="icone" title="Finances Light" src="https://github.com/Jordaobm/finances/blob/main/src/assets/documentation/2.jpg" />
+</h1>
+
 Finances é um app desenvolvido para Android com React-Native com objetivo de aperfeiçoar minhas habilidades em React e em algumas libs. Nessa aplicação uso conceitos de componentização, gerenciamento de estados com ContextAPI do React e seus ReactHooks para controlar suas finanças.
 
 # 💡 Ideia
