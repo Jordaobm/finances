@@ -66,6 +66,20 @@ export const IconArrowDown = styled(Icon)`
   color: ${(props) => props.theme.textColor};
 `;
 
+export const ScheduledDateExpense = styled.Text`
+  font-family: CircularStd-Book;
+  font-size: 14px;
+  line-height: 21px;
+  color: ${(props) => props.theme.textRedOrGray};
+`;
+
+export const ScheduledDate = styled.Text`
+  font-family: CircularStd-Book;
+  font-size: 14px;
+  line-height: 21px;
+  color: ${(props) => props.theme.textGreenOrGray};
+`;
+
 export const Expense = styled(TouchableOpacity)`
   margin: 5px 0;
   padding: 10px;

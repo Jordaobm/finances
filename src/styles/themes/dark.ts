@@ -10,4 +10,6 @@ export const dark: Theme = {
   backgroundText: '#666666',
   borderInputColor: '#666666',
   textBlue: '#9eb7cb',
+  textGreenOrGray: '#cccccc',
+  textRedOrGray: '#cccccc',
 };

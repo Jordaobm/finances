@@ -1,66 +1,52 @@
 import { useNavigation } from '@react-navigation/native';
 import { FormHandles } from '@unform/core';
+import { Form } from '@unform/mobile';
 import React, { useCallback, useRef } from 'react';
 import { Alert } from 'react-native';
-import { IIncome } from '../../../dtos/types';
-import { useMyExpenses } from '../../../hooks/MyExpense';
+import { ScrollView } from 'react-native-gesture-handler';
+import Button from '../../../components/Button';
+import Header from '../../../components/Header';
+import Input from '../../../components/Input';
+import { IIncomeScheduling } from '../../../dtos/types';
+import { useAccountScheduling } from '../../../hooks/AccountScheduling';
+import { useTheme } from '../../../hooks/themes';
 import { addSalary } from '../../../utils/images';
 import {
   Container,
   Content,
-  ImageWraper,
   IconFlag,
+  ImageWraper,
   InputContainer,
-  InputDate,
-  InputValue,
   ValueAndDate,
 } from './styles';
-import Header from '../../../components/Header';
-import Button from '../../../components/Button';
-import Input from '../../../components/Input';
-import { ScrollView } from 'react-native-gesture-handler';
-import { Form } from '@unform/mobile';
-import { useTheme } from '../../../hooks/themes';
 
-const AddExpense: React.FC = () => {
+const IncomeScheduling: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
-  const { setIncomes, incomes } = useMyExpenses();
   const { switchState } = useTheme();
+  const { addAccountSchedulingIncome } = useAccountScheduling();
 
   const navigation = useNavigation();
 
-  const handleAddIncome = useCallback(
-    (data: IIncome) => {
-      if (
-        data.NameIncome === '' ||
-        data.ValueIncome === '' ||
-        data.DateIncome === ''
-      ) {
-        Alert.alert(
-          'Preencha todos os campos',
-          'Preencha um nome para sua renda, um valor e uma data válida',
-        );
-        return;
+  const handleAddAccountScheduling = useCallback(
+    (data: IIncomeScheduling) => {
+      if (data.name === '' || data.DateIncome === '') {
+        Alert.alert('Erro', 'Preencha um nome e data validos');
       }
-
       const id = new Date().getTime();
-      const income: IIncome = {
+      addAccountSchedulingIncome({
         id,
-        NameIncome: data.NameIncome,
-        DescriptionIncome: data.DescriptionIncome,
-        ValueIncome: data.ValueIncome,
+        name: data.name,
         DateIncome: data.DateIncome,
-      };
-
-      setIncomes([...incomes, income]);
-      navigation.navigate('MyExpenses');
+        description: data.description,
+      });
+      navigation.navigate('AccountScheduling');
     },
-    [navigation, setIncomes, incomes],
+    [addAccountSchedulingIncome, navigation],
   );
 
   return (
     <Container>
-      <Header>Controle de minhas despesas</Header>
+      <Header>Agendamento de despesas</Header>
       <Content>
         <ImageWraper
           colors={
@@ -76,28 +62,23 @@ const AddExpense: React.FC = () => {
           paddingTop: 40,
         }}
       >
-        <Form onSubmit={handleAddIncome} ref={formRef}>
+        <Form onSubmit={handleAddAccountScheduling} ref={formRef}>
           <InputContainer>
             <Input
-              name="NameIncome"
+              name="name"
               placeholder="Nome da renda"
               keyboardAppearance="dark"
               returnKeyType="next"
             />
             <Input
-              name="DescriptionIncome"
+              name="description"
               placeholder="Descrição"
               multiline={true}
               numberOfLines={5}
               style={{ textAlignVertical: 'top' }}
             />
             <ValueAndDate>
-              <InputValue>
-                <Input name="ValueIncome" placeholder="Valor" />
-              </InputValue>
-              <InputDate>
-                <Input name="DateIncome" placeholder="Data da despesa" />
-              </InputDate>
+              <Input name="DateIncome" placeholder="Data da despesa" />
             </ValueAndDate>
           </InputContainer>
           <Button
@@ -117,4 +98,4 @@ const AddExpense: React.FC = () => {
   );
 };
 
-export default AddExpense;
+export default IncomeScheduling;

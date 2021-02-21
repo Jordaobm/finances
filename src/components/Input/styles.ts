@@ -14,6 +14,7 @@ export const Container = styled.View<ContainerProps>`
   border: 2px solid ${(props) => props.theme.borderInputColor};
   border-radius: 10px;
   padding: 0px 10px;
+  width: 100%;
 
   ${(props) =>
     props.inputFocus &&

@@ -55,4 +55,22 @@ export interface Theme {
   backgroundText: string;
   borderInputColor: string;
   textBlue: string;
+  textGreenOrGray: string;
+  textRedOrGray: string;
+}
+
+export interface IIncomeScheduling {
+  id: number;
+  name: string;
+  description: string;
+  DateIncome: string;
+}
+
+export interface IExpenseScheduling {
+  id: number;
+  color: string;
+  icon: Object;
+  name: string;
+  description: string;
+  DateExpense: string;
 }

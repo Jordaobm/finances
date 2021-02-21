@@ -20,6 +20,10 @@ import { light } from '../styles/themes/light';
 import { dark } from '../styles/themes/dark';
 import { useTheme } from '../hooks/themes';
 import { StatusBar } from 'react-native';
+import AccountScheduling from '../pages/AccountScheduling';
+import IncomeScheduling from '../pages/AccountScheduling/IncomeScheduling';
+import ListExpensesScheduling from '../pages/AccountScheduling/ListExpensesScheduling';
+import ExpenseScheduling from '../pages/AccountScheduling/ExpenseScheduling';
 
 const Router: React.FC = () => {
   const Stack = createStackNavigator();
@@ -34,6 +38,9 @@ const Router: React.FC = () => {
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Init" component={Init} />
           <Stack.Screen name="Home" component={Home} />
+
+          {/* Telas de Controle de despesas */}
+
           <Stack.Screen name="MyExpenses" component={MyExpenses} />
           <Stack.Screen name="YourSpending" component={YourSpending} />
           <Stack.Screen name="MyInitialBalance" component={MyInitialBalance} />
@@ -45,6 +52,22 @@ const Router: React.FC = () => {
           <Stack.Screen name="EditExpense" component={EditExpense} />
           <Stack.Screen name="EditIncome" component={EditIncome} />
           <Stack.Screen name="DetailsCategory" component={DetailsCategory} />
+
+          {/* Telas de agendamento de despesas */}
+
+          <Stack.Screen
+            name="AccountScheduling"
+            component={AccountScheduling}
+          />
+          <Stack.Screen name="IncomeScheduling" component={IncomeScheduling} />
+          <Stack.Screen
+            name="ListExpensesScheduling"
+            component={ListExpensesScheduling}
+          />
+          <Stack.Screen
+            name="ExpenseScheduling"
+            component={ExpenseScheduling}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </ThemeProvider>

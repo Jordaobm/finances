@@ -2,6 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useCallback } from 'react';
 import { StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useAccountScheduling } from '../../../hooks/AccountScheduling';
 import { useMyExpenses } from '../../../hooks/MyExpense';
 import { useTheme } from '../../../hooks/themes';
 import {
@@ -26,16 +27,16 @@ import {
   Graphic,
 } from './styles';
 
-const ListExpenses: React.FC = () => {
+const ListExpensesScheduling: React.FC = () => {
   const { switchState } = useTheme();
   const navigation = useNavigation();
-  const { setExpenseDetailPageState } = useMyExpenses();
+  const { setExpensePage } = useAccountScheduling();
   const handleNavigateExpenseDetailPage = useCallback(
     (color: string, name: string, icon: object) => {
-      navigation.navigate('AddExpense');
-      setExpenseDetailPageState({ name, color, icon });
+      navigation.navigate('ExpenseScheduling');
+      setExpensePage({ name, color, icon });
     },
-    [navigation, setExpenseDetailPageState],
+    [navigation, setExpensePage],
   );
 
   return (
@@ -113,4 +114,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ListExpenses;
+export default ListExpensesScheduling;

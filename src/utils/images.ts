@@ -18,6 +18,7 @@ import flower from '../assets/flower.png';
 import alert from '../assets/alert.png';
 import flag from '../assets/homeIcon.png';
 import logo from '../assets/logo1.png';
+import agendamentoDeContas from '../assets/agendamentoDeContas.png';
 
 export {
   ArrendamentosEdividendos,
@@ -40,4 +41,5 @@ export {
   alert,
   flag,
   logo,
+  agendamentoDeContas,
 };

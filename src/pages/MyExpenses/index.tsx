@@ -19,12 +19,12 @@ import {
 } from './styles';
 import Header from '../../components/Header';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Calendar } from '../../components/Calendar';
 import { useMyExpenses } from '../../hooks/MyExpense';
 import { useNavigation } from '@react-navigation/native';
 import { cash } from '../../utils/images';
 import { useTheme } from '../../hooks/themes';
 import { shade } from 'polished';
+import { Calendar } from '../../components/Calendar';
 
 const MyExpenses: React.FC = () => {
   const { balanceAvailable } = useMyExpenses();

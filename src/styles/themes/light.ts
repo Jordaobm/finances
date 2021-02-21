@@ -11,4 +11,6 @@ export const light: Theme = {
   backgroundText: '#4ccc81',
   borderInputColor: '#d4dfef',
   textBlue: '#5D87A8',
+  textGreenOrGray: '#4ccc81',
+  textRedOrGray: '#EB5757',
 };

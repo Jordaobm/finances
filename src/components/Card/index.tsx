@@ -23,11 +23,12 @@ import {
   Income,
   IncomeValueInput,
   Placeholder,
+  ScheduledDate,
+  ScheduledDateExpense,
 } from './styles';
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
 import LinearGradient from 'react-native-linear-gradient';
 import { useTheme } from '../../hooks/themes';
-import { shade } from 'polished';
 
 interface CardProps {
   category?: IExpenseCategory;
@@ -86,14 +87,20 @@ const Card: React.FC<CardProps> = ({ expense, income, category, visible }) => {
           <IconImgExpense source={expense.icon} />
         </BackgroundIconExpense>
         <Name>{expense.NameExpense}</Name>
-        <Value>
-          <ExpenseValueInput
-            editable={false}
-            type={'money'}
-            value={expense.ValueExpense}
-          />
-          <Date>{expense.DateExpense}</Date>
-        </Value>
+        {expense.ValueExpense !== 0 ? (
+          <Value>
+            <ExpenseValueInput
+              editable={false}
+              type={'money'}
+              value={expense.ValueExpense}
+            />
+            <Date>{expense.DateExpense}</Date>
+          </Value>
+        ) : (
+          <Value>
+            <ScheduledDateExpense>{expense.DateExpense}</ScheduledDateExpense>
+          </Value>
+        )}
       </Expense>
     );
   }
@@ -105,14 +112,20 @@ const Card: React.FC<CardProps> = ({ expense, income, category, visible }) => {
           <IconImgExpense source={cash} />
         </BackgroundIconIncome>
         <Name>{income.NameIncome}</Name>
-        <Value>
-          <IncomeValueInput
-            editable={false}
-            type={'money'}
-            value={income.ValueIncome}
-          />
-          <Date>{income.DateIncome}</Date>
-        </Value>
+        {income.ValueIncome !== 0 ? (
+          <Value>
+            <IncomeValueInput
+              editable={false}
+              type={'money'}
+              value={income.ValueIncome}
+            />
+            <Date>{income.DateIncome}</Date>
+          </Value>
+        ) : (
+          <Value>
+            <ScheduledDate>{income.DateIncome}</ScheduledDate>
+          </Value>
+        )}
       </Income>
     );
   }

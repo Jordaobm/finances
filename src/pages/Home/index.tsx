@@ -11,6 +11,7 @@ import {
   TextTitle,
   Goals,
   Graphic,
+  IconGoal,
 } from './styles';
 import Header from '../../components/Header';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -23,6 +24,7 @@ import {
   flower,
   alert,
   other,
+  agendamentoDeContas,
 } from '../../utils/images';
 import { useTheme } from '../../hooks/themes';
 
@@ -33,7 +35,7 @@ const Home: React.FC = () => {
   return (
     <>
       <StatusBar
-        backgroundColor={switchState ? '#1a1a1a' : '#fff'}
+        backgroundColor={switchState ? '#1a1a1a' : '#F6F7FB'}
         barStyle={switchState ? 'light-content' : 'dark-content'}
       />
 
@@ -70,14 +72,22 @@ const Home: React.FC = () => {
                   style={styles.container}
                   onPress={() => navigation.navigate('MyExpenses')}
                 >
-                  <GoalIconWraper
-                    color={`${!switchState ? '#fff1f1' : '#333333'}`}
-                  >
+                  <GoalIconWraper color={!switchState ? '#fff1f1' : '#333333'}>
                     <Graphic source={graphic} />
                   </GoalIconWraper>
                   <GoalText>Controle de minhas despesas</GoalText>
                 </Goal>
               )}
+
+              <Goal
+                style={styles.container}
+                onPress={() => navigation.navigate('AccountScheduling')}
+              >
+                <GoalIconWraper color={!switchState ? '#fff2d9' : '#333333'}>
+                  <Graphic source={agendamentoDeContas} />
+                </GoalIconWraper>
+                <GoalText>Agendamento de despesas</GoalText>
+              </Goal>
 
               <Goal disable={true} style={styles.container}>
                 <GoalIconWraper color={'#E0F8E9'} disable={true}>
