@@ -15,13 +15,22 @@ export const Day = styled.Text`
   text-transform: capitalize;
 `;
 
-export const Rest = styled.Text`
+export const Rest = styled.View`
+  flex-direction: row;
+`;
+
+export const DayNumber = styled.Text`
+  text-align: center;
+  font-family: "Roboto-Regular";
+  font-size: 18px;
+`;
+
+export const Month = styled.Text`
   text-align: center;
   font-family: "Roboto-Regular";
   font-size: 18px;
   text-transform: capitalize;
 `;
-
 export const ContainerText = styled.View`
   flex-direction: row;
   align-items: center;

@@ -1,6 +1,14 @@
 import React from "react";
 import { Image, Text } from "react-native";
-import { Container, Day, Settings, ContainerText, Rest } from "./styles";
+import {
+  Container,
+  Day,
+  Settings,
+  ContainerText,
+  Rest,
+  DayNumber,
+  Month,
+} from "./styles";
 import settings from "../../assets/settings.png";
 import { format } from "date-fns";
 
@@ -15,6 +23,8 @@ export const Header = ({ color }: Header) => {
   const day = date?.split("-")[0];
   const rest = date?.split(",")[1];
 
+  console.log(rest?.split("de")[1]);
+
   return (
     <Container>
       <Settings
@@ -24,7 +34,10 @@ export const Header = ({ color }: Header) => {
 
       <ContainerText>
         <Day style={{ color }}>{day},</Day>
-        <Rest style={{ color }}>{rest}</Rest>
+        <Rest>
+          <DayNumber style={{ color }}>{rest?.split("de")[0]}de</DayNumber>
+          <Month style={{ color }}>{rest?.split("de")[1]}</Month>
+        </Rest>
       </ContainerText>
     </Container>
   );

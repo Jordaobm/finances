@@ -31,10 +31,10 @@ export const ContainerCards = styled.View`
 
 export const EntryCard = styled.View`
   width: 47%;
-  border-width: 1;
+  border-width: 1px;
   border-style: dashed;
   border-color: white;
-  border-radius: 10;
+  border-radius: 10px;
   padding: 16px;
 `;
 export const TitleContainer = styled.View`
@@ -58,7 +58,8 @@ interface Value {
 }
 
 export const Value = styled.Text<Value>`
+  margin-top: 16px;
   font-family: "Roboto-Bold";
-  font-size: 18px;
+  font-size: 16px;
   color: ${(props) => props?.color};
 `;

@@ -24,7 +24,7 @@ export const OperationsCards = () => {
   const firstDayMonth = format(startOfMonth(new Date()), "dd/MM/yyyy");
   const lastDayMonth = format(lastDayOfMonth(new Date()), "dd/MM/yyyy");
 
-  const value = 2000;
+  const value = 100000;
   return (
     <Container>
       <MonthContainer>

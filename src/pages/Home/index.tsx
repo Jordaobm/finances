@@ -1,8 +1,19 @@
 import React from "react";
-import { StatusBar, Text, View } from "react-native";
+import { ScrollView, StatusBar, Text, View } from "react-native";
 import { Header } from "../../components/Header";
+import { Navigation } from "../../components/Navigation";
 import { OperationsCards } from "../../components/OperationsCards";
-import { Background, ContainerOperationCards, Heading } from "./styles";
+import { OutputChart } from "../../components/OutputChart";
+import { formatCurrency } from "../../utils/formatCurrency";
+import {
+  Background,
+  ContainerGraph,
+  ContainerOperationCards,
+  CurrentValue,
+  CurrentValueContainer,
+  Heading,
+  SmallText,
+} from "./styles";
 
 export const Home = () => {
   return (
@@ -11,15 +22,24 @@ export const Home = () => {
         barStyle="light-content"
         backgroundColor="rgba(1, 55, 148, 0.8)"
       />
-      <View style={{ flex: 1, backgroundColor: "white" }}>
-        <Background>
-          <Header color="white" />
-
-          <ContainerOperationCards>
-            <OperationsCards />
-          </ContainerOperationCards>
-        </Background>
-      </View>
+      <ScrollView style={{ flex: 1, backgroundColor: "white" }}>
+        <View style={{ flex: 1, backgroundColor: "white" }}>
+          <Background>
+            <Header color="white" />
+            <ContainerOperationCards>
+              <OperationsCards />
+            </ContainerOperationCards>
+            <CurrentValueContainer>
+              <SmallText>Valor atual</SmallText>
+              <CurrentValue>{formatCurrency(800)}</CurrentValue>
+              <ContainerGraph>
+                <OutputChart />
+              </ContainerGraph>
+            </CurrentValueContainer>
+          </Background>
+        </View>
+      </ScrollView>
+      <Navigation />
     </>
   );
 };
