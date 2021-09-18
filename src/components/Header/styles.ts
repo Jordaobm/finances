@@ -5,7 +5,7 @@ export const Container = styled.View``;
 export const Settings = styled.Image`
   align-self: flex-end;
   margin-right: 32px;
-  margin-top: 32px;
+  margin-top: 16px;
 `;
 
 export const Day = styled.Text`

@@ -1,7 +1,10 @@
-import React from "react";
-import { ScrollView, StatusBar, Text, View } from "react-native";
+import { useNavigation } from "@react-navigation/core";
+import React, { useEffect } from "react";
+import { ScrollView, StatusBar } from "react-native";
+import { useAndroidBackHandler } from "react-navigation-backhandler";
 import { Header } from "../../components/Header";
 import { Navigation } from "../../components/Navigation";
+import { Operations } from "../../components/Operations";
 import { OperationsCards } from "../../components/OperationsCards";
 import { OutputChart } from "../../components/OutputChart";
 import { formatCurrency } from "../../utils/formatCurrency";
@@ -11,7 +14,6 @@ import {
   ContainerOperationCards,
   CurrentValue,
   CurrentValueContainer,
-  Heading,
   SmallText,
 } from "./styles";
 
@@ -23,23 +25,22 @@ export const Home = () => {
         backgroundColor="rgba(1, 55, 148, 0.8)"
       />
       <ScrollView style={{ flex: 1, backgroundColor: "white" }}>
-        <View style={{ flex: 1, backgroundColor: "white" }}>
-          <Background>
-            <Header color="white" />
-            <ContainerOperationCards>
-              <OperationsCards />
-            </ContainerOperationCards>
-            <CurrentValueContainer>
-              <SmallText>Valor atual</SmallText>
-              <CurrentValue>{formatCurrency(800)}</CurrentValue>
-              <ContainerGraph>
-                <OutputChart />
-              </ContainerGraph>
-            </CurrentValueContainer>
-          </Background>
-        </View>
+        <Background>
+          <Header color="white" />
+          <ContainerOperationCards>
+            <OperationsCards />
+          </ContainerOperationCards>
+          <CurrentValueContainer>
+            <SmallText>Valor atual</SmallText>
+            <CurrentValue>{formatCurrency(800)}</CurrentValue>
+            <ContainerGraph>
+              <OutputChart />
+            </ContainerGraph>
+          </CurrentValueContainer>
+        </Background>
+        <Operations />
       </ScrollView>
-      <Navigation />
+      <Navigation activeRoute="Home" />
     </>
   );
 };

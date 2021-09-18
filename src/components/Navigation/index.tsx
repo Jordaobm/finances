@@ -1,7 +1,5 @@
+import { useNavigation } from "@react-navigation/core";
 import React from "react";
-
-import { ContainerNavigation, Home } from "./styles";
-import Svg, { Path } from "react-native-svg";
 import {
   ChartIcon,
   HomeIcon,
@@ -9,19 +7,40 @@ import {
   TagIcon,
   WalletIcon,
 } from "../../icons/NavigationIcons";
+import { NavigationProps } from "../../types";
+import { ContainerNavigation, Home, NavigationButton } from "./styles";
 
-interface NavigationProps {}
+export const Navigation = ({ activeRoute }: NavigationProps) => {
+  const navigation = useNavigation();
 
-export const Navigation = ({}: NavigationProps) => {
   return (
     <ContainerNavigation>
-      <TagIcon color={"#595959"} />
-      <WalletIcon color={"#595959"} />
-      <Home>
-        <HomeIcon color={"white"} />
-      </Home>
-      <ChartIcon color={"#595959"} />
-      <MoneyIcon color={"#595959"} />
+      <NavigationButton onPress={() => navigation.navigate("Categories")}>
+        <TagIcon
+          color={
+            activeRoute === "Categories" ? "rgba(1, 55, 148, 0.8)" : "#595959"
+          }
+        />
+      </NavigationButton>
+      <NavigationButton>
+        <WalletIcon color={"#595959"} />
+      </NavigationButton>
+
+      <NavigationButton onPress={() => navigation.navigate("Home")}>
+        <Home
+          color={activeRoute === "Home" ? "rgba(1, 55, 148, 0.8)" : "#595959"}
+        >
+          <HomeIcon color={"white"} />
+        </Home>
+      </NavigationButton>
+
+      <NavigationButton>
+        <ChartIcon color={"#595959"} />
+      </NavigationButton>
+
+      <NavigationButton>
+        <MoneyIcon color={"#595959"} />
+      </NavigationButton>
     </ContainerNavigation>
   );
 };

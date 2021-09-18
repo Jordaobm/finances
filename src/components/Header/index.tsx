@@ -1,29 +1,23 @@
+import { format } from "date-fns";
+import ptBR from "date-fns/locale/pt-BR";
 import React from "react";
-import { Image, Text } from "react-native";
+import settings from "../../assets/settings.png";
+import { HeaderProps } from "../../types";
 import {
   Container,
-  Day,
-  Settings,
   ContainerText,
-  Rest,
+  Day,
   DayNumber,
   Month,
+  Rest,
+  Settings,
 } from "./styles";
-import settings from "../../assets/settings.png";
-import { format } from "date-fns";
 
-import ptBR from "date-fns/locale/pt-BR";
-interface Header {
-  color: "white" | "black";
-}
-
-export const Header = ({ color }: Header) => {
+export const Header = ({ color, onlySettings = false }: HeaderProps) => {
   const date = format(new Date(), "cccc', 'dd 'de' MMMM", { locale: ptBR });
 
   const day = date?.split("-")[0];
   const rest = date?.split(",")[1];
-
-  console.log(rest?.split("de")[1]);
 
   return (
     <Container>
@@ -31,14 +25,15 @@ export const Header = ({ color }: Header) => {
         source={settings}
         style={{ tintColor: color, width: 20, height: 20 }}
       />
-
-      <ContainerText>
-        <Day style={{ color }}>{day},</Day>
-        <Rest>
-          <DayNumber style={{ color }}>{rest?.split("de")[0]}de</DayNumber>
-          <Month style={{ color }}>{rest?.split("de")[1]}</Month>
-        </Rest>
-      </ContainerText>
+      {!onlySettings && (
+        <ContainerText>
+          <Day style={{ color }}>{day},</Day>
+          <Rest>
+            <DayNumber style={{ color }}>{rest?.split("de")[0]}de</DayNumber>
+            <Month style={{ color }}>{rest?.split("de")[1]}</Month>
+          </Rest>
+        </ContainerText>
+      )}
     </Container>
   );
 };

@@ -1,9 +1,6 @@
 import React from "react";
 import Svg, { Path } from "react-native-svg";
-
-interface IconProps {
-  color: string;
-}
+import { IconProps } from "../types";
 
 export const ChartIcon = ({ color }: IconProps) => {
   return (
