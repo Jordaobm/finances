@@ -1,7 +1,9 @@
+import { useNavigation } from "@react-navigation/core";
 import React from "react";
-import { operations } from "../../database";
+import { categories } from "../../database";
 import { PlusIcon } from "../../icons/Icons";
-import { Operation } from "../../types";
+import { Category, Operation } from "../../types";
+import { CardCategories } from "../CardCategories";
 import { CardOperation } from "../CardOperation";
 import {
   AddOperations,
@@ -15,21 +17,23 @@ import {
   OperationsText,
 } from "./styles";
 
-export const Operations = () => {
+export const CategoriesList = () => {
+  const navigation = useNavigation();
+
   return (
     <Container>
       <Content>
         <ContentText>
-          <OperationsText>Operações recentes</OperationsText>
+          <OperationsText>Categorias adicionadas</OperationsText>
 
-          <AddOperations>
+          <AddOperations onPress={() => navigation.navigate("CategoryForm")}>
             <AddOperationsText>Adicionar</AddOperationsText>
-            <PlusIcon color="#fff" />
+            <PlusIcon color="#595959" />
           </AddOperations>
         </ContentText>
         <ContainerCardOperations>
-          {operations?.length > 0 ? (
-            <CardOperation operations={operations} />
+          {categories?.length > 0 ? (
+            <CardCategories categories={categories} />
           ) : (
             <>
               <NotOperation>Ainda não há operações cadastradas</NotOperation>
