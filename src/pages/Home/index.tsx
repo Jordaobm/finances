@@ -1,7 +1,5 @@
-import { useNavigation } from "@react-navigation/core";
-import React, { useEffect } from "react";
+import React from "react";
 import { ScrollView, StatusBar } from "react-native";
-import { useAndroidBackHandler } from "react-navigation-backhandler";
 import { Header } from "../../components/Header";
 import { Navigation } from "../../components/Navigation";
 import { Operations } from "../../components/Operations";
@@ -22,7 +20,8 @@ export const Home = () => {
     <>
       <StatusBar
         barStyle="light-content"
-        backgroundColor="rgba(1, 55, 148, 0.8)"
+        backgroundColor="rgba(1, 55, 148, 0.0)"
+        translucent
       />
       <ScrollView style={{ flex: 1, backgroundColor: "white" }}>
         <Background>

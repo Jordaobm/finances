@@ -32,3 +32,33 @@ export const ContainerGraph = styled.View`
   margin: 32px 0;
   margin-bottom: 56px;
 `;
+
+export const Container = styled.View`
+  padding: 0 32px;
+  margin-top: 12px;
+`;
+
+export const TitlePage = styled.Text`
+  color: #343434;
+  font-family: "Roboto-Bold";
+  font-size: 22px;
+`;
+
+export const SubtitlePage = styled.Text`
+  color: #c6c6c6;
+  font-family: "Roboto-Regular";
+  font-size: 14px;
+  margin-top: 8px;
+`;
+
+export const ContainerImage = styled.View`
+  margin-top: 8px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const CategoriesImage = styled.Image`
+  width: 100%;
+  height: 258px;
+`;

@@ -16,7 +16,14 @@ import {
 export const Header = ({ color, onlySettings = false }: HeaderProps) => {
   const date = format(new Date(), "cccc', 'dd 'de' MMMM", { locale: ptBR });
 
-  const day = date?.split("-")[0];
+  let day;
+
+  if (date.indexOf("-") === -1) {
+    day = date?.split(",")[0];
+  } else {
+    day = date?.split("-")[0];
+  }
+
   const rest = date?.split(",")[1];
 
   return (

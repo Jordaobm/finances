@@ -1,5 +1,4 @@
 import React from "react";
-import { ScrollView } from "react-native";
 import { CardOperationProps } from "../../types";
 import { formatCurrency } from "../../utils/formatCurrency";
 import {

@@ -8,6 +8,7 @@ export interface HeaderProps {
 }
 
 export interface Operation {
+  id: number;
   category: {
     color: string;
   };

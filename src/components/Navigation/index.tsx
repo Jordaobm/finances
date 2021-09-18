@@ -8,13 +8,20 @@ import {
   WalletIcon,
 } from "../../icons/NavigationIcons";
 import { NavigationProps } from "../../types";
-import { ContainerNavigation, Home, NavigationButton } from "./styles";
+import { Content, Home, NavigationButton } from "./styles";
 
 export const Navigation = ({ activeRoute }: NavigationProps) => {
   const navigation = useNavigation();
 
   return (
-    <ContainerNavigation>
+    <Content
+      colors={[
+        "rgba(255, 255, 255, 0.0)",
+        "rgba(255, 255, 255, 1)",
+        "rgba(255, 255, 255, 1)",
+        "rgba(255, 255, 255, 1)",
+      ]}
+    >
       <NavigationButton onPress={() => navigation.navigate("Categories")}>
         <TagIcon
           color={
@@ -41,6 +48,6 @@ export const Navigation = ({ activeRoute }: NavigationProps) => {
       <NavigationButton>
         <MoneyIcon color={"#595959"} />
       </NavigationButton>
-    </ContainerNavigation>
+    </Content>
   );
 };

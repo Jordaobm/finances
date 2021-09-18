@@ -4,3 +4,4 @@ declare module "@env" {
 
 declare module "*.svg";
 declare module "*.png";
+declare module "*.jpg";

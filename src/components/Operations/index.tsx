@@ -17,6 +17,7 @@ import {
 export const Operations = () => {
   const mockOperations: Operation[] = [
     {
+      id: 1,
       card: {
         name: "Cartão Nubank",
       },
@@ -28,6 +29,8 @@ export const Operations = () => {
       name: "Salário",
     },
     {
+      id: 2,
+
       card: {
         name: "Cartão Caixa Econômica",
       },
@@ -39,6 +42,8 @@ export const Operations = () => {
       name: "Mercado",
     },
     {
+      id: 3,
+
       card: {
         name: "Carteira Atual",
       },
@@ -50,6 +55,34 @@ export const Operations = () => {
       name: "Internet",
     },
     {
+      id: 4,
+
+      card: {
+        name: "Outra conta",
+      },
+      category: {
+        color: "#16b900",
+      },
+      date: new Date(),
+      value: 400,
+      name: "Outra conta",
+    },
+    {
+      id: 5,
+
+      card: {
+        name: "Outra conta",
+      },
+      category: {
+        color: "#16b900",
+      },
+      date: new Date(),
+      value: 400,
+      name: "Outra conta",
+    },
+    {
+      id: 6,
+
       card: {
         name: "Outra conta",
       },
