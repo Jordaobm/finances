@@ -53,4 +53,5 @@ export const Line = styled.View`
   margin-top: 8px;
 
   background-color: #f5f5f5;
+  /* background-color: red; */
 `;

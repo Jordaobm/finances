@@ -11,6 +11,7 @@ import {
 } from "./styles";
 
 import categoriesImage from "../../assets/829.jpg";
+import { CategoriesList } from "../../components/CategoriesList";
 
 export const Categories = () => {
   return (
@@ -22,7 +23,7 @@ export const Categories = () => {
       />
 
       <ScrollView style={{ flex: 1, backgroundColor: "white" }}>
-        <Header color="black" onlySettings />
+        <Header color="#595959" onlySettings />
 
         <Container>
           <TitlePage>Categorias</TitlePage>
@@ -34,6 +35,8 @@ export const Categories = () => {
           <ContainerImage>
             <CategoriesImage source={categoriesImage} />
           </ContainerImage>
+
+          <CategoriesList />
         </Container>
       </ScrollView>
 
