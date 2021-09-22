@@ -33,9 +33,10 @@ export interface Operation {
 }
 
 export interface Category {
-  id: number;
+  id?: number;
   name: string;
   color: string;
+  number: number;
 }
 
 export interface CardOperationProps {

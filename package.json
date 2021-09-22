@@ -16,12 +16,15 @@
     "date-fns": "^2.23.0",
     "react": "17.0.2",
     "react-native": "0.65.1",
+    "react-native-draggable": "^3.3.0",
     "react-native-linear-gradient": "^2.5.6",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.7.1",
     "react-native-svg": "^12.1.1",
     "react-native-svg-charts": "^5.4.0",
     "react-native-svg-icon": "^0.10.0",
+    "react-native-toast-message": "^1.6.0",
+    "realm": "^10.8.0",
     "styled-components": "^5.3.1"
   },
   "devDependencies": {

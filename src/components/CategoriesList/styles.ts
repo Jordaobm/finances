@@ -36,7 +36,6 @@ export const ContainerCardOperations = styled.View`
   width: 100%;
   background-color: white;
   margin-top: 8px;
-  border-radius: 10px;
   padding: 8px;
   border-width: 1px;
   border-style: dashed;
