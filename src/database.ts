@@ -1,20 +1,18 @@
 import { Category, Operation } from "./types";
 
 export const categories: Category[] = [
+  { color: "#db7311", id: 1, name: "Salário", number: 285.74153900146484 },
   {
-    id: 1,
-    color: "#3CC75E",
-    name: "Salário",
-  },
-  {
+    color: "#b94ab3",
     id: 2,
-    color: "#FF6F6F",
     name: "Despesas da casa",
+    number: 241.26537704467773,
   },
   {
+    color: "#43acf4",
     id: 3,
-    color: "#E1A0FF",
     name: "Despesas fixas",
+    number: 88.11928939819336,
   },
 ];
 
@@ -22,9 +20,10 @@ export const operations: Operation[] = [
   {
     id: 1,
     category: {
+      color: "#db7311",
       id: 1,
-      color: "#3CC75E",
       name: "Salário",
+      number: 285.74153900146484,
     },
     date: new Date(),
     name: "Salário",
@@ -39,9 +38,10 @@ export const operations: Operation[] = [
   {
     id: 2,
     category: {
+      color: "#b94ab3",
       id: 2,
-      color: "#FF6F6F",
       name: "Despesas da casa",
+      number: 241.26537704467773,
     },
     date: new Date(),
     name: "Mercado",

@@ -1,10 +1,10 @@
 import { useNavigation } from "@react-navigation/core";
-import React from "react";
-import { categories } from "../../database";
+import React, { useEffect, useState } from "react";
+import { useUpdateDataContext } from "../../context/UpdateDataContext";
 import { PlusIcon } from "../../icons/Icons";
-import { Category, Operation } from "../../types";
+import Category from "../../schemas/CategorySchema";
+import { getCategories } from "../../services/realm";
 import { CardCategories } from "../CardCategories";
-import { CardOperation } from "../CardOperation";
 import {
   AddOperations,
   AddOperationsText,
@@ -19,6 +19,8 @@ import {
 
 export const CategoriesList = () => {
   const navigation = useNavigation();
+
+  const { categories } = useUpdateDataContext();
 
   return (
     <Container>

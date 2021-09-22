@@ -1,17 +1,16 @@
 import React from "react";
-import { Image, ScrollView, StatusBar } from "react-native";
+import { ScrollView, StatusBar } from "react-native";
+import categoriesImage from "../../assets/829.jpg";
+import { CategoriesList } from "../../components/CategoriesList";
 import { Header } from "../../components/Header";
 import { Navigation } from "../../components/Navigation";
 import {
-  Container,
-  TitlePage,
-  SubtitlePage,
   CategoriesImage,
+  Container,
   ContainerImage,
+  SubtitlePage,
+  TitlePage,
 } from "./styles";
-
-import categoriesImage from "../../assets/829.jpg";
-import { CategoriesList } from "../../components/CategoriesList";
 
 export const Categories = () => {
   return (

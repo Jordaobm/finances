@@ -5,7 +5,7 @@ export const ContentCard = styled.View`
   align-items: center;
 `;
 
-export const ContainerCard = styled.View`
+export const ContainerCard = styled.TouchableOpacity`
   padding: 16px;
 `;
 
@@ -14,7 +14,7 @@ export const TextOperation = styled.Text`
   font-family: "Roboto-Medium";
   color: #7e7e7e;
   padding-right: 10px;
-  max-width: 55%;
+  max-width: 50%;
 `;
 
 export const ValueAndMonth = styled.View`
