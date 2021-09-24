@@ -8,12 +8,14 @@ export interface HeaderProps {
 }
 
 export interface Card {
-  id: number;
+  id?: number;
   institutionName: string;
   name: string;
   currentValue: number;
   colorBackground: string;
+  colorBackgroundNumber?: number;
   colorText: string;
+  colorTextNumber?: number;
 }
 
 export interface Wallet {

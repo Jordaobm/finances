@@ -15,11 +15,7 @@ import {
 export const Categories = () => {
   return (
     <>
-      <StatusBar
-        barStyle="dark-content"
-        backgroundColor="rgba(1, 55, 148, 0.0)"
-        translucent
-      />
+      <StatusBar hidden />
 
       <ScrollView style={{ flex: 1, backgroundColor: "white" }}>
         <Header color="#595959" onlySettings />

@@ -19,12 +19,16 @@ interface InputColorProps {
   onChangeColor: (color: string, number: number) => void;
   initialColor: string;
   initialNumber: number;
+  placeholder?: string;
+  palette?: boolean;
 }
 
 export const InputColor = ({
   onChangeColor,
   initialColor,
   initialNumber,
+  placeholder,
+  palette,
 }: InputColorProps) => {
   const [color, setColor] = useState(
     initialColor ? initialColor : "rgba(1, 55, 148, 0.8)"
@@ -34,18 +38,22 @@ export const InputColor = ({
   }, []);
 
   function generateColor(value: number) {
-    return (
-      "#" +
-      parseInt((value / 1000) * 3 * 16777215)
-        .toString(16)
-        .padStart(6, "0")
-    );
+    if (!palette) {
+      return (
+        "#" +
+        Math.floor((value / 300) * 16777215)
+          .toString(16)
+          .padStart(6, "0")
+      );
+    }
+
+    return `rgba(${value},${value},${value},1)`;
   }
 
   return (
     <>
       <Container>
-        <Placeholder>Cor da categoria</Placeholder>
+        <Placeholder>{placeholder}</Placeholder>
         <BoxColor color={color} />
       </Container>
       <BoxInputColor>
@@ -64,8 +72,12 @@ export const InputColor = ({
           onDragRelease={(event, gestureState, bounds) => {
             let value = bounds.left;
             if (value === 0) {
-              setColor("rgba(1, 55, 148, 0.8)");
-              return;
+              if (palette) {
+                setColor("rgba(0, 0, 0,1)");
+              } else {
+                setColor("rgba(1, 55, 148, 0.8)");
+                return;
+              }
             }
             setColor(generateColor(value));
             onChangeColor(generateColor(value), value);

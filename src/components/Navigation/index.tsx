@@ -28,8 +28,10 @@ export const Navigation = ({ activeRoute }: NavigationProps) => {
           }
         />
       </NavigationButton>
-      <NavigationButton>
-        <WalletIcon color={"#595959"} />
+      <NavigationButton onPress={() => navigation.navigate("Cards")}>
+        <WalletIcon
+          color={activeRoute === "Cards" ? "rgba(1, 55, 148, 0.8)" : "#595959"}
+        />
       </NavigationButton>
 
       <NavigationButton onPress={() => navigation.navigate("Home")}>
