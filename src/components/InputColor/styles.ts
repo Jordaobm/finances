@@ -21,6 +21,11 @@ export const BoxColor = styled.View<BoxColorProps>`
   width: 40px;
   height: 40px;
   background-color: ${(props) => props.color};
+
+  border-width: 1px;
+  border-style: dashed;
+  border-color: #c6c6c6;
+  border-radius: 10px;
 `;
 export const BoxInputColor = styled.View`
   flex: 1;

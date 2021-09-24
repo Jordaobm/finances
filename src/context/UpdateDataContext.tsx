@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { createContext, ReactNode, useContext } from "react";
 import { getCategoriesByDB } from "../database/functions";
-import { getCategories } from "../services/realm";
-import { Category } from "../types";
+import { getCards, getCategories } from "../services/realm";
+import { Card, Category } from "../types";
 
 interface UpdateDataContextProps {
   updateCategory: Category;
@@ -10,6 +10,9 @@ interface UpdateDataContextProps {
 
   categories: Category[];
   setCategories: (categories: Category[]) => void;
+
+  cards: Card[];
+  setCards: (cards: Card[]) => void;
 }
 const UpdateDataContext = createContext({} as UpdateDataContextProps);
 
@@ -24,14 +27,28 @@ export const UpdateDataContextProvider = ({
   );
 
   const [categories, setCategories] = useState<Category[]>([]);
+  const [cards, setCards] = useState<Card[]>([]);
+
+  console.log({ categories, cards });
 
   useEffect(async () => {
-    setCategories(await getCategoriesByDB().then((data) => data));
+    setCategories(await getCategories().then((data) => data));
+  }, []);
+
+  useEffect(async () => {
+    setCards(await getCards().then((data) => data));
   }, []);
 
   return (
     <UpdateDataContext.Provider
-      value={{ updateCategory, setUpdateCategory, categories, setCategories }}
+      value={{
+        updateCategory,
+        setUpdateCategory,
+        categories,
+        setCategories,
+        cards,
+        setCards,
+      }}
     >
       {children}
     </UpdateDataContext.Provider>

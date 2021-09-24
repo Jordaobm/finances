@@ -1,5 +1,5 @@
 import React from "react";
-import Svg, { Path } from "react-native-svg";
+import Svg, { Circle, Path } from "react-native-svg";
 import { IconProps } from "../types";
 
 export const PlusIcon = ({ color }: IconProps) => {
@@ -82,6 +82,16 @@ export const TrashIcon = ({ color }: IconProps) => {
         stroke-linecap="round"
         stroke-linejoin="round"
       />
+    </Svg>
+  );
+};
+
+export const BulletsIcon = ({ color }: IconProps) => {
+  return (
+    <Svg width="18" height="4" viewBox="0 0 18 4" fill="none">
+      <Circle cx="2" cy="2" r="2" fill={color} />
+      <Circle cx="9" cy="2" r="2" fill={color} />
+      <Circle cx="16" cy="2" r="2" fill={color} />
     </Svg>
   );
 };

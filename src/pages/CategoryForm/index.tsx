@@ -1,9 +1,12 @@
 import { useNavigation } from "@react-navigation/core";
 import React, { useState } from "react";
 import { ScrollView, StatusBar } from "react-native";
+import Toast from "react-native-toast-message";
 import { Input } from "../../components/Input";
 import { InputColor } from "../../components/InputColor";
+import { useUpdateDataContext } from "../../context/UpdateDataContext";
 import { ArrowLeftIcon, TrashIcon } from "../../icons/Icons";
+import getRealm from "../../services/realm";
 import { Category } from "../../types";
 import {
   AcceptText,
@@ -19,10 +22,6 @@ import {
   SubtitlePage,
   TitlePage,
 } from "./styles";
-import Toast from "react-native-toast-message";
-import { useUpdateDataContext } from "../../context/UpdateDataContext";
-import getRealm from "../../services/realm";
-import { getCategoriesByDB } from "../../database/functions";
 
 export const CategoryForm = () => {
   const { updateCategory, setUpdateCategory, setCategories } =
@@ -95,10 +94,10 @@ export const CategoryForm = () => {
   return (
     <>
       <StatusBar
-        hidden
         barStyle="dark-content"
         backgroundColor="rgba(1, 55, 148, 0.0)"
         translucent
+        hidden
       />
       <ScrollView style={{ flex: 1, backgroundColor: "white" }}>
         <Container>
@@ -138,6 +137,7 @@ export const CategoryForm = () => {
                 }}
                 initialColor={form?.color}
                 initialNumber={form?.number}
+                placeholder="Cor da categoria"
               />
             </ContainerInput>
 
@@ -188,7 +188,7 @@ export const CategoryForm = () => {
             setUpdateCategory({} as Category);
           }}
         >
-          <AcceptText>Salvar</AcceptText>
+          <AcceptText>{updateCategory?.id ? "Salvar" : "Cadastrar"}</AcceptText>
         </Action>
       </Actions>
     </>
