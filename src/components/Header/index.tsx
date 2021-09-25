@@ -28,10 +28,7 @@ export const Header = ({ color, onlySettings = false }: HeaderProps) => {
 
   return (
     <Container>
-      <Settings
-        source={settings}
-        style={{ tintColor: color, width: 20, height: 20 }}
-      />
+      <Settings source={settings} style={{ tintColor: color }} />
       {!onlySettings && (
         <ContainerText>
           <Day style={{ color }}>{day},</Day>

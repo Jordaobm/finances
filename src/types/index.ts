@@ -51,4 +51,6 @@ export interface CardCategoryProps {
 
 export interface NavigationProps {
   activeRoute: string;
+  activeColor?: string;
+  onNavigate?: () => void;
 }

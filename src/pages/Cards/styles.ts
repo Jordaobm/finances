@@ -1,4 +1,6 @@
 import styled from "styled-components/native";
+export const ContainerColor = styled.View``;
+
 export const Container = styled.View`
   padding: 0 32px;
   margin-top: 12px;

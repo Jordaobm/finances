@@ -10,44 +10,58 @@ import {
 import { NavigationProps } from "../../types";
 import { Content, Home, NavigationButton } from "./styles";
 
-export const Navigation = ({ activeRoute }: NavigationProps) => {
+export const Navigation = ({
+  activeRoute,
+  activeColor = "rgba(1, 55, 148, 0.8)",
+  onNavigate,
+}: NavigationProps) => {
   const navigation = useNavigation();
 
   return (
     <Content
       colors={[
         "rgba(255, 255, 255, 0.0)",
-        "rgba(255, 255, 255, 0.5)",
+        "rgba(255, 255, 255, 0.4)",
+        "rgba(255, 255, 255, 0.8)",
         "rgba(255, 255, 255, 1)",
       ]}
     >
-      <NavigationButton onPress={() => navigation.navigate("Categories")}>
+      <NavigationButton
+        onPress={() => {
+          onNavigate && onNavigate();
+          navigation.navigate("Categories");
+        }}
+      >
         <TagIcon
-          color={
-            activeRoute === "Categories" ? "rgba(1, 55, 148, 0.8)" : "#595959"
-          }
+          color={activeRoute === "Categories" ? activeColor : "#595959"}
         />
       </NavigationButton>
-      <NavigationButton onPress={() => navigation.navigate("Cards")}>
-        <WalletIcon
-          color={activeRoute === "Cards" ? "rgba(1, 55, 148, 0.8)" : "#595959"}
-        />
+      <NavigationButton
+        onPress={() => {
+          onNavigate && onNavigate();
+          navigation.navigate("Cards");
+        }}
+      >
+        <WalletIcon color={activeRoute === "Cards" ? activeColor : "#595959"} />
       </NavigationButton>
 
-      <NavigationButton onPress={() => navigation.navigate("Home")}>
-        <Home
-          color={activeRoute === "Home" ? "rgba(1, 55, 148, 0.8)" : "#595959"}
-        >
+      <NavigationButton
+        onPress={() => {
+          onNavigate && onNavigate();
+          navigation.navigate("Home");
+        }}
+      >
+        <Home color={activeColor}>
           <HomeIcon color={"white"} />
         </Home>
       </NavigationButton>
 
       <NavigationButton>
-        <ChartIcon color={"#595959"} />
+        <MoneyIcon color={"#595959"} />
       </NavigationButton>
 
       <NavigationButton>
-        <MoneyIcon color={"#595959"} />
+        <ChartIcon color={"#595959"} />
       </NavigationButton>
     </Content>
   );

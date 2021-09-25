@@ -131,6 +131,7 @@ export const CardForm = ({}) => {
 
             <ContainerInput>
               <Input
+                keyboardType="number-pad"
                 value={form?.currentValue ? `${form?.currentValue}` : ``}
                 reference={currentValue}
                 placeholder="Valor disponível na conta"
@@ -205,7 +206,7 @@ export const CardForm = ({}) => {
                   <NormalText>
                     para melhor usabilidade da aplicação, recomendamos usar uma
                     cor de contraste para os textos do cartão. Para cartões
-                    escuro, opte por cores claras (branco), e para cartões
+                    escuros, opte por cores claras (branco), e para cartões
                     claros, cores escuras melhoram a legibilidade dos dados
                   </NormalText>
                 </BoldText>
