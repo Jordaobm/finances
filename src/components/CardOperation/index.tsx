@@ -1,13 +1,11 @@
 import React from "react";
 import { CardOperationProps } from "../../types";
 import { formatCurrency } from "../../utils/formatCurrency";
-import { getDayAndMonthByDate } from "../../utils/formatDate";
 import {
   Bullet,
   ContainerCard,
   ContentCard,
   DateText,
-  Line,
   TextOperation,
   Value,
   ValueAndMonth,
@@ -28,10 +26,7 @@ export const CardOperation = ({ operations }: CardOperationProps) => {
                   {formatCurrency(operation?.value)}
                 </Value>
                 <DateText>
-                  em {getDayAndMonthByDate(operation?.date)}, no{" "}
-                  {operation?.card?.institutionName
-                    ? operation?.card?.institutionName
-                    : operation?.wallet?.name && operation?.wallet?.name}
+                  em {operation?.date}, no {operation?.card?.institutionName}
                 </DateText>
               </ValueAndMonth>
             </ContentCard>

@@ -15,7 +15,7 @@ export const ContentText = styled.View`
   justify-content: space-between;
 `;
 
-export const AddOperations = styled.View`
+export const AddOperations = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
 `;

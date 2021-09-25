@@ -1,4 +1,5 @@
 import styled from "styled-components/native";
+import { TextInputMask } from "react-native-masked-text";
 
 interface ContainerInputProps {
   color: string;
@@ -13,6 +14,12 @@ export const ContainerInput = styled.View<ContainerInputProps>`
 `;
 
 export const CustomInput = styled.TextInput`
+  margin: 0;
+  padding: 0;
+  color: #595959;
+`;
+
+export const InputDate = styled(TextInputMask)`
   margin: 0;
   padding: 0;
   color: #595959;

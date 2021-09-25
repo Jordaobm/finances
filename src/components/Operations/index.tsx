@@ -1,7 +1,8 @@
+import { useNavigation } from "@react-navigation/core";
 import React from "react";
 import { operations } from "../../database";
 import { PlusIcon } from "../../icons/Icons";
-import { Card, Operation } from "../../types";
+import { Card } from "../../types";
 import { CardOperation } from "../CardOperation";
 import {
   AddOperations,
@@ -14,12 +15,13 @@ import {
   NotOperationSpan,
   OperationsText,
 } from "./styles";
-
 interface OperationsProps {
   card?: Card;
 }
 
 export const Operations = ({ card }: OperationsProps) => {
+  const navigation = useNavigation();
+
   if (card?.institutionName) {
     // pegar as operações do cartão aqui
   }
@@ -30,7 +32,7 @@ export const Operations = ({ card }: OperationsProps) => {
         <ContentText>
           <OperationsText>Operações recentes</OperationsText>
 
-          <AddOperations>
+          <AddOperations onPress={() => navigation.navigate("OperationForm")}>
             <AddOperationsText>Adicionar</AddOperationsText>
             <PlusIcon color="#fff" />
           </AddOperations>

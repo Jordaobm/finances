@@ -24,18 +24,17 @@ export interface Wallet {
 }
 
 export interface Operation {
-  id: number;
-  type: "INPUT" | "OUTPUT" | "POUPED";
+  id: string;
+  type: string;
   name: string;
   value: number;
   category: Category;
-  date: Date;
+  date: string;
   card?: Card;
-  wallet?: Wallet;
 }
 
 export interface Category {
-  id?: number;
+  id?: string;
   name: string;
   color: string;
   number: number;
@@ -53,4 +52,16 @@ export interface NavigationProps {
   activeRoute: string;
   activeColor?: string;
   onNavigate?: () => void;
+}
+
+export interface AutocompleteOption {
+  label: string;
+  value: string;
+  id?: string;
+}
+
+export interface SelectOption {
+  label: string;
+  value: string;
+  id?: string;
 }
