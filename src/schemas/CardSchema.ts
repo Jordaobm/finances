@@ -5,6 +5,7 @@ export default class Card {
     properties: {
       id: "string",
       institutionName: "string",
+      name: "string",
       currentValue: "int",
       colorBackground: "string",
       colorBackgroundNumber: "int",

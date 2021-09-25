@@ -8,6 +8,12 @@ interface UpdateDataContextProps {
   updateCategory: Category;
   setUpdateCategory: (category: Category) => void;
 
+  updateCard: Card;
+  setUpdateCard: (card: Card) => void;
+
+  selectedCard: Card;
+  setSelectedCard: (card: Card) => void;
+
   categories: Category[];
   setCategories: (categories: Category[]) => void;
 
@@ -25,11 +31,12 @@ export const UpdateDataContextProvider = ({
   const [updateCategory, setUpdateCategory] = useState<Category>(
     {} as Category
   );
+  const [updateCard, setUpdateCard] = useState<Card>({} as Card);
 
   const [categories, setCategories] = useState<Category[]>([]);
   const [cards, setCards] = useState<Card[]>([]);
 
-  console.log({ categories, cards });
+  const [selectedCard, setSelectedCard] = useState<Card>({} as Card);
 
   useEffect(async () => {
     setCategories(await getCategories().then((data) => data));
@@ -48,6 +55,10 @@ export const UpdateDataContextProvider = ({
         setCategories,
         cards,
         setCards,
+        updateCard,
+        setUpdateCard,
+        selectedCard,
+        setSelectedCard,
       }}
     >
       {children}

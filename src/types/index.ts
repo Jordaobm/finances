@@ -8,7 +8,7 @@ export interface HeaderProps {
 }
 
 export interface Card {
-  id?: number;
+  id?: string;
   institutionName: string;
   name: string;
   currentValue: number;

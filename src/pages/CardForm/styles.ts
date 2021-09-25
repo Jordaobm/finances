@@ -109,7 +109,7 @@ export const AcceptText = styled.Text`
 `;
 
 export const DeleteButton = styled.TouchableOpacity`
-  margin-top: 48px;
+  margin-top: 70px;
   width: 100%;
 
   border-width: 1px;

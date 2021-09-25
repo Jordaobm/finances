@@ -13,19 +13,45 @@ import {
   Value,
 } from "./styles";
 import chip from "../../assets/chip.png";
-import { Card as CardProps } from "../../types";
+import { Card } from "../../types";
 import { useNavigation } from "@react-navigation/core";
+import { formatCurrency } from "../../utils/formatCurrency";
+import { useUpdateDataContext } from "../../context/UpdateDataContext";
 
-export const Card = ({}: CardProps) => {
+interface CardProps {
+  card: Card;
+}
+
+export const CardComponent = ({ card }: CardProps) => {
+  const navigation = useNavigation();
+  const { setUpdateCard } = useUpdateDataContext();
+
   return (
     <Container>
-      <CardContent>
+      <CardContent
+        style={{ backgroundColor: card?.colorBackground, opacity: 1 }}
+        onPress={() => {
+          setUpdateCard(card);
+          navigation.navigate("CardForm");
+        }}
+      >
         <Bullets>
-          <BulletsIcon color="#595959" />
+          <BulletsIcon color={card?.colorText} />
         </Bullets>
+
         <ChipImage source={chip} />
+
+        <DataCard>
+          <Value style={{ color: card?.colorText }}>
+            {formatCurrency(card?.currentValue)}
+          </Value>
+          <Name style={{ color: card?.colorText }}>{card?.name}</Name>
+        </DataCard>
+
+        <InstitutionName style={{ color: card?.colorText }}>
+          {card?.institutionName}
+        </InstitutionName>
       </CardContent>
-      <TouchAddCard>Toque para adicionar um cartão</TouchAddCard>
     </Container>
   );
 };

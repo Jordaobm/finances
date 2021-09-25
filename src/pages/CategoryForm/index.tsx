@@ -75,7 +75,7 @@ export const CategoryForm = () => {
       text2: "A categoria foi alterada com sucesso",
       autoHide: true,
     });
-
+    setUpdateCategory({} as Category);
     setCategories(await getCategoriesByDB().then((data) => data));
   }
 
