@@ -5,7 +5,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { getCards, getCategories } from "../services/realm";
+import { getCards, getCarteira, getCategories } from "../services/realm";
 import { Card, Category, Operation } from "../types";
 
 interface UpdateDataContextProps {
@@ -26,6 +26,9 @@ interface UpdateDataContextProps {
 
   cards: Card[];
   setCards: (cards: Card[]) => void;
+
+  wallet: Card;
+  setWallet: (wallet: Card) => void;
 }
 const UpdateDataContext = createContext({} as UpdateDataContextProps);
 
@@ -35,6 +38,8 @@ interface UpdateDataContextProviderProps {
 export const UpdateDataContextProvider = ({
   children,
 }: UpdateDataContextProviderProps) => {
+  const [wallet, setWallet] = useState<Card>({} as Card);
+
   const [updateCategory, setUpdateCategory] = useState<Category>(
     {} as Category
   );
@@ -56,6 +61,10 @@ export const UpdateDataContextProvider = ({
     setCards(await getCards().then((data) => data));
   }, []);
 
+  useEffect(async () => {
+    setWallet(await getCarteira().then((data) => data));
+  }, []);
+
   return (
     <UpdateDataContext.Provider
       value={{
@@ -71,6 +80,8 @@ export const UpdateDataContextProvider = ({
         setSelectedCard,
         updateOperation,
         setUpdateOperation,
+        wallet,
+        setWallet,
       }}
     >
       {children}
