@@ -4,6 +4,12 @@ export const Container = styled.View`
   margin-top: 12px;
 `;
 
+export const ContainerCarousel = styled.View`
+  /* margin-left: 32px; */
+  margin-top: 32px;
+  padding: 0 32px;
+`;
+
 export const TitlePage = styled.Text`
   color: #343434;
   font-family: "Roboto-Bold";

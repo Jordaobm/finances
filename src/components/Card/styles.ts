@@ -61,6 +61,8 @@ export const Name = styled.Text`
   color: #595959;
   font-size: 14px;
   font-family: "Roboto-Bold";
+
+  max-width: 190px;
 `;
 export const DataCard = styled.View`
   position: relative;
@@ -70,9 +72,9 @@ export const DataCard = styled.View`
   flex-direction: column;
 `;
 export const InstitutionName = styled.Text`
-  position: relative;
-  top: -10%;
-
+  position: absolute;
+  top: 110%;
+  left: 10%;
   color: #595959;
   font-size: 10px;
   font-family: "Roboto-Regular";

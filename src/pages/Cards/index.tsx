@@ -1,5 +1,5 @@
-import React from "react";
-import { ScrollView, StatusBar } from "react-native";
+import React, { useState } from "react";
+import { ScrollView, StatusBar, View } from "react-native";
 import { FakeCard } from "../../components/Card";
 import { Header } from "../../components/Header";
 import { Navigation } from "../../components/Navigation";
@@ -9,12 +9,17 @@ import {
   CardImageContainer,
   Container,
   ContainerCards,
+  ContainerCarousel,
   SubtitlePage,
   TitlePage,
 } from "./styles";
 import cardImage from "../../assets/card.png";
+import { CustomCarousel } from "../../components/Carousel";
+import { useUpdateDataContext } from "../../context/UpdateDataContext";
 
 export const Cards = () => {
+  const { selectedCard, setSelectedCard, cards } = useUpdateDataContext();
+
   return (
     <>
       <StatusBar hidden />
@@ -29,19 +34,29 @@ export const Cards = () => {
           </SubtitlePage>
         </Container>
 
-        <ContainerCards>
-          <FakeCard />
+        {cards.length === 0 ? (
+          <View style={{ margin: 32 }}>
+            <FakeCard />
+          </View>
+        ) : (
+          <ContainerCarousel>
+            <CustomCarousel onChangeCard={(card) => setSelectedCard(card)} />
+          </ContainerCarousel>
+        )}
 
-          <CardImageContainer>
-            <CardImage source={cardImage} />
+        {!selectedCard?.id && (
+          <ContainerCards>
+            <CardImageContainer>
+              <CardImage source={cardImage} />
 
-            <CardDescriptionText>
-              Aqui serão listadas as operações envolvendo seu cartão/conta. Por
-              isso é importante vincular suas operações corretamente ao
-              criá-las.
-            </CardDescriptionText>
-          </CardImageContainer>
-        </ContainerCards>
+              <CardDescriptionText>
+                Aqui serão listadas as operações envolvendo seu cartão/conta.
+                Por isso é importante vincular suas operações corretamente ao
+                criá-las.
+              </CardDescriptionText>
+            </CardImageContainer>
+          </ContainerCards>
+        )}
       </ScrollView>
 
       <Navigation activeRoute="Cards" />

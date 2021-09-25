@@ -1,11 +1,11 @@
 import { useNavigation } from "@react-navigation/core";
 import React, { useRef, useState } from "react";
-import { ScrollView, StatusBar, Text, TextInput } from "react-native";
+import { ScrollView, StatusBar } from "react-native";
 import Toast from "react-native-toast-message";
 import { Input } from "../../components/Input";
 import { InputColor } from "../../components/InputColor";
 import { useUpdateDataContext } from "../../context/UpdateDataContext";
-import { ArrowLeftIcon } from "../../icons/Icons";
+import { ArrowLeftIcon, TrashIcon } from "../../icons/Icons";
 import getRealm, { getCards } from "../../services/realm";
 import { Card } from "../../types";
 import {
@@ -26,14 +26,19 @@ import {
   TitlePage,
 } from "./styles";
 export const CardForm = ({}) => {
-  const { setCards } = useUpdateDataContext();
+  const { setCards, updateCard, setUpdateCard, setSelectedCard } =
+    useUpdateDataContext();
 
-  const [form, setForm] = useState({
-    colorBackground: "rgba(1, 55, 148, 0.8)",
-    colorBackgroundNumber: 0,
-    colorText: "#ffffff",
-    colorTextNumber: 0,
-  } as Card);
+  const [form, setForm] = useState(
+    updateCard?.id
+      ? updateCard
+      : ({
+          colorBackground: "rgba(1, 55, 148, 0.8)",
+          colorBackgroundNumber: 0,
+          colorText: "#ffffff",
+          colorTextNumber: 275,
+        } as Card)
+  );
 
   const navigation = useNavigation();
 
@@ -61,6 +66,17 @@ export const CardForm = ({}) => {
     setCards(await getCards().then((data) => data));
   }
 
+  async function deleteCard(card: Card) {
+    const realm = await getRealm();
+
+    const collection = realm.objects("Card").filtered("id= $0", card?.id);
+    realm.write(() => {
+      realm.delete(collection);
+    });
+    setCards(await getCards().then((data) => data));
+    setSelectedCard({} as Card);
+  }
+
   return (
     <>
       <StatusBar
@@ -86,6 +102,7 @@ export const CardForm = ({}) => {
           <FormContainer>
             <ContainerInput>
               <Input
+                value={form?.institutionName}
                 placeholder="Nome da instituição financeira"
                 onChangeText={(institutionName) =>
                   setForm((state) => ({ ...state, institutionName }))
@@ -99,6 +116,7 @@ export const CardForm = ({}) => {
 
             <ContainerInput>
               <Input
+                value={form?.name}
                 reference={nameCardInput}
                 onSubmitEditing={() => {
                   currentValue.current.focus();
@@ -113,6 +131,7 @@ export const CardForm = ({}) => {
 
             <ContainerInput>
               <Input
+                value={form?.currentValue ? `${form?.currentValue}` : ``}
                 reference={currentValue}
                 placeholder="Valor disponível na conta"
                 onChangeText={(currentValue) =>
@@ -126,38 +145,58 @@ export const CardForm = ({}) => {
 
             <ContainerInput>
               <InputColor
-                onChangeColor={(colorBackground) => {
-                  setForm((state) => ({ ...state, colorBackground }));
+                onChangeColor={(colorBackground, colorBackgroundNumber) => {
+                  setForm((state) => ({
+                    ...state,
+                    colorBackground,
+                    colorBackgroundNumber,
+                  }));
                 }}
-                initialColor={"rgba(1, 55, 148, 0.8)"}
-                initialNumber={0}
+                initialColor={
+                  form?.colorBackground
+                    ? form?.colorBackground
+                    : "rgba(1, 55, 148, 0.8)"
+                }
+                initialNumber={
+                  form?.colorBackgroundNumber
+                    ? Number(form?.colorBackgroundNumber)
+                    : 0
+                }
                 placeholder="Cor de fundo do cartão"
               />
             </ContainerInput>
 
             <ContainerInput>
               <InputColor
-                onChangeColor={(colorText) => {
-                  setForm((state) => ({ ...state, colorText }));
+                onChangeColor={(colorText, colorTextNumber) => {
+                  setForm((state) => ({
+                    ...state,
+                    colorText,
+                    colorTextNumber,
+                  }));
                 }}
-                initialColor={"#ffffff"}
-                initialNumber={0}
+                initialColor={form?.colorText ? form?.colorText : "#ffffff"}
+                initialNumber={
+                  form?.colorTextNumber ? Number(form?.colorTextNumber) : 275
+                }
                 placeholder="Cor do texto do cartão"
                 palette
               />
             </ContainerInput>
 
-            {/* {updateCategory?.id && (
+            {updateCard?.id && (
               <DeleteButton
-                onPress={() => {
+                onPress={async () => {
+                  await deleteCard(form);
                   navigation.navigate("Cards");
+                  setUpdateCard({} as Card);
                 }}
               >
-                <DeleteText>Excluir categoria</DeleteText>
+                <DeleteText>Excluir cartão</DeleteText>
 
                 <TrashIcon color="#FF6F6F" />
               </DeleteButton>
-            )} */}
+            )}
 
             <ContainerInput style={{ marginTop: 50, marginBottom: 50 }}>
               <ContainerText>
@@ -178,6 +217,7 @@ export const CardForm = ({}) => {
       <Actions>
         <Action
           onPress={() => {
+            setUpdateCard({} as Card);
             navigation.navigate("Cards");
           }}
         >
@@ -201,12 +241,16 @@ export const CardForm = ({}) => {
                 autoHide: true,
               });
             } else {
-              await saveCard(form);
-              navigation.navigate("Cards");
+              if (updateCard?.id) {
+                // editar
+              } else {
+                await saveCard(form);
+                navigation.navigate("Cards");
+              }
             }
           }}
         >
-          <AcceptText>Cadastrar</AcceptText>
+          <AcceptText>{updateCard?.id ? "Salvar" : "Cadastrar"}</AcceptText>
         </Action>
       </Actions>
     </>
