@@ -1,7 +1,7 @@
 import React from "react";
 import { operations } from "../../database";
 import { PlusIcon } from "../../icons/Icons";
-import { Operation } from "../../types";
+import { Card, Operation } from "../../types";
 import { CardOperation } from "../CardOperation";
 import {
   AddOperations,
@@ -15,7 +15,15 @@ import {
   OperationsText,
 } from "./styles";
 
-export const Operations = () => {
+interface OperationsProps {
+  card?: Card;
+}
+
+export const Operations = ({ card }: OperationsProps) => {
+  if (card?.institutionName) {
+    // pegar as operações do cartão aqui
+  }
+
   return (
     <Container>
       <Content>

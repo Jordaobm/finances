@@ -6,6 +6,9 @@ export const Settings = styled.Image`
   align-self: flex-end;
   margin-right: 32px;
   margin-top: 32px;
+  opacity: 1;
+  width: 20px;
+  height: 20px;
 `;
 
 export const Day = styled.Text`
@@ -13,6 +16,7 @@ export const Day = styled.Text`
   font-family: "Roboto-Regular";
   font-size: 18px;
   text-transform: capitalize;
+  opacity: 1;
 `;
 
 export const Rest = styled.View`
@@ -23,6 +27,7 @@ export const DayNumber = styled.Text`
   text-align: center;
   font-family: "Roboto-Regular";
   font-size: 18px;
+  opacity: 1;
 `;
 
 export const Month = styled.Text`
@@ -30,9 +35,11 @@ export const Month = styled.Text`
   font-family: "Roboto-Regular";
   font-size: 18px;
   text-transform: capitalize;
+  opacity: 1;
 `;
 export const ContainerText = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  opacity: 1;
 `;
