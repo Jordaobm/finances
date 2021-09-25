@@ -95,3 +95,18 @@ export const BulletsIcon = ({ color }: IconProps) => {
     </Svg>
   );
 };
+
+export const ArrowDown = ({ color }: IconProps) => {
+  return (
+    <Svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <Path
+        d="M19.92 8.95L13.4 15.47C12.63 16.24 11.37 16.24 10.6 15.47L4.07996 8.95"
+        stroke={color}
+        stroke-width="1.5"
+        stroke-miterlimit="10"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </Svg>
+  );
+};

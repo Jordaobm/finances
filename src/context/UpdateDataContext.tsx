@@ -1,8 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { createContext, ReactNode, useContext } from "react";
-import { getCategoriesByDB } from "../database/functions";
+import React, {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { getCards, getCategories } from "../services/realm";
-import { Card, Category } from "../types";
+import { Card, Category, Operation } from "../types";
 
 interface UpdateDataContextProps {
   updateCategory: Category;
@@ -10,6 +14,9 @@ interface UpdateDataContextProps {
 
   updateCard: Card;
   setUpdateCard: (card: Card) => void;
+
+  updateOperation: Operation;
+  setUpdateOperation: (operation: Operation) => void;
 
   selectedCard: Card;
   setSelectedCard: (card: Card) => void;
@@ -32,6 +39,9 @@ export const UpdateDataContextProvider = ({
     {} as Category
   );
   const [updateCard, setUpdateCard] = useState<Card>({} as Card);
+  const [updateOperation, setUpdateOperation] = useState<Operation>(
+    {} as Operation
+  );
 
   const [categories, setCategories] = useState<Category[]>([]);
   const [cards, setCards] = useState<Card[]>([]);
@@ -59,6 +69,8 @@ export const UpdateDataContextProvider = ({
         setUpdateCard,
         selectedCard,
         setSelectedCard,
+        updateOperation,
+        setUpdateOperation,
       }}
     >
       {children}

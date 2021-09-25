@@ -6,7 +6,7 @@ import { Input } from "../../components/Input";
 import { InputColor } from "../../components/InputColor";
 import { useUpdateDataContext } from "../../context/UpdateDataContext";
 import { ArrowLeftIcon, TrashIcon } from "../../icons/Icons";
-import getRealm from "../../services/realm";
+import getRealm, { getCategories } from "../../services/realm";
 import { Category } from "../../types";
 import {
   AcceptText,
@@ -52,7 +52,7 @@ export const CategoryForm = () => {
       autoHide: true,
     });
 
-    setCategories(await getCategoriesByDB().then((data) => data));
+    setCategories(await getCategories().then((data) => data));
   }
 
   async function editCategory(category: Category) {
@@ -76,7 +76,7 @@ export const CategoryForm = () => {
       autoHide: true,
     });
     setUpdateCategory({} as Category);
-    setCategories(await getCategoriesByDB().then((data) => data));
+    setCategories(await getCategories().then((data) => data));
   }
 
   async function deleteCategory(category: Category) {
@@ -88,7 +88,7 @@ export const CategoryForm = () => {
     realm.write(() => {
       realm.delete(collection);
     });
-    setCategories(await getCategoriesByDB().then((data) => data));
+    setCategories(await getCategories().then((data) => data));
   }
 
   return (
