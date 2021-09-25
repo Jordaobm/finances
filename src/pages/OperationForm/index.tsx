@@ -33,8 +33,11 @@ export const OperationForm = () => {
     setUpdateOperation,
     categories,
     cards,
+    wallet,
   } = useUpdateDataContext();
   const [form, setForm] = useState<Operation>({} as Operation);
+
+  const cardAndCarteira = [...cards, wallet];
 
   const navigation = useNavigation();
 
@@ -145,14 +148,17 @@ export const OperationForm = () => {
             <ContainerInput>
               <Select
                 value={form?.card?.id}
-                items={cards.map((card) => ({
-                  label: card?.institutionName,
+                items={cardAndCarteira.map((card) => ({
+                  label:
+                    card?.institutionName !== ""
+                      ? card?.institutionName
+                      : card?.name,
                   value: card?.id?.toString() || "",
                   id: card?.id,
                 }))}
                 placeholder="Vincular operação à..."
                 onValueChange={(idCard) => {
-                  const selectedCard = cards?.find(
+                  const selectedCard = cardAndCarteira?.find(
                     (item) => item?.id?.toString() === idCard
                   );
 
