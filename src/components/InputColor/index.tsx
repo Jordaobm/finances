@@ -47,7 +47,9 @@ export const InputColor = ({
       );
     }
 
-    return `rgba(${value},${value},${value},1)`;
+    return `rgba(${Math.round(value)},${Math.round(value)},${Math.round(
+      value
+    )},1)`;
   }
 
   return (

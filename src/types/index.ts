@@ -38,6 +38,7 @@ export interface Category {
   name: string;
   color: string;
   number: number;
+  accumuledValue?:number
 }
 
 export interface CardOperationProps {

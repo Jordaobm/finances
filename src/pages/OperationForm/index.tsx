@@ -1,16 +1,13 @@
 import { useNavigation } from "@react-navigation/core";
-import React, { useState } from "react";
-import { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { ScrollView, StatusBar } from "react-native";
-import RNPickerSelect from "react-native-picker-select";
 import Toast from "react-native-toast-message";
 import { Input } from "../../components/Input";
-import { InputDate } from "../../components/InputDate";
 import { Select } from "../../components/Select";
 import { useUpdateDataContext } from "../../context/UpdateDataContext";
 import { typeOperation } from "../../database";
-import { ArrowLeftIcon, TrashIcon } from "../../icons/Icons";
-import Category from "../../schemas/CategorySchema";
+import { ArrowLeftIcon } from "../../icons/Icons";
+import { getCards, getOperations, updateCard } from "../../services/realm";
 import { Operation } from "../../types";
 import {
   AcceptText,
@@ -19,8 +16,6 @@ import {
   CancelText,
   Container,
   ContainerInput,
-  DeleteButton,
-  DeleteText,
   FormContainer,
   GoBack,
   SubtitlePage,
@@ -28,12 +23,13 @@ import {
 } from "./styles";
 export const OperationForm = () => {
   const {
-    updateCategory,
     updateOperation,
     setUpdateOperation,
     categories,
     cards,
     wallet,
+    setCards,
+    setOperations
   } = useUpdateDataContext();
   const [form, setForm] = useState<Operation>({} as Operation);
 
@@ -43,7 +39,21 @@ export const OperationForm = () => {
 
   const valueInputRef = useRef(null);
 
-  console.log(form);
+  async function saveOperation(operation: Operation) {
+    await updateCard(operation);
+    setCards(await getCards().then((data) => data));
+
+    Toast.show({
+      type: "success",
+      text1: "Operação adicionada com sucesso",
+      text2: `A operação ${operation?.name} foi vinculada à ${operation?.card?.institutionName}`,
+      autoHide: true,
+    });
+
+    
+
+    setOperations(await getOperations());
+  }
 
   return (
     <>
@@ -58,13 +68,15 @@ export const OperationForm = () => {
           <GoBack
             onPress={() => {
               navigation.goBack();
-              //   setUpdateCategory({} as Category);
+              //   setupdateOperation({} as Category);
             }}
           >
             <ArrowLeftIcon color="#595959" />
           </GoBack>
           <TitlePage>
-            {updateCategory?.id ? "Editando categoria" : "Adicionando operação"}
+            {updateOperation?.id
+              ? "Editando categoria"
+              : "Adicionando operação"}
           </TitlePage>
           <SubtitlePage>
             Adicione seus ganhos e despesas todo o mês para obter o controle das
@@ -91,7 +103,7 @@ export const OperationForm = () => {
                 value={form?.name}
                 returnKeyType={"next"}
                 onSubmitEditing={() => {
-                  valueInputRef.current.focus();
+                  valueInputRef?.current?.focus();
                 }}
               />
             </ContainerInput>
@@ -102,9 +114,9 @@ export const OperationForm = () => {
                 placeholder="Valor"
                 keyboardType="number-pad"
                 onChangeText={(value) =>
-                  setForm((state) => ({ ...state, value }))
+                  setForm((state) => ({ ...state, value: Number(value) }))
                 }
-                value={form?.value}
+                value={form?.value?.toString()}
               />
             </ContainerInput>
 
@@ -172,7 +184,7 @@ export const OperationForm = () => {
               />
             </ContainerInput>
 
-            {updateOperation?.id && (
+            {/* {updateOperation?.id && (
               <DeleteButton
                 onPress={async () => {
                   //   await deleteCategory(form);
@@ -184,7 +196,7 @@ export const OperationForm = () => {
 
                 <TrashIcon color="#FF6F6F" />
               </DeleteButton>
-            )}
+            )} */}
           </FormContainer>
         </Container>
       </ScrollView>
@@ -208,18 +220,20 @@ export const OperationForm = () => {
               });
             } else {
               // salvar
-              if (!updateCategory?.id) {
-                // await saveCategory(form);
+              if (!updateOperation?.id) {
+                await saveOperation(form);
                 navigation.goBack();
               } else {
                 // await editCategory(form);
-                navigation.goBack();
+                // navigation.goBack();
               }
             }
             setUpdateOperation({} as Operation);
           }}
         >
-          <AcceptText>{updateCategory?.id ? "Salvar" : "Cadastrar"}</AcceptText>
+          <AcceptText>
+            {updateOperation?.id ? "Salvar" : "Cadastrar"}
+          </AcceptText>
         </Action>
       </Actions>
     </>

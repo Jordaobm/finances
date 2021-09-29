@@ -77,6 +77,29 @@ export const CardForm = ({}) => {
     setSelectedCard({} as Card);
   }
 
+  async function editCard(card: Card) {
+    const realm = await getRealm();
+
+    const collection = realm.objects("Card").filtered("id= $0", card?.id);
+    realm.write(() => {
+      realm.delete(collection);
+    });
+
+    realm.write(() => {
+      realm.create("Card", { ...card }, "modified");
+    });
+
+    Toast.show({
+      type: "success",
+      text1: "Cartão editado com sucesso",
+      text2: "O Cartão foi salvo com sucesso",
+      autoHide: true,
+    });
+
+    setUpdateCard({} as Card);
+    setCards(await getCards().then((data) => data));
+  }
+
   return (
     <>
       <StatusBar
@@ -244,6 +267,8 @@ export const CardForm = ({}) => {
             } else {
               if (updateCard?.id) {
                 // editar
+                await editCard(form);
+                navigation.navigate("Cards");
               } else {
                 await saveCard(form);
                 navigation.navigate("Cards");

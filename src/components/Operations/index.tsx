@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/core";
 import React from "react";
-import { operations } from "../../database";
+import { useUpdateDataContext } from "../../context/UpdateDataContext";
 import { PlusIcon } from "../../icons/Icons";
 import { Card } from "../../types";
 import { CardOperation } from "../CardOperation";
@@ -20,6 +20,9 @@ interface OperationsProps {
 }
 
 export const Operations = ({ card }: OperationsProps) => {
+
+  const {operations} = useUpdateDataContext();
+
   const navigation = useNavigation();
 
   if (card?.institutionName) {
