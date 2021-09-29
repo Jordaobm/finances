@@ -66,7 +66,7 @@ export const CategoryForm = () => {
     });
 
     realm.write(() => {
-      realm.create("Category", { ...category, id: category?.id }, "modified");
+      realm.create("Category", { ...category }, "modified");
     });
 
     Toast.show({

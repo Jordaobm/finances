@@ -1,9 +1,7 @@
 import { useNavigation } from "@react-navigation/core";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useUpdateDataContext } from "../../context/UpdateDataContext";
 import { PlusIcon } from "../../icons/Icons";
-import Category from "../../schemas/CategorySchema";
-import { getCategories } from "../../services/realm";
 import { CardCategories } from "../CardCategories";
 import {
   AddOperations,
@@ -38,7 +36,7 @@ export const CategoriesList = () => {
             <CardCategories categories={categories} />
           ) : (
             <>
-              <NotOperation>Ainda não há operações cadastradas</NotOperation>
+              <NotOperation>Ainda não há categorias cadastradas</NotOperation>
               <NotOperationSpan>
                 Cadastre uma operação e ela aparecerá aqui!
               </NotOperationSpan>
