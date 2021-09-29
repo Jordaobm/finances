@@ -42,18 +42,16 @@ export const CardForm = ({}) => {
 
   const navigation = useNavigation();
 
-  const nameCardInput = useRef(null);
-  const currentValue = useRef(null);
-
   async function saveCard(card: Card) {
     const realm = await getRealm();
 
+    const formattedData: Card = {
+      ...card,
+      id: new Date().getTime().toString(),
+      currentValue: Number(card?.currentValue),
+    };
     realm.write(() => {
-      realm.create(
-        "Card",
-        { ...card, id: new Date().getTime().toString() },
-        "modified"
-      );
+      realm.create("Card", formattedData, "modified");
     });
 
     Toast.show({
@@ -86,7 +84,11 @@ export const CardForm = ({}) => {
     });
 
     realm.write(() => {
-      realm.create("Card", { ...card }, "modified");
+      realm.create(
+        "Card",
+        { ...card, currentValue: Number(card?.currentValue) },
+        "modified"
+      );
     });
 
     Toast.show({
@@ -113,6 +115,7 @@ export const CardForm = ({}) => {
           <GoBack
             onPress={() => {
               navigation.navigate("Cards");
+              setUpdateCard({} as Card);
             }}
           >
             <ArrowLeftIcon color="#595959" />
@@ -131,19 +134,12 @@ export const CardForm = ({}) => {
                   setForm((state) => ({ ...state, institutionName }))
                 }
                 returnKeyType={"next"}
-                onSubmitEditing={() => {
-                  nameCardInput.current.focus();
-                }}
               />
             </ContainerInput>
 
             <ContainerInput>
               <Input
                 value={form?.name}
-                reference={nameCardInput}
-                onSubmitEditing={() => {
-                  currentValue.current.focus();
-                }}
                 returnKeyType={"next"}
                 placeholder="Nome presente no cartão"
                 onChangeText={(name) =>
@@ -154,15 +150,26 @@ export const CardForm = ({}) => {
 
             <ContainerInput>
               <Input
-                keyboardType="number-pad"
-                value={form?.currentValue ? `${form?.currentValue}` : ``}
-                reference={currentValue}
+                money
                 placeholder="Valor disponível na conta"
-                onChangeText={(currentValue) =>
+                keyboardType="numeric"
+                onChangeText={(value) => {
+                  const valor = Number(
+                    value
+                      ?.replace("R$", "")
+                      ?.replace(".", "")
+                      ?.replace(",", ".")
+                  ).toFixed(2);
+
                   setForm((state) => ({
                     ...state,
-                    currentValue: Number(currentValue),
-                  }))
+                    currentValue: valor,
+                  }));
+                }}
+                value={
+                  form?.currentValue
+                    ? `${Number(form?.currentValue)?.toFixed(2)}`
+                    : ``
                 }
               />
             </ContainerInput>
@@ -241,15 +248,14 @@ export const CardForm = ({}) => {
       <Actions>
         <Action
           onPress={() => {
-            setUpdateCard({} as Card);
             navigation.navigate("Cards");
+            setUpdateCard({} as Card);
           }}
         >
           <CancelText>Cancelar</CancelText>
         </Action>
         <Action
           onPress={async () => {
-            // navigation.navigate("Cards");
             if (
               !form?.name ||
               form?.name == "" ||

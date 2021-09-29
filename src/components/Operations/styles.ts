@@ -51,3 +51,7 @@ export const NotOperationSpan = styled.Text`
   font-size: 12px;
   color: #c6c6c6;
 `;
+
+export const ContainerNotOperation = styled.View`
+  padding: 8px;
+`;

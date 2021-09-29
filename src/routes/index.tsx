@@ -17,9 +17,9 @@ export const NavigationRoutes = () => {
         <Navigation.Screen name="Home" component={Home} />
         <Navigation.Screen name="Categories" component={Categories} />
         <Navigation.Screen name="CategoryForm" component={CategoryForm} />
-        <Navigation.Screen name="Cards" component={Cards} />
         <Navigation.Screen name="CardForm" component={CardForm} />
         <Navigation.Screen name="OperationForm" component={OperationForm} />
+        <Navigation.Screen name="Cards" component={Cards} />
       </Navigation.Navigator>
       <ToastWrapper ref={(ref) => ToastWrapper.setRef(ref)} />
     </>

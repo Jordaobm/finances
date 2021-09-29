@@ -19,7 +19,7 @@ export const CustomInput = styled.TextInput`
   color: #595959;
 `;
 
-export const InputDate = styled(TextInputMask)`
+export const InputStyle = styled(TextInputMask)`
   margin: 0;
   padding: 0;
   color: #595959;

@@ -1,13 +1,17 @@
 import { useNavigation } from "@react-navigation/core";
 import React, { useRef, useState } from "react";
-import { ScrollView, StatusBar } from "react-native";
+import { ScrollView, StatusBar, TextInput } from "react-native";
 import Toast from "react-native-toast-message";
 import { Input } from "../../components/Input";
 import { Select } from "../../components/Select";
 import { useUpdateDataContext } from "../../context/UpdateDataContext";
-import { typeOperation } from "../../database";
-import { ArrowLeftIcon } from "../../icons/Icons";
-import { getCards, getOperations, updateCard } from "../../services/realm";
+import { operations, typeOperation } from "../../database";
+import { ArrowLeftIcon, TrashIcon } from "../../icons/Icons";
+import {
+  getCards,
+  getOperations,
+  addOrExcludeOperationAndUpdateCard,
+} from "../../services/realm";
 import { Operation } from "../../types";
 import {
   AcceptText,
@@ -16,6 +20,8 @@ import {
   CancelText,
   Container,
   ContainerInput,
+  DeleteButton,
+  DeleteText,
   FormContainer,
   GoBack,
   SubtitlePage,
@@ -29,30 +35,80 @@ export const OperationForm = () => {
     cards,
     wallet,
     setCards,
-    setOperations
+    setOperations,
+    operations,
   } = useUpdateDataContext();
-  const [form, setForm] = useState<Operation>({} as Operation);
+
+  const [form, setForm] = useState<Operation>(
+    updateOperation?.id
+      ? {
+          ...updateOperation,
+          value: Number(updateOperation?.value)?.toFixed(2),
+        }
+      : ({} as Operation)
+  );
 
   const cardAndCarteira = [...cards, wallet];
 
   const navigation = useNavigation();
 
-  const valueInputRef = useRef(null);
+  async function saveOperation(operation: Operation, showMessage: boolean) {
+    const formattedOperation: Operation = {
+      ...operation,
+      value: Number(operation?.value),
+    };
 
-  async function saveOperation(operation: Operation) {
-    await updateCard(operation);
+    await addOrExcludeOperationAndUpdateCard(formattedOperation, false);
     setCards(await getCards().then((data) => data));
+    setOperations(await getOperations());
+    if (showMessage) {
+      Toast.show({
+        type: "success",
+        text1: "Operação adicionada com sucesso",
+        text2: `A operação ${formattedOperation?.name} foi vinculada à ${formattedOperation?.card?.institutionName}`,
+        autoHide: true,
+      });
+    }
+  }
+
+  async function deleteOperation(operation: Operation, showMessage: boolean) {
+    const formattedOperation: Operation = {
+      ...operation,
+      type:
+        operation?.type === "INPUT"
+          ? "OUTPUT"
+          : operation?.type === "OUTPUT"
+          ? "INPUT"
+          : operation?.type,
+      value: Number(operation?.value),
+    };
+
+    await addOrExcludeOperationAndUpdateCard(formattedOperation, true);
+    setCards(await getCards().then((data) => data));
+    setOperations(await getOperations());
+    if (showMessage) {
+      Toast.show({
+        type: "success",
+        text1: "Operação excluída com sucesso",
+        text2: `A operação ${formattedOperation?.name} foi desvinculada à ${formattedOperation?.card?.institutionName}`,
+        autoHide: true,
+      });
+    }
+  }
+
+  async function editOperation(operation: Operation) {
+    const excludeOp = operations?.find((op) => op?.id === operation?.id);
+
+    if (excludeOp) {
+      await deleteOperation(excludeOp, false);
+      await saveOperation(operation, false);
+    }
 
     Toast.show({
       type: "success",
-      text1: "Operação adicionada com sucesso",
-      text2: `A operação ${operation?.name} foi vinculada à ${operation?.card?.institutionName}`,
+      text1: "Operação editada com sucesso",
       autoHide: true,
     });
-
-    
-
-    setOperations(await getOperations());
   }
 
   return (
@@ -67,8 +123,8 @@ export const OperationForm = () => {
         <Container>
           <GoBack
             onPress={() => {
+              setUpdateOperation({} as Operation);
               navigation.goBack();
-              //   setupdateOperation({} as Category);
             }}
           >
             <ArrowLeftIcon color="#595959" />
@@ -102,27 +158,34 @@ export const OperationForm = () => {
                 }
                 value={form?.name}
                 returnKeyType={"next"}
-                onSubmitEditing={() => {
-                  valueInputRef?.current?.focus();
-                }}
               />
             </ContainerInput>
 
             <ContainerInput>
               <Input
-                reference={valueInputRef}
+                money
                 placeholder="Valor"
-                keyboardType="number-pad"
-                onChangeText={(value) =>
-                  setForm((state) => ({ ...state, value: Number(value) }))
-                }
+                keyboardType="numeric"
+                onChangeText={(value) => {
+                  const valor = Number(
+                    value
+                      ?.replace("R$", "")
+                      ?.replace(".", "")
+                      ?.replace(",", ".")
+                  ).toFixed(2);
+
+                  setForm((state) => ({
+                    ...state,
+                    value: valor,
+                  }));
+                }}
                 value={form?.value?.toString()}
               />
             </ContainerInput>
 
             <ContainerInput>
               <Select
-                value={form?.category?.id}
+                value={form?.category?.id || ""}
                 items={categories.map((category) => ({
                   label: category?.name,
                   value: category?.id?.toString() || "",
@@ -152,14 +215,14 @@ export const OperationForm = () => {
                 onChangeText={(date) =>
                   setForm((state) => ({ ...state, date }))
                 }
-                value={form?.name}
+                value={form?.date}
               />
             </ContainerInput>
 
             {/* carteira / cartao */}
             <ContainerInput>
               <Select
-                value={form?.card?.id}
+                value={form?.card?.id || ""}
                 items={cardAndCarteira.map((card) => ({
                   label:
                     card?.institutionName !== ""
@@ -184,19 +247,19 @@ export const OperationForm = () => {
               />
             </ContainerInput>
 
-            {/* {updateOperation?.id && (
+            {updateOperation?.id && (
               <DeleteButton
                 onPress={async () => {
-                  //   await deleteCategory(form);
+                  await deleteOperation(form, true);
                   navigation.goBack();
                   setUpdateOperation({} as Operation);
                 }}
               >
-                <DeleteText>Excluir categoria</DeleteText>
+                <DeleteText>Excluir operação</DeleteText>
 
                 <TrashIcon color="#FF6F6F" />
               </DeleteButton>
-            )} */}
+            )}
           </FormContainer>
         </Container>
       </ScrollView>
@@ -221,11 +284,11 @@ export const OperationForm = () => {
             } else {
               // salvar
               if (!updateOperation?.id) {
-                await saveOperation(form);
+                await saveOperation(form, true);
                 navigation.goBack();
               } else {
-                // await editCategory(form);
-                // navigation.goBack();
+                await editOperation(form);
+                navigation.goBack();
               }
             }
             setUpdateOperation({} as Operation);

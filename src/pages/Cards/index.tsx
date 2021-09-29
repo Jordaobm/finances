@@ -100,7 +100,6 @@ export const Cards = () => {
       </ScrollView>
 
       <Navigation
-        onNavigate={() => setSelectedCard({} as Card)}
         activeRoute="Cards"
         activeColor={
           selectedCard?.colorBackground

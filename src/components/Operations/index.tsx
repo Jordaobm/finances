@@ -9,6 +9,7 @@ import {
   AddOperationsText,
   Container,
   ContainerCardOperations,
+  ContainerNotOperation,
   Content,
   ContentText,
   NotOperation,
@@ -20,13 +21,16 @@ interface OperationsProps {
 }
 
 export const Operations = ({ card }: OperationsProps) => {
+  const { operations } = useUpdateDataContext();
 
-  const {operations} = useUpdateDataContext();
+  let operationsFilter = operations;
 
   const navigation = useNavigation();
 
   if (card?.institutionName) {
-    // pegar as operações do cartão aqui
+    operationsFilter = operationsFilter?.filter(
+      (operation) => operation?.card?.id === card?.id
+    );
   }
 
   return (
@@ -41,15 +45,15 @@ export const Operations = ({ card }: OperationsProps) => {
           </AddOperations>
         </ContentText>
         <ContainerCardOperations>
-          {operations?.length > 0 ? (
-            <CardOperation operations={operations} />
+          {operationsFilter?.length > 0 ? (
+            <CardOperation operations={operationsFilter} />
           ) : (
-            <>
+            <ContainerNotOperation>
               <NotOperation>Ainda não há operações cadastradas</NotOperation>
               <NotOperationSpan>
                 Cadastre uma operação e ela aparecerá aqui!
               </NotOperationSpan>
-            </>
+            </ContainerNotOperation>
           )}
         </ContainerCardOperations>
       </Content>
