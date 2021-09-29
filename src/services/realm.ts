@@ -111,36 +111,52 @@ export async function getCarteira() {
   }
 }
 
-export async function updateCard(operation: Operation) {
+export async function addOrExcludeOperationAndUpdateCard(
+  operation: Operation,
+  exclude: Boolean
+) {
   const realm = await Realm.open({
     path: "mydb",
     schema: [CategorySchema, CardSchema, OperationSchema],
   });
 
-  let updt = realm.objects("Card").filtered("id= $0", `${operation?.card?.id}`);
+  let updt: any = realm
+    .objects("Card")
+    .filtered("id= $0", `${operation?.card?.id}`);
   if (operation?.type === "INPUT") {
     realm.write(() => {
-      updt[0].currentValue = updt[0].currentValue + operation?.value;
+      updt[0].currentValue =
+        Number(updt[0]?.currentValue) + Number(operation?.value);
     });
   } else if (operation?.type === "OUTPUT") {
     realm.write(() => {
-      updt[0].currentValue = updt[0].currentValue - operation?.value;
+      updt[0].currentValue =
+        Number(updt[0]?.currentValue) - Number(operation?.value);
     });
   }
 
-  const formatOperation = {
-    ...operation,
-    id: new Date().getTime().toString(),
-    id_category: operation?.category?.id,
-    id_card: operation?.card?.id,
-  };
+  if (!exclude) {
+    const formatOperation = {
+      ...operation,
+      id: new Date().getTime().toString(),
+      id_category: operation?.category?.id,
+      id_card: operation?.card?.id,
+    };
 
-  realm.write(() => {
-    realm.create("Operation", formatOperation, "modified");
-  });
+    realm.write(() => {
+      realm.create("Operation", formatOperation, "modified");
+    });
+  } else {
+    const collection = realm
+      .objects("Operation")
+      .filtered("id= $0", `${operation?.id}`);
+    realm.write(() => {
+      realm.delete(collection);
+    });
+  }
 }
 
-export async function getCategory(idCategory:string){
+export async function getCategory(idCategory: string) {
   const realm = await Realm.open({
     path: "mydb",
     schema: [CategorySchema, CardSchema, OperationSchema],
@@ -161,12 +177,10 @@ export async function getCategory(idCategory:string){
     });
   }
 
-
   return categories[0];
-
 }
 
-export async function getCard(idCard:string){
+export async function getCard(idCard: string) {
   const realm = await Realm.open({
     path: "mydb",
     schema: [CategorySchema, CardSchema, OperationSchema],
@@ -191,12 +205,10 @@ export async function getCard(idCard:string){
     });
   }
 
-
   return cards[0];
-} 
+}
 
-export async function getOperations(){
-
+export async function getOperations() {
   const realm = await Realm.open({
     path: "mydb",
     schema: [CategorySchema, CardSchema, OperationSchema],
@@ -210,16 +222,15 @@ export async function getOperations(){
     const value: any = data[i];
 
     operations.push({
-      id:value?.id,
-      date:value?.date,
-      name:value?.name,
-      type:value?.type,
-      value:value?.value,
-      category:await getCategory(value?.id_category),
-      card: await getCard(value?.id_card)
+      id: value?.id,
+      date: value?.date,
+      name: value?.name,
+      type: value?.type,
+      value: value?.value,
+      category: await getCategory(value?.id_category),
+      card: await getCard(value?.id_card),
     });
   }
 
   return operations;
-
 }

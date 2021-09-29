@@ -1,4 +1,6 @@
+import { useNavigation } from "@react-navigation/core";
 import React from "react";
+import { useUpdateDataContext } from "../../context/UpdateDataContext";
 import { CardOperationProps } from "../../types";
 import { formatCurrency } from "../../utils/formatCurrency";
 import {
@@ -12,11 +14,20 @@ import {
 } from "./styles";
 
 export const CardOperation = ({ operations }: CardOperationProps) => {
+  const navigation = useNavigation();
+  const { setUpdateOperation } = useUpdateDataContext();
+
   return (
     <>
       {operations?.map((operation, index) => {
         return (
-          <ContainerCard key={index}>
+          <ContainerCard
+            key={index}
+            onPress={() => {
+              navigation.navigate("OperationForm");
+              setUpdateOperation(operation);
+            }}
+          >
             <ContentCard>
               <Bullet color={operation?.category?.color} />
               <TextOperation>{operation?.name}</TextOperation>

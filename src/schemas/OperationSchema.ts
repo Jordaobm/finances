@@ -6,7 +6,7 @@ export default class Category {
       id: "string",
       type: "string",
       name: "string",
-      value: "float",
+      value: "double",
       id_category: "string",
       date: "string",
       id_card: "string",

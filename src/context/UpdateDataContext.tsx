@@ -5,7 +5,12 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { getCards, getCarteira, getCategories, getOperations } from "../services/realm";
+import {
+  getCards,
+  getCarteira,
+  getCategories,
+  getOperations,
+} from "../services/realm";
 import { Card, Category, Operation } from "../types";
 
 interface UpdateDataContextProps {
@@ -27,8 +32,8 @@ interface UpdateDataContextProps {
   cards: Card[];
   setCards: (cards: Card[]) => void;
 
-  operations:Operation[];
-  setOperations:(operations:Operation[])=>void;
+  operations: Operation[];
+  setOperations: (operations: Operation[]) => void;
 
   wallet: Card;
   setWallet: (wallet: Card) => void;
@@ -91,7 +96,7 @@ export const UpdateDataContextProvider = ({
         wallet,
         setWallet,
         operations,
-        setOperations
+        setOperations,
       }}
     >
       {children}

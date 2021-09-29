@@ -22,7 +22,7 @@ interface RenderItemProps {
 export const CustomCarousel: React.SFC<CustomCarouselProps> = ({
   onChangeCard,
 }) => {
-  const { cards } = useUpdateDataContext();
+  const { cards, selectedCard } = useUpdateDataContext();
 
   const [carouselItems, setCarouselItems] = useState<Card[]>([
     {} as Card,
@@ -35,6 +35,9 @@ export const CustomCarousel: React.SFC<CustomCarouselProps> = ({
       <Carousel
         layout={"default"}
         ref={ref}
+        firstItem={
+          cards?.findIndex((card) => card?.id === selectedCard?.id) + 1
+        }
         data={carouselItems}
         sliderWidth={300}
         itemWidth={290}

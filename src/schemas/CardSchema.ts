@@ -6,7 +6,7 @@ export default class Card {
       id: "string",
       institutionName: "string",
       name: "string",
-      currentValue: "int",
+      currentValue: "double",
       colorBackground: "string",
       colorBackgroundNumber: "int",
       colorText: "string",

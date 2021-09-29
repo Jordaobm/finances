@@ -5,7 +5,7 @@ export const ContentCard = styled.View`
   align-items: center;
 `;
 
-export const ContainerCard = styled.View`
+export const ContainerCard = styled.TouchableOpacity`
   padding: 16px;
 `;
 

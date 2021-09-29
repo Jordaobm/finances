@@ -11,7 +11,7 @@ export interface Card {
   id?: string;
   institutionName: string;
   name: string;
-  currentValue: number;
+  currentValue: number | string;
   colorBackground: string;
   colorBackgroundNumber?: number;
   colorText: string;
@@ -27,7 +27,7 @@ export interface Operation {
   id: string;
   type: string;
   name: string;
-  value: number;
+  value: number | string;
   category: Category;
   date: string;
   card?: Card;
@@ -38,7 +38,7 @@ export interface Category {
   name: string;
   color: string;
   number: number;
-  accumuledValue?:number
+  accumuledValue?: number;
 }
 
 export interface CardOperationProps {
