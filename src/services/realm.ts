@@ -25,11 +25,24 @@ export async function getCategories() {
   for (let i = 0; i < data.length; i++) {
     const value: any = data[i];
 
+    const operations = await getOperationsByCategory({
+      color: value?.color,
+      id: value?.id,
+      name: value?.name,
+      number: value?.number,
+    });
+
+    let accumuledValue = 0;
+    operations?.forEach((e) => {
+      accumuledValue = accumuledValue + Number(e?.value);
+    });
+
     categories.push({
       color: value?.color,
       id: value?.id,
       name: value?.name,
       number: value?.number,
+      accumuledValue,
     });
   }
 
@@ -169,11 +182,24 @@ export async function getCategory(idCategory: string) {
   for (let i = 0; i < data.length; i++) {
     const value: any = data[i];
 
+    const operations = await getOperationsByCategory({
+      color: value?.color,
+      id: value?.id,
+      name: value?.name,
+      number: value?.number,
+    });
+
+    let accumuledValue = 0;
+    operations?.forEach((e) => {
+      accumuledValue = accumuledValue + Number(e?.value);
+    });
+
     categories.push({
       color: value?.color,
       id: value?.id,
       name: value?.name,
       number: value?.number,
+      accumuledValue,
     });
   }
 
@@ -228,6 +254,35 @@ export async function getOperations() {
       type: value?.type,
       value: value?.value,
       category: await getCategory(value?.id_category),
+      card: await getCard(value?.id_card),
+    });
+  }
+
+  return operations;
+}
+
+export async function getOperationsByCategory(category: Category) {
+  const realm = await Realm.open({
+    path: "mydb",
+    schema: [CategorySchema, CardSchema, OperationSchema],
+  });
+
+  const data = realm
+    .objects("Operation")
+    .filtered("id_category= $0", `${category?.id}`);
+
+  const operations: Operation[] = [];
+
+  for (let i = 0; i < data.length; i++) {
+    const value: any = data[i];
+
+    operations.push({
+      id: value?.id,
+      date: value?.date,
+      name: value?.name,
+      type: value?.type,
+      value: value?.value,
+      category,
       card: await getCard(value?.id_card),
     });
   }

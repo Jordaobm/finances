@@ -15,6 +15,8 @@ import {
 } from "./styles";
 
 export const CardCategories = ({ categories }: CardCategoryProps) => {
+  const { operations } = useUpdateDataContext();
+
   const navigation = useNavigation();
 
   const { setUpdateCategory } = useUpdateDataContext();
@@ -22,8 +24,6 @@ export const CardCategories = ({ categories }: CardCategoryProps) => {
   return (
     <>
       {categories?.map((category, index) => {
-        const value = 0;
-
         return (
           <ContainerCard
             key={index}
@@ -37,8 +37,20 @@ export const CardCategories = ({ categories }: CardCategoryProps) => {
               <TextOperation>{category?.name}</TextOperation>
 
               <ValueAndMonth>
-                <Value color={category?.color}>{formatCurrency(value)}</Value>
-                <DateText>última adição em 11/09</DateText>
+                <Value color={category?.color}>
+                  {formatCurrency(Number(category?.accumuledValue))}
+                </Value>
+
+                {operations?.find((e) => e?.category?.id === category?.id)
+                  ?.date && (
+                  <DateText>
+                    última adição em{" "}
+                    {
+                      operations?.find((e) => e?.category?.id === category?.id)
+                        ?.date
+                    }
+                  </DateText>
+                )}
               </ValueAndMonth>
             </ContentCard>
           </ContainerCard>

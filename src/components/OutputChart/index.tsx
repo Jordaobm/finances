@@ -1,6 +1,8 @@
 import React from "react";
 import { PieChart } from "react-native-svg-charts";
 import { Text, G, Circle } from "react-native-svg";
+import { useUpdateDataContext } from "../../context/UpdateDataContext";
+import { Category } from "../../types";
 
 interface LabelProps {
   slices: any;
@@ -9,20 +11,31 @@ interface LabelProps {
 }
 
 export const OutputChart = () => {
-  const data = [
-    {
-      key: 1,
-      amount: 63.63,
-      svg: { fill: "#FF6F6F" },
-      category: "Mercado",
-    },
-    {
-      key: 2,
-      amount: 36.36,
-      svg: { fill: "#E1A0FF" },
-      category: "Internet",
-    },
-  ];
+  const { operations } = useUpdateDataContext();
+
+  const outPutOperations = operations?.filter((e) => e?.type === "OUTPUT");
+  let outPutCategories: Category[] = [];
+
+  outPutOperations?.forEach((operation) => {
+    if (!outPutCategories?.find((e) => e?.id === operation?.category?.id)) {
+      outPutCategories.push(operation?.category);
+    }
+  });
+
+  let totalOutPutCategories = 0;
+
+  outPutCategories?.forEach((e) => {
+    totalOutPutCategories = totalOutPutCategories + Number(e?.accumuledValue);
+  });
+
+  const data = outPutCategories?.map((category) => ({
+    key: category?.id,
+    amount: Number(
+      (Number(category?.accumuledValue) / totalOutPutCategories) * 100
+    ).toFixed(2),
+    svg: { fill: category?.color },
+    category: category?.name,
+  }));
 
   const Labels = ({ slices, height, width }: LabelProps) => {
     return slices.map((slice, index) => {
@@ -37,7 +50,7 @@ export const OutputChart = () => {
           alignmentBaseline={"middle"}
           fontSize={12}
         >
-          {`${data.amount} ${data.category}`}
+          {`${data?.amount?.replace(".", ",")}%  ${data.category}`}
         </Text>
       );
     });

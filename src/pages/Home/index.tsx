@@ -5,6 +5,7 @@ import { Navigation } from "../../components/Navigation";
 import { Operations } from "../../components/Operations";
 import { OperationsCards } from "../../components/OperationsCards";
 import { OutputChart } from "../../components/OutputChart";
+import { useUpdateDataContext } from "../../context/UpdateDataContext";
 import { formatCurrency } from "../../utils/formatCurrency";
 import {
   Background,
@@ -16,6 +17,20 @@ import {
 } from "./styles";
 
 export const Home = () => {
+  const { wallet, operations } = useUpdateDataContext();
+
+  let currentValue = 0;
+
+  operations?.forEach((operation) => {
+    if (operation?.type === "INPUT") {
+      currentValue = currentValue + Number(operation?.value);
+    }
+
+    if (operation?.type === "OUTPUT") {
+      currentValue = currentValue - Number(operation?.value);
+    }
+  });
+
   return (
     <>
       <StatusBar
@@ -31,9 +46,10 @@ export const Home = () => {
           </ContainerOperationCards>
           <CurrentValueContainer>
             <SmallText>Valor atual</SmallText>
-            <CurrentValue>{formatCurrency(800)}</CurrentValue>
+            <CurrentValue>{formatCurrency(Number(currentValue))}</CurrentValue>
+
             <ContainerGraph>
-              <OutputChart />
+              {operations?.length > 0 && <OutputChart />}
             </ContainerGraph>
           </CurrentValueContainer>
         </Background>
