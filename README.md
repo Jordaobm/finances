@@ -122,3 +122,44 @@ Para editar/excluir uma operação, basta o usuário clicar nela e ele será lev
 <div align="center">
   <img alt="finances" title="finances" src="https://github.com/Jordaobm/finances/blob/main/src/assets/document/13.png" width="300px" />
 </div>
+
+## 🛠 Tecnologias
+
+   - "@react-native-picker/picker": "^2.1.0",
+   - "@react-navigation/native": "^6.0.2",
+   - "@react-navigation/native-stack": "^6.1.0",
+   - "@types/react-native-autocomplete-input": "^5.0.0",
+   - "@types/react-native-snap-carousel": "^3.8.4",
+   - "@types/react-native-svg-charts": "^5.0.9",
+   - "date-fns": "^2.23.0",
+   - "react": "17.0.2",
+   - "react-native": "0.65.1",
+   - "react-native-autocomplete-input": "^5.0.2",
+   - "react-native-draggable": "^3.3.0",
+   - "react-native-linear-gradient": "^2.5.6",
+   - "react-native-masked-text": "^1.13.0",
+   - "react-native-picker-select": "^8.0.4",
+   - "react-native-safe-area-context": "^3.3.2",
+   - "react-native-screens": "^3.7.1",
+   - "react-native-snap-carousel": "^3.9.1",
+   - "react-native-splash-screen": "^3.2.0",
+   - "react-native-svg": "^12.1.1",
+   - "react-native-svg-charts": "^5.4.0",
+   - "react-native-svg-icon": "^0.10.0",
+   - "react-native-toast-message": "^1.6.0",
+   - "realm": "^10.8.0",
+   - "styled-components": "^5.3.1"
+
+
+### Autor
+---
+
+<a href="https://github.com/Jordaobm">
+ <img style="border-radius: "50px";" src="https://avatars.githubusercontent.com/u/70074016?v=4" width="100px;" alt="Jordão"/>
+ <br />
+ <sub><b>Jordão Beghetto Massariol</b></sub></a> <a href="https://github.com/Jordaobm" title="Jordão">🚀</a>
+
+
+Feito com ❤️ por Jordão Beghetto Massariol 👋🏽 Entre em contato!
+
+<a href="https://twitter.com/JordoMass"><img alt="Twitter" src="https://img.shields.io/twitter/url?style=social"></a>
