@@ -1,4 +1,4 @@
-export default class Category {
+export default class OperationSchema {
   static schema = {
     name: "Operation",
     primaryKey: "id",
@@ -8,7 +8,7 @@ export default class Category {
       name: "string",
       value: "double",
       id_category: "string",
-      date: "string",
+      date: "date",
       id_card: "string",
     },
   };

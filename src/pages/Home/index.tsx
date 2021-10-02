@@ -49,7 +49,9 @@ export const Home = () => {
             <CurrentValue>{formatCurrency(Number(currentValue))}</CurrentValue>
 
             <ContainerGraph>
-              {operations?.length > 0 && <OutputChart />}
+              {operations?.filter((e) => e?.type === "OUTPUT")?.length > 0 && (
+                <OutputChart />
+              )}
             </ContainerGraph>
           </CurrentValueContainer>
         </Background>

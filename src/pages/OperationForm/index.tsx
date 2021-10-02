@@ -11,6 +11,7 @@ import {
   getCards,
   getOperations,
   addOrExcludeOperationAndUpdateCard,
+  getCategories,
 } from "../../services/realm";
 import { Operation } from "../../types";
 import {
@@ -37,6 +38,7 @@ export const OperationForm = () => {
     setCards,
     setOperations,
     operations,
+    setCategories,
   } = useUpdateDataContext();
 
   const [form, setForm] = useState<Operation>(
@@ -61,6 +63,7 @@ export const OperationForm = () => {
     await addOrExcludeOperationAndUpdateCard(formattedOperation, false);
     setCards(await getCards().then((data) => data));
     setOperations(await getOperations());
+    setCategories(await getCategories().then((data) => data));
     if (showMessage) {
       Toast.show({
         type: "success",
@@ -86,6 +89,8 @@ export const OperationForm = () => {
     await addOrExcludeOperationAndUpdateCard(formattedOperation, true);
     setCards(await getCards().then((data) => data));
     setOperations(await getOperations());
+    setCategories(await getCategories().then((data) => data));
+
     if (showMessage) {
       Toast.show({
         type: "success",
@@ -103,6 +108,7 @@ export const OperationForm = () => {
       await deleteOperation(excludeOp, false);
       await saveOperation(operation, false);
     }
+    setCategories(await getCategories().then((data) => data));
 
     Toast.show({
       type: "success",

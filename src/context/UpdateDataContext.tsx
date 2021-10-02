@@ -9,9 +9,12 @@ import {
   getCards,
   getCarteira,
   getCategories,
+  getConfiguration,
   getOperations,
+  updateConfigRealm,
 } from "../services/realm";
-import { Card, Category, Operation } from "../types";
+import { Card, Category, Config, Operation } from "../types";
+import { dateToString, stringToDate } from "../utils/formatDate";
 
 interface UpdateDataContextProps {
   updateCategory: Category;
@@ -37,6 +40,11 @@ interface UpdateDataContextProps {
 
   wallet: Card;
   setWallet: (wallet: Card) => void;
+
+  config: Config;
+  setConfig: (config: Config) => void;
+
+  updateConfig: (config: Config) => void;
 }
 const UpdateDataContext = createContext({} as UpdateDataContextProps);
 
@@ -62,6 +70,8 @@ export const UpdateDataContextProvider = ({
 
   const [selectedCard, setSelectedCard] = useState<Card>({} as Card);
 
+  const [config, setConfig] = useState<Config>({} as Config);
+
   useEffect(async () => {
     setCategories(await getCategories().then((data) => data));
   }, []);
@@ -77,6 +87,21 @@ export const UpdateDataContextProvider = ({
   useEffect(async () => {
     setOperations(await getOperations().then((data) => data));
   }, []);
+
+  useEffect(async () => {
+    setConfig(await getConfiguration().then((data) => data));
+  }, []);
+
+  async function updateConfig(config: Config) {
+    setConfig(await updateConfigRealm(config).then((data) => data));
+
+    // atualizando informações
+    setCategories(await getCategories().then((data) => data));
+    setCards(await getCards().then((data) => data));
+    setWallet(await getCarteira().then((data) => data));
+    setOperations(await getOperations().then((data) => data));
+    setConfig(await getConfiguration().then((data) => data));
+  }
 
   return (
     <UpdateDataContext.Provider
@@ -97,6 +122,9 @@ export const UpdateDataContextProvider = ({
         setWallet,
         operations,
         setOperations,
+        config,
+        setConfig,
+        updateConfig,
       }}
     >
       {children}

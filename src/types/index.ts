@@ -66,3 +66,10 @@ export interface SelectOption {
   value: string;
   id?: string;
 }
+
+export interface Config {
+  id?: string;
+  monthYear: string;
+  firstDayMonth?: string;
+  lastDayMonth?: string;
+}

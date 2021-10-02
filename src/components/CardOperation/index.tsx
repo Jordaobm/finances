@@ -37,7 +37,10 @@ export const CardOperation = ({ operations }: CardOperationProps) => {
                   {formatCurrency(operation?.value)}
                 </Value>
                 <DateText>
-                  em {operation?.date}, no {operation?.card?.institutionName}
+                  em {operation?.date},{" "}
+                  {operation?.card?.institutionName
+                    ? `no ${operation?.card?.institutionName}`
+                    : `na ${operation?.card?.name}`}
                 </DateText>
               </ValueAndMonth>
             </ContentCard>

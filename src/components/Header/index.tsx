@@ -1,9 +1,11 @@
+import { useNavigation } from "@react-navigation/core";
 import { format } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 import React from "react";
 import settings from "../../assets/settings.png";
 import { HeaderProps } from "../../types";
 import {
+  Button,
   Container,
   ContainerText,
   Day,
@@ -15,6 +17,8 @@ import {
 
 export const Header = ({ color, onlySettings = false }: HeaderProps) => {
   const date = format(new Date(), "cccc', 'dd 'de' MMMM", { locale: ptBR });
+
+  const navigation = useNavigation();
 
   let day;
 
@@ -28,7 +32,9 @@ export const Header = ({ color, onlySettings = false }: HeaderProps) => {
 
   return (
     <Container>
-      <Settings source={settings} style={{ tintColor: color }} />
+      <Button onPress={() => navigation.navigate("Configuration")}>
+        <Settings source={settings} style={{ tintColor: color }} />
+      </Button>
       {!onlySettings && (
         <ContainerText>
           <Day style={{ color }}>{day},</Day>

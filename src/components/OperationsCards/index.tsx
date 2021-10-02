@@ -22,8 +22,8 @@ import { useUpdateDataContext } from "../../context/UpdateDataContext";
 
 export const OperationsCards = () => {
   const date = format(new Date(), "MMMM", { locale: ptBR })?.split("-")[0];
-  const firstDayMonth = format(startOfMonth(new Date()), "dd/MM/yyyy");
-  const lastDayMonth = format(lastDayOfMonth(new Date()), "dd/MM/yyyy");
+
+  const { config } = useUpdateDataContext();
 
   const { operations } = useUpdateDataContext();
 
@@ -46,7 +46,7 @@ export const OperationsCards = () => {
         <Month>{date}</Month>
       </MonthContainer>
       <IntervalDates>
-        {firstDayMonth} até {lastDayMonth}
+        {config?.firstDayMonth} até {config?.lastDayMonth}
       </IntervalDates>
 
       <ContainerCards>

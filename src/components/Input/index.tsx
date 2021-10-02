@@ -6,9 +6,16 @@ interface InputProps extends TextInputProps {
   reference?: any;
   maskDate?: boolean;
   money?: boolean;
+  maskMonth?: boolean;
 }
 
-export const Input = ({ reference, maskDate, money, ...rest }: InputProps) => {
+export const Input = ({
+  reference,
+  maskDate,
+  money,
+  maskMonth,
+  ...rest
+}: InputProps) => {
   const [active, setActive] = useState(false);
 
   if (maskDate) {
@@ -18,6 +25,24 @@ export const Input = ({ reference, maskDate, money, ...rest }: InputProps) => {
           type={"datetime"}
           options={{
             format: "DD/MM/YYYY",
+          }}
+          ref={reference}
+          placeholderTextColor="#c6c6c6"
+          onFocus={() => setActive(true)}
+          onBlur={() => setActive(false)}
+          {...rest}
+        />
+      </ContainerInput>
+    );
+  }
+
+  if (maskMonth) {
+    return (
+      <ContainerInput color={active ? "#3CC75E" : "#f5f5f5"}>
+        <InputStyle
+          type={"datetime"}
+          options={{
+            format: "MM/YYYY",
           }}
           ref={reference}
           placeholderTextColor="#c6c6c6"

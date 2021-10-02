@@ -3,19 +3,23 @@ import Realm from "realm";
 import CategorySchema from "../schemas/CategorySchema";
 import CardSchema from "../schemas/CardSchema";
 import OperationSchema from "../schemas/OperationSchema";
-import { Card, Category, Operation } from "../types";
+import ConfigurationSchema from "../schemas/ConfigurationSchema";
+import { Card, Category, Config, Operation } from "../types";
+import { newDateToMonthAndYear } from "../utils/newDateToMonthAndYear";
+import { format, lastDayOfMonth, startOfMonth } from "date-fns";
+import { dateToString, stringToDate } from "../utils/formatDate";
 
 export default function getRealm() {
   return Realm.open({
     path: "mydb",
-    schema: [CategorySchema, CardSchema, OperationSchema],
+    schema: [CategorySchema, CardSchema, OperationSchema, ConfigurationSchema],
   });
 }
 
 export async function getCategories() {
   const realm = await Realm.open({
     path: "mydb",
-    schema: [CategorySchema, CardSchema, OperationSchema],
+    schema: [CategorySchema, CardSchema, OperationSchema, ConfigurationSchema],
   });
 
   const data = realm.objects("Category");
@@ -52,7 +56,7 @@ export async function getCategories() {
 export async function getCards() {
   const realm = await Realm.open({
     path: "mydb",
-    schema: [CategorySchema, CardSchema, OperationSchema],
+    schema: [CategorySchema, CardSchema, OperationSchema, ConfigurationSchema],
   });
 
   const data = realm.objects("Card");
@@ -77,10 +81,72 @@ export async function getCards() {
   return cards.filter((item) => item?.id !== "1");
 }
 
+export async function getConfiguration() {
+  const realm = await Realm.open({
+    path: "mydb",
+    schema: [CategorySchema, CardSchema, OperationSchema, ConfigurationSchema],
+  });
+
+  const data = realm.objects("Configuration").filtered("id= $0", "1");
+
+  const config: Config[] = [];
+
+  for (let i = 0; i < data.length; i++) {
+    const value: any = data[i];
+
+    config.push({
+      id: value?.id,
+      monthYear: value?.monthYear,
+      firstDayMonth: value?.firstDayMonth,
+      lastDayMonth: value?.lastDayMonth,
+    });
+  }
+
+  if (!config[0]?.id) {
+    const firstDayMonth = format(startOfMonth(new Date()), "dd/MM/yyyy");
+    const lastDayMonth = format(lastDayOfMonth(new Date()), "dd/MM/yyyy");
+
+    const monthYear = newDateToMonthAndYear(new Date());
+
+    const initialConfig: Config = {
+      id: "1",
+      monthYear,
+      firstDayMonth,
+      lastDayMonth,
+    };
+
+    realm.write(() => {
+      realm.create("Configuration", initialConfig, "modified");
+    });
+
+    return initialConfig;
+  } else {
+    return config[0];
+  }
+}
+
+export async function updateConfigRealm(config: Config) {
+  const realm = await Realm.open({
+    path: "mydb",
+    schema: [CategorySchema, CardSchema, OperationSchema, ConfigurationSchema],
+  });
+
+  const collection = realm.objects("Configuration").filtered("id= $0", `1`);
+  realm.write(() => {
+    realm.delete(collection);
+  });
+
+  realm.write(() => {
+    realm.create("Configuration", { ...config, id: "1" }, "modified");
+  });
+
+  return config;
+}
+
 export async function getCarteira() {
   const realm = await Realm.open({
     path: "mydb",
-    schema: [CategorySchema, CardSchema, OperationSchema],
+    schema: [CategorySchema, CardSchema, OperationSchema, ConfigurationSchema],
   });
 
   const data = realm.objects("Card").filtered("id= $0", "1");
@@ -130,7 +196,7 @@ export async function addOrExcludeOperationAndUpdateCard(
 ) {
   const realm = await Realm.open({
     path: "mydb",
-    schema: [CategorySchema, CardSchema, OperationSchema],
+    schema: [CategorySchema, CardSchema, OperationSchema, ConfigurationSchema],
   });
 
   let updt: any = realm
@@ -157,7 +223,11 @@ export async function addOrExcludeOperationAndUpdateCard(
     };
 
     realm.write(() => {
-      realm.create("Operation", formatOperation, "modified");
+      realm.create(
+        "Operation",
+        { ...formatOperation, date: stringToDate(formatOperation?.date) },
+        "modified"
+      );
     });
   } else {
     const collection = realm
@@ -172,7 +242,7 @@ export async function addOrExcludeOperationAndUpdateCard(
 export async function getCategory(idCategory: string) {
   const realm = await Realm.open({
     path: "mydb",
-    schema: [CategorySchema, CardSchema, OperationSchema],
+    schema: [CategorySchema, CardSchema, OperationSchema, ConfigurationSchema],
   });
 
   const data = realm.objects("Category").filtered("id= $0", `${idCategory}`);
@@ -209,7 +279,7 @@ export async function getCategory(idCategory: string) {
 export async function getCard(idCard: string) {
   const realm = await Realm.open({
     path: "mydb",
-    schema: [CategorySchema, CardSchema, OperationSchema],
+    schema: [CategorySchema, CardSchema, OperationSchema, ConfigurationSchema],
   });
 
   const data = realm.objects("Card").filtered("id= $0", `${idCard}`);
@@ -237,10 +307,22 @@ export async function getCard(idCard: string) {
 export async function getOperations() {
   const realm = await Realm.open({
     path: "mydb",
-    schema: [CategorySchema, CardSchema, OperationSchema],
+    schema: [CategorySchema, CardSchema, OperationSchema, ConfigurationSchema],
   });
 
-  const data = realm.objects("Operation");
+  const config = await getConfiguration();
+  let data;
+  if (config) {
+    data = realm
+      .objects("Operation")
+      .filtered(
+        "date >= $0 && date <= $1",
+        stringToDate(config.firstDayMonth),
+        stringToDate(config.lastDayMonth)
+      );
+  } else {
+    data = realm.objects("Operation");
+  }
 
   const operations: Operation[] = [];
 
@@ -249,7 +331,7 @@ export async function getOperations() {
 
     operations.push({
       id: value?.id,
-      date: value?.date,
+      date: dateToString(value?.date),
       name: value?.name,
       type: value?.type,
       value: value?.value,
@@ -264,12 +346,25 @@ export async function getOperations() {
 export async function getOperationsByCategory(category: Category) {
   const realm = await Realm.open({
     path: "mydb",
-    schema: [CategorySchema, CardSchema, OperationSchema],
+    schema: [CategorySchema, CardSchema, OperationSchema, ConfigurationSchema],
   });
 
-  const data = realm
-    .objects("Operation")
-    .filtered("id_category= $0", `${category?.id}`);
+  const config = await getConfiguration();
+  let data;
+  if (config) {
+    data = realm
+      .objects("Operation")
+      .filtered("id_category= $0", `${category?.id}`)
+      .filtered(
+        "date >= $0 && date <= $1",
+        stringToDate(config.firstDayMonth),
+        stringToDate(config.lastDayMonth)
+      );
+  } else {
+    data = realm
+      .objects("Operation")
+      .filtered("id_category= $0", `${category?.id}`);
+  }
 
   const operations: Operation[] = [];
 
@@ -278,7 +373,7 @@ export async function getOperationsByCategory(category: Category) {
 
     operations.push({
       id: value?.id,
-      date: value?.date,
+      date: dateToString(value?.date),
       name: value?.name,
       type: value?.type,
       value: value?.value,
