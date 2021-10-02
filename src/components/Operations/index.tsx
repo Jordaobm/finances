@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/core";
 import React from "react";
 import { useUpdateDataContext } from "../../context/UpdateDataContext";
 import { PlusIcon } from "../../icons/Icons";
-import { Card } from "../../types";
+import { Card, Operation } from "../../types";
 import { CardOperation } from "../CardOperation";
 import {
   AddOperations,
@@ -18,12 +18,25 @@ import {
 } from "./styles";
 interface OperationsProps {
   card?: Card;
+  color?: string;
+  addOperation?: boolean;
+  operationText?: string;
+  listOperations?: Operation[];
 }
 
-export const Operations = ({ card }: OperationsProps) => {
+export const Operations = ({
+  card,
+  color,
+  addOperation = true,
+  operationText,
+  listOperations,
+}: OperationsProps) => {
   const { operations } = useUpdateDataContext();
-
   let operationsFilter = operations;
+
+  if (listOperations) {
+    operationsFilter = listOperations;
+  }
 
   const navigation = useNavigation();
 
@@ -37,19 +50,25 @@ export const Operations = ({ card }: OperationsProps) => {
     <Container>
       <Content>
         <ContentText>
-          <OperationsText>Operações recentes</OperationsText>
+          <OperationsText style={{ color: color ? color : "#fff" }}>
+            {operationText ? operationText : "Operações recentes"}
+          </OperationsText>
 
-          <AddOperations onPress={() => navigation.navigate("OperationForm")}>
-            <AddOperationsText>Adicionar</AddOperationsText>
-            <PlusIcon color="#fff" />
-          </AddOperations>
+          {addOperation && (
+            <AddOperations onPress={() => navigation.navigate("OperationForm")}>
+              <AddOperationsText style={{ color: color ? color : "#fff" }}>
+                Adicionar
+              </AddOperationsText>
+              <PlusIcon color={color ? color : "#fff"} />
+            </AddOperations>
+          )}
         </ContentText>
         <ContainerCardOperations>
           {operationsFilter?.length > 0 ? (
             <CardOperation operations={operationsFilter} />
           ) : (
             <ContainerNotOperation>
-              <NotOperation>Ainda não há operações cadastradas</NotOperation>
+              <NotOperation>Não há operações para este período</NotOperation>
               <NotOperationSpan>
                 Cadastre uma operação e ela aparecerá aqui!
               </NotOperationSpan>

@@ -384,3 +384,39 @@ export async function getOperationsByCategory(category: Category) {
 
   return operations;
 }
+
+export async function getOperationForFilter(filter: {
+  initialDate: string;
+  finishDate: string;
+}) {
+  const realm = await Realm.open({
+    path: "mydb",
+    schema: [CategorySchema, CardSchema, OperationSchema, ConfigurationSchema],
+  });
+
+  const data = realm
+    .objects("Operation")
+    .filtered(
+      "date >= $0 && date <= $1",
+      stringToDate(filter.initialDate),
+      stringToDate(filter.finishDate)
+    );
+
+  const operations: Operation[] = [];
+
+  for (let i = 0; i < data.length; i++) {
+    const value: any = data[i];
+
+    operations.push({
+      id: value?.id,
+      date: dateToString(value?.date),
+      name: value?.name,
+      type: value?.type,
+      value: value?.value,
+      category: await getCategory(value?.id_category),
+      card: await getCard(value?.id_card),
+    });
+  }
+
+  return operations;
+}

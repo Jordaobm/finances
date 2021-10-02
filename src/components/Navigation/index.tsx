@@ -56,8 +56,15 @@ export const Navigation = ({
         </Home>
       </NavigationButton>
 
-      <NavigationButton>
-        <MoneyIcon color={"#595959"} />
+      <NavigationButton
+        onPress={() => {
+          onNavigate && onNavigate();
+          navigation.navigate("Operation");
+        }}
+      >
+        <MoneyIcon
+          color={activeRoute === "Operation" ? activeColor : "#595959"}
+        />
       </NavigationButton>
 
       <NavigationButton>

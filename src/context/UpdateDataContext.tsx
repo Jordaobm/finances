@@ -38,6 +38,9 @@ interface UpdateDataContextProps {
   setConfig: (config: Config) => void;
 
   updateConfig: (config: Config) => void;
+
+  filterOperations: Operation[];
+  setFilterOperations: (operations: Operation[]) => void;
 }
 const UpdateDataContext = createContext({} as UpdateDataContextProps);
 
@@ -64,6 +67,8 @@ export const UpdateDataContextProvider = ({
   const [selectedCard, setSelectedCard] = useState<Card>({} as Card);
 
   const [config, setConfig] = useState<Config>({} as Config);
+
+  const [filterOperations, setFilterOperations] = useState<Operation[]>([]);
 
   async function updateConfig(config: Config) {
     setConfig(await updateConfigRealm(config).then((data) => data));
@@ -98,6 +103,8 @@ export const UpdateDataContextProvider = ({
         config,
         setConfig,
         updateConfig,
+        filterOperations,
+        setFilterOperations,
       }}
     >
       {children}
