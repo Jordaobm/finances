@@ -76,7 +76,10 @@ export const Cards = () => {
             </View>
           ) : (
             <ContainerCarousel
-              style={{ marginBottom: selectedCard?.id ? 120 : 0 }}
+              style={{
+                marginBottom: selectedCard?.id ? 120 : 0,
+                marginTop: selectedCard?.id ? 18 : 50,
+              }}
             >
               <CustomCarousel onChangeCard={(card) => setSelectedCard(card)} />
             </ContainerCarousel>

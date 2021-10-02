@@ -4,6 +4,7 @@ import {
   BoxInputColor,
   Circle,
   Container,
+  Content,
   Line,
   Placeholder,
 } from "./styles";
@@ -14,6 +15,7 @@ import {
   Text,
   View,
 } from "react-native";
+import { hexToRgb } from "../../utils/colors";
 
 interface InputColorProps {
   onChangeColor: (color: string, number: number) => void;
@@ -38,6 +40,18 @@ export const InputColor = ({
   }, []);
 
   function generateColor(value: number) {
+    if (value >= 150 && value < 160) {
+      return hexToRgb("#F6E05E", "1");
+    }
+
+    if (value >= 190 && value < 200) {
+      return hexToRgb("#C53030", "1");
+    }
+
+    if (value >= 170 && value < 180) {
+      return hexToRgb("#805AD5", "1");
+    }
+
     if (!palette) {
       return (
         "#" +
@@ -58,34 +72,36 @@ export const InputColor = ({
         <Placeholder>{placeholder}</Placeholder>
         <BoxColor color={color} />
       </Container>
-      <BoxInputColor>
-        <Line />
-        <Circle
-          x={valor()}
-          y={4}
-          renderSize={25}
-          renderColor="#595959"
-          renderText=""
-          isCircle
-          minY={4}
-          maxY={4}
-          minX={0}
-          maxX={300}
-          onDragRelease={(event, gestureState, bounds) => {
-            let value = bounds.left;
-            if (value === 0) {
-              if (palette) {
-                setColor("rgba(0, 0, 0,1)");
-              } else {
-                setColor("rgba(1, 55, 148, 0.8)");
-                return;
+      <Content>
+        <BoxInputColor>
+          <Line />
+          <Circle
+            x={valor()}
+            y={1}
+            renderSize={30}
+            renderColor="#595959"
+            renderText=""
+            isCircle
+            minY={1}
+            maxY={1}
+            minX={0}
+            maxX={300}
+            onDragRelease={(event, gestureState, bounds) => {
+              let value = bounds.left;
+              if (value === 0) {
+                if (palette) {
+                  setColor("rgba(0, 0, 0,1)");
+                } else {
+                  setColor("rgba(1, 55, 148, 0.8)");
+                  return;
+                }
               }
-            }
-            setColor(generateColor(value));
-            onChangeColor(generateColor(value), value);
-          }}
-        />
-      </BoxInputColor>
+              setColor(generateColor(value));
+              onChangeColor(generateColor(value), value);
+            }}
+          />
+        </BoxInputColor>
+      </Content>
     </>
   );
 };

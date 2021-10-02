@@ -39,7 +39,7 @@ export const Configuration = () => {
         <Container>
           <GoBack
             onPress={() => {
-              navigation.navigate("Categories");
+              navigation.goBack();
             }}
           >
             <ArrowLeftIcon color="#595959" />
@@ -54,8 +54,46 @@ export const Configuration = () => {
               <Input
                 maskMonth
                 placeholder="Mês e ano"
-                onChangeText={(monthYear) => setForm({ monthYear })}
+                onChangeText={(monthYear) => {
+                  if (monthYear?.length === 7) {
+                    const firstDayMonth = format(
+                      startOfMonth(monthAndYearToDate(monthYear)),
+                      "dd/MM/yyyy"
+                    );
+                    const lastDayMonth = format(
+                      lastDayOfMonth(monthAndYearToDate(monthYear)),
+                      "dd/MM/yyyy"
+                    );
+                    setForm((state) => ({
+                      ...state,
+                      monthYear,
+                      firstDayMonth,
+                      lastDayMonth,
+                    }));
+                  }
+                }}
                 value={form?.monthYear}
+              />
+            </ContainerInput>
+            <ContainerInput>
+              <Input
+                maskDate
+                placeholder="Primeiro dia do período"
+                onChangeText={(firstDayMonth) =>
+                  setForm((state) => ({ ...state, firstDayMonth }))
+                }
+                value={form?.firstDayMonth}
+              />
+            </ContainerInput>
+
+            <ContainerInput>
+              <Input
+                maskDate
+                placeholder="Ultimo dia do período"
+                onChangeText={(lastDayMonth) =>
+                  setForm((state) => ({ ...state, lastDayMonth }))
+                }
+                value={form?.lastDayMonth}
               />
             </ContainerInput>
           </FormContainer>
@@ -71,17 +109,7 @@ export const Configuration = () => {
         </Action>
         <Action
           onPress={async () => {
-            const firstDayMonth = format(
-              startOfMonth(monthAndYearToDate(form?.monthYear)),
-              "dd/MM/yyyy"
-            );
-            const lastDayMonth = format(
-              lastDayOfMonth(monthAndYearToDate(form?.monthYear)),
-              "dd/MM/yyyy"
-            );
-
-            await updateConfig({ ...form, firstDayMonth, lastDayMonth });
-
+            await updateConfig({ ...form });
             navigation.goBack();
           }}
         >

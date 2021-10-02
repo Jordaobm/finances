@@ -24,7 +24,7 @@ export interface Wallet {
 }
 
 export interface Operation {
-  id: string;
+  id?: string;
   type: string;
   name: string;
   value: number | string;

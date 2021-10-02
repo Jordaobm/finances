@@ -27,10 +27,19 @@ export const BoxColor = styled.View<BoxColorProps>`
   border-color: #c6c6c6;
   border-radius: 10px;
 `;
+
+export const Content = styled.View`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const BoxInputColor = styled.View`
   flex: 1;
   padding: 16px;
+  width: 300px;
 `;
+
 export const Line = styled.View`
   width: 100%;
   height: 2px;

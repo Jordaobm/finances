@@ -5,7 +5,7 @@ import Carousel from "react-native-snap-carousel";
 import { useUpdateDataContext } from "../../context/UpdateDataContext";
 import { Card } from "../../types";
 import { CardComponent, FakeCard } from "../Card";
-
+import { Dimensions } from "react-native";
 interface ItemProps {
   title: string;
   text: string;
@@ -39,10 +39,12 @@ export const CustomCarousel: React.SFC<CustomCarouselProps> = ({
           cards?.findIndex((card) => card?.id === selectedCard?.id) + 1
         }
         data={carouselItems}
-        sliderWidth={300}
+        sliderWidth={Dimensions.get("window").width - 60}
         itemWidth={290}
         renderItem={renderItem}
-        onSnapToItem={(index: number) => onChangeCard(carouselItems[index])}
+        onSnapToItem={(index: number) => {
+          onChangeCard(carouselItems[index]);
+        }}
       />
     );
   };

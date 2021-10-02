@@ -7,13 +7,14 @@ import { Select } from "../../components/Select";
 import { useUpdateDataContext } from "../../context/UpdateDataContext";
 import { operations, typeOperation } from "../../database";
 import { ArrowLeftIcon, TrashIcon } from "../../icons/Icons";
+import Card from "../../schemas/CardSchema";
 import {
   getCards,
   getOperations,
   addOrExcludeOperationAndUpdateCard,
   getCategories,
 } from "../../services/realm";
-import { Operation } from "../../types";
+import { Category, Operation } from "../../types";
 import {
   AcceptText,
   Action,
@@ -47,7 +48,14 @@ export const OperationForm = () => {
           ...updateOperation,
           value: Number(updateOperation?.value)?.toFixed(2),
         }
-      : ({} as Operation)
+      : ({
+          category: {} as Category,
+          date: "",
+          name: "",
+          value: "",
+          card: {} as Card,
+          type: "",
+        } as Operation)
   );
 
   const cardAndCarteira = [...cards, wallet];
@@ -117,6 +125,34 @@ export const OperationForm = () => {
     });
   }
 
+  const validateForm = (operation: Operation) => {
+    let isValid = true;
+
+    Object.keys(form)?.map((key) => {
+      if (form?.[key] === "" || form?.[key] === {}) {
+        isValid = false;
+        Toast.show({
+          type: "error",
+          text1: "Ocorreu um erro",
+          text2: "Preencha todos os dados da operação",
+          autoHide: true,
+        });
+      }
+
+      if (form?.date?.length !== 10) {
+        isValid = false;
+        Toast.show({
+          type: "error",
+          text1: "Data inválida",
+          text2: "A data precisa conter dia, mês e ano",
+          autoHide: true,
+        });
+      }
+    });
+
+    return isValid;
+  };
+
   return (
     <>
       <StatusBar
@@ -136,9 +172,7 @@ export const OperationForm = () => {
             <ArrowLeftIcon color="#595959" />
           </GoBack>
           <TitlePage>
-            {updateOperation?.id
-              ? "Editando categoria"
-              : "Adicionando operação"}
+            {updateOperation?.id ? "Editando operação" : "Adicionando operação"}
           </TitlePage>
           <SubtitlePage>
             Adicione seus ganhos e despesas todo o mês para obter o controle das
@@ -280,15 +314,7 @@ export const OperationForm = () => {
         </Action>
         <Action
           onPress={async () => {
-            if (!form?.name || form?.name === "") {
-              Toast.show({
-                type: "error",
-                text1: "Ocorreu um erro",
-                text2: "Preencha todos os dados da operação",
-                autoHide: true,
-              });
-            } else {
-              // salvar
+            if (validateForm(form)) {
               if (!updateOperation?.id) {
                 await saveOperation(form, true);
                 navigation.goBack();
@@ -296,8 +322,8 @@ export const OperationForm = () => {
                 await editOperation(form);
                 navigation.goBack();
               }
+              setUpdateOperation({} as Operation);
             }
-            setUpdateOperation({} as Operation);
           }}
         >
           <AcceptText>

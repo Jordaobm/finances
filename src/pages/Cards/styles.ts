@@ -41,7 +41,7 @@ export const CardImageContainer = styled.View`
 `;
 
 export const CardDescriptionText = styled.Text`
-  font-size: 16px;
+  font-size: 14px;
   color: #c6c6c6;
   font-family: "Roboto-Regular";
   margin-bottom: 80px;

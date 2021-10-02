@@ -10,7 +10,7 @@ export const ContainerCard = styled.TouchableOpacity`
 `;
 
 export const TextOperation = styled.Text`
-  font-size: 16px;
+  font-size: 14px;
   font-family: "Roboto-Medium";
   color: #7e7e7e;
   padding-right: 10px;
