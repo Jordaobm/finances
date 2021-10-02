@@ -1,6 +1,8 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React from "react";
+import React, { useEffect } from "react";
+import SplashScreen from "react-native-splash-screen";
 import ToastWrapper from "react-native-toast-message";
+import { useUpdateDataContext } from "../context/UpdateDataContext";
 import { CardForm } from "../pages/CardForm";
 import { Cards } from "../pages/Cards";
 import { Categories } from "../pages/Categories";
@@ -8,10 +10,30 @@ import { CategoryForm } from "../pages/CategoryForm";
 import { Configuration } from "../pages/Configuration";
 import { Home } from "../pages/Home";
 import { OperationForm } from "../pages/OperationForm";
+import {
+  getCards,
+  getCarteira,
+  getCategories,
+  getConfiguration,
+  getOperations,
+} from "../services/realm";
 
 const Navigation = createNativeStackNavigator();
 
 export const NavigationRoutes = () => {
+  const { setCategories, setConfig, setCards, setWallet, setOperations } =
+    useUpdateDataContext();
+
+  useEffect(async () => {
+    setCategories(await getCategories().then((data) => data));
+    setConfig(await getConfiguration().then((data) => data));
+    setCards(await getCards().then((data) => data));
+    setWallet(await getCarteira().then((data) => data));
+    setOperations(await getOperations().then((data) => data));
+
+    SplashScreen.hide();
+  }, []);
+
   return (
     <>
       <Navigation.Navigator screenOptions={{ headerShown: false }}>

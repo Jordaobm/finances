@@ -11,6 +11,7 @@ import {
   Background,
   ContainerGraph,
   ContainerOperationCards,
+  ContainerValue,
   CurrentValue,
   CurrentValueContainer,
   SmallText,
@@ -45,8 +46,15 @@ export const Home = () => {
             <OperationsCards />
           </ContainerOperationCards>
           <CurrentValueContainer>
-            <SmallText>Valor atual</SmallText>
+            <SmallText>Valor entre as operações do período</SmallText>
             <CurrentValue>{formatCurrency(Number(currentValue))}</CurrentValue>
+
+            <ContainerValue>
+              <SmallText>Valor atual da carteira</SmallText>
+              <CurrentValue>
+                {formatCurrency(Number(wallet?.currentValue))}
+              </CurrentValue>
+            </ContainerValue>
 
             <ContainerGraph>
               {operations?.filter((e) => e?.type === "OUTPUT")?.length > 0 && (

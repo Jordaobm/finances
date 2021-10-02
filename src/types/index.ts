@@ -73,3 +73,11 @@ export interface Config {
   firstDayMonth?: string;
   lastDayMonth?: string;
 }
+
+export interface InitialValue {
+  categories: Category[];
+  cards: Card[];
+  wallet: Card;
+  operations: Operation[];
+  config: Config;
+}

@@ -17,6 +17,11 @@ export const ContainerOperationCards = styled.View`
 export const CurrentValueContainer = styled.View`
   padding: 42px 32px;
 `;
+
+export const ContainerValue = styled.View`
+  margin-top: 16px;
+`;
+
 export const SmallText = styled.Text`
   font-family: "Roboto-Regular";
   font-size: 12px;
@@ -24,7 +29,7 @@ export const SmallText = styled.Text`
 `;
 export const CurrentValue = styled.Text`
   font-family: "Roboto-Bold";
-  font-size: 32px;
+  font-size: 30px;
   color: white;
 `;
 

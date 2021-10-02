@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { createContext, ReactNode, useContext, useState } from "react";
 import {
   getCards,
   getCarteira,
@@ -14,7 +8,6 @@ import {
   updateConfigRealm,
 } from "../services/realm";
 import { Card, Category, Config, Operation } from "../types";
-import { dateToString, stringToDate } from "../utils/formatDate";
 
 interface UpdateDataContextProps {
   updateCategory: Category;
@@ -71,26 +64,6 @@ export const UpdateDataContextProvider = ({
   const [selectedCard, setSelectedCard] = useState<Card>({} as Card);
 
   const [config, setConfig] = useState<Config>({} as Config);
-
-  useEffect(async () => {
-    setCategories(await getCategories().then((data) => data));
-  }, []);
-
-  useEffect(async () => {
-    setCards(await getCards().then((data) => data));
-  }, []);
-
-  useEffect(async () => {
-    setWallet(await getCarteira().then((data) => data));
-  }, []);
-
-  useEffect(async () => {
-    setOperations(await getOperations().then((data) => data));
-  }, []);
-
-  useEffect(async () => {
-    setConfig(await getConfiguration().then((data) => data));
-  }, []);
 
   async function updateConfig(config: Config) {
     setConfig(await updateConfigRealm(config).then((data) => data));
