@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { ScrollView, StatusBar, View } from "react-native";
+import cardImage from "../../assets/card.png";
 import { FakeCard } from "../../components/Card";
+import { CustomCarousel } from "../../components/Carousel";
 import { Header } from "../../components/Header";
 import { Navigation } from "../../components/Navigation";
+import { Operations } from "../../components/Operations";
+import { useUpdateDataContext } from "../../context/UpdateDataContext";
+import { hexToRgb } from "../../utils/colors";
 import {
   CardDescriptionText,
   CardImage,
@@ -14,12 +19,6 @@ import {
   SubtitlePage,
   TitlePage,
 } from "./styles";
-import cardImage from "../../assets/card.png";
-import { CustomCarousel } from "../../components/Carousel";
-import { useUpdateDataContext } from "../../context/UpdateDataContext";
-import { hexToRgb } from "../../utils/colors";
-import { Operations } from "../../components/Operations";
-import { Card } from "../../types";
 
 export const Cards = () => {
   const { selectedCard, setSelectedCard, cards } = useUpdateDataContext();

@@ -14,6 +14,7 @@ import {
   addOrExcludeOperationAndUpdateCard,
   getCategories,
   getCarteira,
+  createOperationPouped,
 } from "../../services/realm";
 import { Category, Operation } from "../../types";
 import {
@@ -156,6 +157,28 @@ export const OperationForm = () => {
     return isValid;
   };
 
+  async function savePouped(operation: Operation) {
+    await createOperationPouped(operation);
+    setCards(await getCards().then((data) => data));
+    setOperations(await getOperations());
+    setCategories(await getCategories().then((data) => data));
+    setWallet(await getCarteira().then((data) => data));
+    Toast.show({
+      type: "success",
+      text1: "Popança realizada com sucesso",
+      text2: `O valor foi transferido do ${
+        form?.origin?.institutionName
+          ? form?.origin?.institutionName
+          : form?.origin?.name
+      } para o ${
+        form?.for?.institutionName
+          ? form?.for?.institutionName
+          : form?.for?.name
+      }`,
+      autoHide: true,
+    });
+  }
+
   return (
     <>
       <StatusBar
@@ -261,35 +284,91 @@ export const OperationForm = () => {
                 value={form?.date}
               />
             </ContainerInput>
+            {form?.type !== "POUPED" ? (
+              <ContainerInput>
+                <Select
+                  value={form?.card?.id || ""}
+                  items={cardAndCarteira.map((card) => ({
+                    label:
+                      card?.institutionName !== ""
+                        ? card?.institutionName
+                        : card?.name,
+                    value: card?.id?.toString() || "",
+                    id: card?.id,
+                  }))}
+                  placeholder="Vincular operação à..."
+                  onValueChange={(idCard) => {
+                    const selectedCard = cardAndCarteira?.find(
+                      (item) => item?.id?.toString() === idCard
+                    );
 
-            {/* carteira / cartao */}
-            <ContainerInput>
-              <Select
-                value={form?.card?.id || ""}
-                items={cardAndCarteira.map((card) => ({
-                  label:
-                    card?.institutionName !== ""
-                      ? card?.institutionName
-                      : card?.name,
-                  value: card?.id?.toString() || "",
-                  id: card?.id,
-                }))}
-                placeholder="Vincular operação à..."
-                onValueChange={(idCard) => {
-                  const selectedCard = cardAndCarteira?.find(
-                    (item) => item?.id?.toString() === idCard
-                  );
+                    if (selectedCard) {
+                      setForm((state) => ({
+                        ...state,
+                        card: selectedCard,
+                      }));
+                    }
+                  }}
+                />
+              </ContainerInput>
+            ) : (
+              <>
+                <ContainerInput>
+                  <Select
+                    value={form?.origin?.id || ""}
+                    items={cardAndCarteira.map((card) => ({
+                      label:
+                        card?.institutionName !== ""
+                          ? card?.institutionName
+                          : card?.name,
+                      value: card?.id?.toString() || "",
+                      id: card?.id,
+                    }))}
+                    placeholder="De..."
+                    onValueChange={(idCard) => {
+                      const selectedCard = cardAndCarteira?.find(
+                        (item) => item?.id?.toString() === idCard
+                      );
 
-                  if (selectedCard) {
-                    setForm((state) => ({
-                      ...state,
-                      card: selectedCard,
-                    }));
-                  }
-                }}
-              />
-            </ContainerInput>
+                      if (selectedCard) {
+                        setForm((state) => ({
+                          ...state,
+                          origin: selectedCard,
+                        }));
+                      }
+                    }}
+                  />
+                </ContainerInput>
 
+                <ContainerInput>
+                  <Select
+                    value={form?.for?.id || ""}
+                    items={cardAndCarteira.map((card) => ({
+                      label:
+                        card?.institutionName !== ""
+                          ? card?.institutionName
+                          : card?.name,
+                      value: card?.id?.toString() || "",
+                      id: card?.id,
+                    }))}
+                    placeholder="Para..."
+                    onValueChange={(idCard) => {
+                      const selectedCard = cardAndCarteira?.find(
+                        (item) => item?.id?.toString() === idCard
+                      );
+
+                      if (selectedCard) {
+                        setForm((state) => ({
+                          ...state,
+                          for: selectedCard,
+                          card: selectedCard,
+                        }));
+                      }
+                    }}
+                  />
+                </ContainerInput>
+              </>
+            )}
             {updateOperation?.id && (
               <DeleteButton
                 onPress={async () => {
@@ -318,15 +397,20 @@ export const OperationForm = () => {
         <Action
           onPress={async () => {
             if (validateForm(form)) {
-              if (!updateOperation?.id) {
-                await saveOperation(form, true);
-                navigation.goBack();
+              if (form?.type !== "POUPED") {
+                if (!updateOperation?.id) {
+                  await saveOperation(form, true);
+                } else {
+                  await editOperation(form);
+                }
+                setUpdateOperation({} as Operation);
               } else {
-                await editOperation(form);
-                navigation.goBack();
+                // pouped
+                await savePouped(form);
+                setUpdateOperation({} as Operation);
               }
-              setUpdateOperation({} as Operation);
             }
+            navigation.goBack();
           }}
         >
           <AcceptText>

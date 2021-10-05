@@ -1,5 +1,6 @@
 import { useNavigation } from "@react-navigation/core";
 import React from "react";
+import { Text } from "react-native";
 import { useUpdateDataContext } from "../../context/UpdateDataContext";
 import { CardOperationProps } from "../../types";
 import { formatCurrency } from "../../utils/formatCurrency";
@@ -8,8 +9,10 @@ import {
   ContainerCard,
   ContentCard,
   DateText,
+  IsTransfer,
   TextOperation,
   Value,
+  ContainerText,
   ValueAndMonth,
 } from "./styles";
 
@@ -30,7 +33,23 @@ export const CardOperation = ({ operations }: CardOperationProps) => {
           >
             <ContentCard>
               <Bullet color={operation?.category?.color} />
-              <TextOperation>{operation?.name}</TextOperation>
+
+              {operation?.for?.id ? (
+                <ContainerText>
+                  <TextOperation style={{ maxWidth: "100%", fontSize: 12 }}>
+                    {operation?.name}
+                  </TextOperation>
+                  <IsTransfer>
+                    Essa foi uma transferência de{" "}
+                    {operation?.origin?.institutionName ||
+                      operation?.origin?.name}{" "}
+                    para{" "}
+                    {operation?.for?.institutionName || operation?.for?.name}
+                  </IsTransfer>
+                </ContainerText>
+              ) : (
+                <TextOperation>{operation?.name}</TextOperation>
+              )}
 
               <ValueAndMonth>
                 <Value color={operation?.category?.color}>

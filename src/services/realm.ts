@@ -220,6 +220,8 @@ export async function addOrExcludeOperationAndUpdateCard(
       id: new Date().getTime().toString(),
       id_category: operation?.category?.id,
       id_card: operation?.card?.id,
+      id_origin: "",
+      id_for: "",
     };
 
     realm.write(() => {
@@ -301,7 +303,10 @@ export async function getCard(idCard: string) {
     });
   }
 
-  return cards[0];
+  if (cards?.length > 0) {
+    return cards[0];
+  }
+  return {} as Card;
 }
 
 export async function getOperations() {
@@ -337,6 +342,8 @@ export async function getOperations() {
       value: value?.value,
       category: await getCategory(value?.id_category),
       card: await getCard(value?.id_card),
+      for: await getCard(value?.id_for),
+      origin: await getCard(value?.id_origin),
     });
   }
 
@@ -379,6 +386,8 @@ export async function getOperationsByCategory(category: Category) {
       value: value?.value,
       category,
       card: await getCard(value?.id_card),
+      for: await getCard(value?.id_for),
+      origin: await getCard(value?.id_origin),
     });
   }
 
@@ -415,8 +424,55 @@ export async function getOperationForFilter(filter: {
       value: value?.value,
       category: await getCategory(value?.id_category),
       card: await getCard(value?.id_card),
+      for: await getCard(value?.id_for),
+      origin: await getCard(value?.id_origin),
     });
   }
 
   return operations;
+}
+
+export async function createOperationPouped(operation: Operation) {
+  const realm = await Realm.open({
+    path: "mydb",
+    schema: [CategorySchema, CardSchema, OperationSchema, ConfigurationSchema],
+  });
+
+  if (operation?.origin?.id) {
+    let updt: any = realm
+      .objects("Card")
+      .filtered("id= $0", `${operation?.origin?.id}`);
+    realm.write(() => {
+      updt[0].currentValue =
+        Number(updt[0]?.currentValue) - Number(operation?.value);
+    });
+  }
+
+  if (operation?.for?.id) {
+    let updt: any = realm
+      .objects("Card")
+      .filtered("id= $0", `${operation?.for?.id}`);
+    realm.write(() => {
+      updt[0].currentValue =
+        Number(updt[0]?.currentValue) + Number(operation?.value);
+    });
+  }
+
+  const formatOperation = {
+    ...operation,
+    id: new Date().getTime().toString(),
+    id_category: operation?.category?.id,
+    id_card: operation?.card?.id,
+    value: Number(operation?.value),
+    id_origin: operation?.origin?.id,
+    id_for: operation?.for?.id,
+  };
+
+  realm.write(() => {
+    realm.create(
+      "Operation",
+      { ...formatOperation, date: stringToDate(formatOperation?.date) },
+      "modified"
+    );
+  });
 }

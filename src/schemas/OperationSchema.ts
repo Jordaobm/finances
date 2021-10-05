@@ -10,6 +10,8 @@ export default class OperationSchema {
       id_category: "string",
       date: "date",
       id_card: "string",
+      id_origin: "string",
+      id_for: "string",
     },
   };
 }

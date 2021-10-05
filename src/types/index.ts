@@ -31,6 +31,8 @@ export interface Operation {
   category: Category;
   date: string;
   card?: Card;
+  origin?: Card;
+  for?: Card;
 }
 
 export interface Category {

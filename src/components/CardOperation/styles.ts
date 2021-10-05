@@ -17,10 +17,20 @@ export const TextOperation = styled.Text`
   max-width: 50%;
 `;
 
+export const IsTransfer = styled.Text`
+  font-size: 10px;
+  font-family: "Roboto-Regular";
+  color: #c6c6c6;
+`;
+export const ContainerText = styled.View`
+  width: 60%;
+`;
+
 export const ValueAndMonth = styled.View`
   align-items: flex-end;
   margin-left: auto;
   padding-left: 10px;
+  width: 40%;
 `;
 
 interface BulletProps {
@@ -37,6 +47,7 @@ export const DateText = styled.Text`
   font-size: 10px;
   font-family: "Roboto-Regular";
   color: #c6c6c6;
+  text-align: right;
 `;
 
 export const Bullet = styled.View<BulletProps>`
