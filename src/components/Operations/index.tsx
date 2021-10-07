@@ -40,10 +40,16 @@ export const Operations = ({
 
   const navigation = useNavigation();
 
-  if (card?.institutionName) {
-    operationsFilter = operationsFilter?.filter(
-      (operation) => operation?.card?.id === card?.id
-    );
+  if (card?.institutionName || card?.name) {
+    operationsFilter = operationsFilter?.filter((operation) => {
+      if (operation?.card?.id === card?.id) {
+        return operation;
+      }
+
+      if (operation?.origin?.id === card?.id) {
+        return operation;
+      }
+    });
   }
 
   return (

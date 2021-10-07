@@ -171,12 +171,12 @@ export async function getCarteira() {
   if (!cards[0]?.id) {
     const initialCard = {
       id: "1",
-      colorBackground: "rgba(0, 0, 0, 0)",
-      colorBackgroundNumber: 0,
-      colorText: "#ffffff",
-      colorTextNumber: 0,
+      colorBackground: "#282b46",
+      colorBackgroundNumber: 47,
+      colorText: "rgba(270,270,270,1)",
+      colorTextNumber: 270,
       currentValue: 0,
-      institutionName: "",
+      institutionName: "Carteira",
       name: "Carteira",
     };
 
@@ -191,13 +191,21 @@ export async function getCarteira() {
 }
 
 export async function addOrExcludeOperationAndUpdateCard(
-  operation: Operation,
+  receivedOperation: Operation,
   exclude: Boolean
 ) {
   const realm = await Realm.open({
     path: "mydb",
     schema: [CategorySchema, CardSchema, OperationSchema, ConfigurationSchema],
   });
+
+  let operation = receivedOperation;
+
+  if (exclude) {
+    if (receivedOperation?.id) {
+      operation = await getOperationById(receivedOperation?.id);
+    }
+  }
 
   let updt: any = realm
     .objects("Card")
@@ -234,7 +242,7 @@ export async function addOrExcludeOperationAndUpdateCard(
   } else {
     const collection = realm
       .objects("Operation")
-      .filtered("id= $0", `${operation?.id}`);
+      .filtered("id= $0", `${receivedOperation?.id}`);
     realm.write(() => {
       realm.delete(collection);
     });
@@ -307,6 +315,35 @@ export async function getCard(idCard: string) {
     return cards[0];
   }
   return {} as Card;
+}
+
+export async function getOperationById(operationId: string) {
+  const realm = await Realm.open({
+    path: "mydb",
+    schema: [CategorySchema, CardSchema, OperationSchema, ConfigurationSchema],
+  });
+
+  const operations: Operation[] = [];
+
+  const data = realm.objects("Operation").filtered("id= $0", operationId);
+
+  for (let i = 0; i < data.length; i++) {
+    const value: any = data[i];
+
+    operations.push({
+      id: value?.id,
+      date: dateToString(value?.date),
+      name: value?.name,
+      type: value?.type,
+      value: value?.value,
+      category: await getCategory(value?.id_category),
+      card: await getCard(value?.id_card),
+      for: await getCard(value?.id_for),
+      origin: await getCard(value?.id_origin),
+    });
+  }
+
+  return operations[0];
 }
 
 export async function getOperations() {
@@ -474,5 +511,41 @@ export async function createOperationPouped(operation: Operation) {
       { ...formatOperation, date: stringToDate(formatOperation?.date) },
       "modified"
     );
+  });
+}
+
+export async function deleteOperationPouped(operationId: string) {
+  const realm = await Realm.open({
+    path: "mydb",
+    schema: [CategorySchema, CardSchema, OperationSchema, ConfigurationSchema],
+  });
+
+  const operation = await getOperationById(operationId);
+
+  if (operation?.origin?.id) {
+    let updt: any = realm
+      .objects("Card")
+      .filtered("id= $0", `${operation?.origin?.id}`);
+    realm.write(() => {
+      updt[0].currentValue =
+        Number(updt[0]?.currentValue) + Number(operation?.value);
+    });
+  }
+
+  if (operation?.for?.id) {
+    let updt: any = realm
+      .objects("Card")
+      .filtered("id= $0", `${operation?.for?.id}`);
+    realm.write(() => {
+      updt[0].currentValue =
+        Number(updt[0]?.currentValue) - Number(operation?.value);
+    });
+  }
+
+  const collection = realm
+    .objects("Operation")
+    .filtered("id= $0", `${operationId}`);
+  realm.write(() => {
+    realm.delete(collection);
   });
 }

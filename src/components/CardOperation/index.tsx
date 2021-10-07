@@ -14,6 +14,9 @@ import {
   Value,
   ContainerText,
   ValueAndMonth,
+  ContainerTitle,
+  CategoryContainer,
+  TitleCategory,
 } from "./styles";
 
 export const CardOperation = ({ operations }: CardOperationProps) => {
@@ -32,24 +35,26 @@ export const CardOperation = ({ operations }: CardOperationProps) => {
             }}
           >
             <ContentCard>
-              <Bullet color={operation?.category?.color} />
-
-              {operation?.for?.id ? (
-                <ContainerText>
-                  <TextOperation style={{ maxWidth: "100%", fontSize: 12 }}>
-                    {operation?.name}
-                  </TextOperation>
-                  <IsTransfer>
-                    Essa foi uma transferência de{" "}
-                    {operation?.origin?.institutionName ||
-                      operation?.origin?.name}{" "}
-                    para{" "}
-                    {operation?.for?.institutionName || operation?.for?.name}
-                  </IsTransfer>
-                </ContainerText>
-              ) : (
-                <TextOperation>{operation?.name}</TextOperation>
-              )}
+              <CategoryContainer>
+                <Bullet color={operation?.category?.color} />
+                <TitleCategory>{operation?.category?.name}</TitleCategory>
+              </CategoryContainer>
+              <ContainerTitle>
+                {operation?.for?.id ? (
+                  <ContainerText>
+                    <TextOperation>{operation?.name}</TextOperation>
+                    <IsTransfer>
+                      Essa foi uma transferência de{" "}
+                      {operation?.origin?.institutionName ||
+                        operation?.origin?.name}{" "}
+                      para{" "}
+                      {operation?.for?.institutionName || operation?.for?.name}
+                    </IsTransfer>
+                  </ContainerText>
+                ) : (
+                  <TextOperation>{operation?.name}</TextOperation>
+                )}
+              </ContainerTitle>
 
               <ValueAndMonth>
                 <Value color={operation?.category?.color}>

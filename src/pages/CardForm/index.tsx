@@ -6,7 +6,7 @@ import { Input } from "../../components/Input";
 import { InputColor } from "../../components/InputColor";
 import { useUpdateDataContext } from "../../context/UpdateDataContext";
 import { ArrowLeftIcon, TrashIcon } from "../../icons/Icons";
-import getRealm, { getCards } from "../../services/realm";
+import getRealm, { getCards, getCarteira } from "../../services/realm";
 import { Card } from "../../types";
 import {
   AcceptText,
@@ -26,7 +26,7 @@ import {
   TitlePage,
 } from "./styles";
 export const CardForm = ({}) => {
-  const { setCards, updateCard, setUpdateCard, setSelectedCard } =
+  const { setCards, updateCard, setUpdateCard, setSelectedCard, setWallet } =
     useUpdateDataContext();
 
   const [form, setForm] = useState(
@@ -100,6 +100,7 @@ export const CardForm = ({}) => {
 
     setUpdateCard({} as Card);
     setCards(await getCards().then((data) => data));
+    setWallet(await getCarteira().then((data) => data));
   }
 
   return (
@@ -120,7 +121,9 @@ export const CardForm = ({}) => {
           >
             <ArrowLeftIcon color="#595959" />
           </GoBack>
-          <TitlePage>Adicionando cartão</TitlePage>
+          <TitlePage>
+            {updateCard?.id ? "Editando cartão" : "Adicionando cartão"}
+          </TitlePage>
           <SubtitlePage>
             Adicione seus cartões para obter o controle das finanças.
           </SubtitlePage>
@@ -272,7 +275,6 @@ export const CardForm = ({}) => {
               });
             } else {
               if (updateCard?.id) {
-                // editar
                 await editCard(form);
                 navigation.navigate("Cards");
               } else {

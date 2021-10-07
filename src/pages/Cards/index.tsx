@@ -21,7 +21,10 @@ import {
 } from "./styles";
 
 export const Cards = () => {
-  const { selectedCard, setSelectedCard, cards } = useUpdateDataContext();
+  const { selectedCard, setSelectedCard, cards, wallet } =
+    useUpdateDataContext();
+
+  const cardsWithWallets = [...cards, wallet];
 
   let containerColorStyle;
 
@@ -69,7 +72,7 @@ export const Cards = () => {
             </SubtitlePage>
           </Container>
 
-          {cards.length === 0 ? (
+          {cardsWithWallets.length === 0 ? (
             <View style={{ margin: 32 }}>
               <FakeCard />
             </View>

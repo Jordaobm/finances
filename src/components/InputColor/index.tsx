@@ -49,7 +49,7 @@ export const InputColor = ({
     }
 
     if (value >= 170 && value < 180) {
-      return hexToRgb("#805AD5", "1");
+      return hexToRgb("#820ad1", "1");
     }
 
     if (!palette) {

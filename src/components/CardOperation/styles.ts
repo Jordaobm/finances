@@ -1,6 +1,10 @@
 import styled from "styled-components/native";
 
 export const ContentCard = styled.View`
+  flex-direction: column;
+`;
+
+export const CategoryContainer = styled.View`
   flex-direction: row;
   align-items: center;
 `;
@@ -10,11 +14,15 @@ export const ContainerCard = styled.TouchableOpacity`
 `;
 
 export const TextOperation = styled.Text`
-  font-size: 14px;
+  font-size: 12px;
   font-family: "Roboto-Medium";
   color: #7e7e7e;
-  padding-right: 10px;
-  max-width: 50%;
+`;
+
+export const TitleCategory = styled.Text`
+  font-size: 18px;
+  font-family: "Roboto-Medium";
+  color: #595959;
 `;
 
 export const IsTransfer = styled.Text`
@@ -23,15 +31,16 @@ export const IsTransfer = styled.Text`
   color: #c6c6c6;
 `;
 export const ContainerText = styled.View`
-  width: 60%;
+  width: 100%;
 `;
 
-export const ValueAndMonth = styled.View`
-  align-items: flex-end;
-  margin-left: auto;
-  padding-left: 10px;
-  width: 40%;
+export const ContainerTitle = styled.View`
+  align-items: center;
+  display: flex;
+  flex-direction: row;
 `;
+
+export const ValueAndMonth = styled.View``;
 
 interface BulletProps {
   color: string;
@@ -41,13 +50,14 @@ export const Value = styled.Text<BulletProps>`
   color: ${(props) => props?.color};
   font-family: "Roboto-Medium";
   font-size: 18px;
+  position: relative;
+  left: -4px;
 `;
 
 export const DateText = styled.Text`
-  font-size: 10px;
+  font-size: 12px;
   font-family: "Roboto-Regular";
   color: #c6c6c6;
-  text-align: right;
 `;
 
 export const Bullet = styled.View<BulletProps>`

@@ -2,5 +2,5 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@color/splashscreen_bg" />
 
-    <item android:width="411dp" android:height="414dp" android:drawable="@mipmap/splash_icon" android:gravity="center" />
+    <item android:width="343dp" android:height="400dp" android:drawable="@mipmap/splash_icon" android:gravity="center" />
 </layer-list>

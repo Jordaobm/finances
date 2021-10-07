@@ -15,6 +15,7 @@ import {
   getCategories,
   getCarteira,
   createOperationPouped,
+  deleteOperationPouped,
 } from "../../services/realm";
 import { Category, Operation } from "../../types";
 import {
@@ -165,7 +166,7 @@ export const OperationForm = () => {
     setWallet(await getCarteira().then((data) => data));
     Toast.show({
       type: "success",
-      text1: "Popança realizada com sucesso",
+      text1: "Transferência realizada com sucesso",
       text2: `O valor foi transferido do ${
         form?.origin?.institutionName
           ? form?.origin?.institutionName
@@ -177,6 +178,30 @@ export const OperationForm = () => {
       }`,
       autoHide: true,
     });
+  }
+
+  async function deletePouped(operation: Operation) {
+    if (operation?.id) {
+      await deleteOperationPouped(operation?.id?.toString());
+      setCards(await getCards().then((data) => data));
+      setOperations(await getOperations());
+      setCategories(await getCategories().then((data) => data));
+      setWallet(await getCarteira().then((data) => data));
+      Toast.show({
+        type: "success",
+        text1: "Transferência excluida com sucesso",
+        text2: `O valor foi transferido do ${
+          form?.origin?.institutionName
+            ? form?.origin?.institutionName
+            : form?.origin?.name
+        } para o ${
+          form?.for?.institutionName
+            ? form?.for?.institutionName
+            : form?.for?.name
+        }`,
+        autoHide: true,
+      });
+    }
   }
 
   return (
@@ -372,9 +397,15 @@ export const OperationForm = () => {
             {updateOperation?.id && (
               <DeleteButton
                 onPress={async () => {
-                  await deleteOperation(form, true);
-                  navigation.goBack();
-                  setUpdateOperation({} as Operation);
+                  if (form?.type !== "POUPED") {
+                    await deleteOperation(form, true);
+                    navigation.goBack();
+                    setUpdateOperation({} as Operation);
+                  } else {
+                    await deletePouped(form);
+                    navigation.goBack();
+                    setUpdateOperation({} as Operation);
+                  }
                 }}
               >
                 <DeleteText>Excluir operação</DeleteText>

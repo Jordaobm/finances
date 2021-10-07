@@ -22,11 +22,13 @@ interface RenderItemProps {
 export const CustomCarousel: React.SFC<CustomCarouselProps> = ({
   onChangeCard,
 }) => {
-  const { cards, selectedCard } = useUpdateDataContext();
+  const { cards, selectedCard, wallet } = useUpdateDataContext();
+
+  const cardsWithWallets = [...cards, wallet];
 
   const [carouselItems, setCarouselItems] = useState<Card[]>([
     {} as Card,
-    ...cards,
+    ...cardsWithWallets,
   ]);
   const ref = useRef(null);
 
@@ -36,7 +38,8 @@ export const CustomCarousel: React.SFC<CustomCarouselProps> = ({
         layout={"default"}
         ref={ref}
         firstItem={
-          cards?.findIndex((card) => card?.id === selectedCard?.id) + 1
+          cardsWithWallets?.findIndex((card) => card?.id === selectedCard?.id) +
+          1
         }
         data={carouselItems}
         sliderWidth={Dimensions.get("window").width - 60}
@@ -50,7 +53,7 @@ export const CustomCarousel: React.SFC<CustomCarouselProps> = ({
   };
 
   useEffect(() => {
-    setCarouselItems([{} as Card, ...cards]);
+    setCarouselItems([{} as Card, ...cardsWithWallets]);
     renderCarousel();
   }, [cards]);
 
