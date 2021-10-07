@@ -7,6 +7,7 @@ interface InputProps extends TextInputProps {
   maskDate?: boolean;
   money?: boolean;
   maskMonth?: boolean;
+  disabledStyle?: boolean;
 }
 
 export const Input = ({
@@ -14,6 +15,7 @@ export const Input = ({
   maskDate,
   money,
   maskMonth,
+  disabledStyle,
   ...rest
 }: InputProps) => {
   const [active, setActive] = useState(false);
@@ -73,7 +75,10 @@ export const Input = ({
   }
 
   return (
-    <ContainerInput color={active ? "#3CC75E" : "#f5f5f5"}>
+    <ContainerInput
+      disabledStyle={disabledStyle}
+      color={active ? "#3CC75E" : "#f5f5f5"}
+    >
       <CustomInput
         ref={reference}
         placeholderTextColor="#c6c6c6"

@@ -3,6 +3,7 @@ import { TextInputMask } from "react-native-masked-text";
 
 interface ContainerInputProps {
   color: string;
+  disabledStyle?: boolean;
 }
 
 export const ContainerInput = styled.View<ContainerInputProps>`
@@ -11,6 +12,8 @@ export const ContainerInput = styled.View<ContainerInputProps>`
   border-style: solid;
   border-color: ${(props) => props?.color};
   border-radius: 10px;
+
+  background-color: ${(props) => (props?.disabledStyle ? "#f7f7f7" : "white")};
 `;
 
 export const CustomInput = styled.TextInput`

@@ -122,7 +122,13 @@ export const CardForm = ({}) => {
             <ArrowLeftIcon color="#595959" />
           </GoBack>
           <TitlePage>
-            {updateCard?.id ? "Editando cartão" : "Adicionando cartão"}
+            {updateCard?.id
+              ? `Editando ${
+                  updateCard?.institutionName === "Carteira"
+                    ? "carteira"
+                    : "cartão"
+                }`
+              : "Adicionando cartão"}
           </TitlePage>
           <SubtitlePage>
             Adicione seus cartões para obter o controle das finanças.
@@ -131,6 +137,8 @@ export const CardForm = ({}) => {
           <FormContainer>
             <ContainerInput>
               <Input
+                disabledStyle={form?.name === "Carteira"}
+                editable={form?.name !== "Carteira"}
                 value={form?.institutionName}
                 placeholder="Nome da instituição financeira"
                 onChangeText={(institutionName) =>
@@ -142,6 +150,8 @@ export const CardForm = ({}) => {
 
             <ContainerInput>
               <Input
+                disabledStyle={form?.name === "Carteira"}
+                editable={form?.name !== "Carteira"}
                 value={form?.name}
                 returnKeyType={"next"}
                 placeholder="Nome presente no cartão"

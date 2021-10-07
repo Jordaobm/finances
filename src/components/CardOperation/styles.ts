@@ -4,6 +4,12 @@ export const ContentCard = styled.View`
   flex-direction: column;
 `;
 
+export const Icone = styled.View`
+  position: absolute;
+  top: 3px;
+  right: 0;
+`;
+
 export const CategoryContainer = styled.View`
   flex-direction: row;
   align-items: center;

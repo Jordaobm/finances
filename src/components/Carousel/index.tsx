@@ -4,7 +4,7 @@ import { Text, View, SafeAreaView } from "react-native";
 import Carousel from "react-native-snap-carousel";
 import { useUpdateDataContext } from "../../context/UpdateDataContext";
 import { Card } from "../../types";
-import { CardComponent, FakeCard } from "../Card";
+import { CardComponent, FakeCard, Wallet } from "../Card";
 import { Dimensions } from "react-native";
 interface ItemProps {
   title: string;

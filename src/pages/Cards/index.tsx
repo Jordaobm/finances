@@ -67,7 +67,11 @@ export const Cards = () => {
               }}
             >
               {selectedCard?.institutionName
-                ? `Bem vindo ao gerenciamento do seu Cartão ${selectedCard?.institutionName}`
+                ? `Bem vindo ao gerenciamento ${
+                    selectedCard?.name === "Carteira"
+                      ? "da sua"
+                      : "do seu Cartão"
+                  } ${selectedCard?.institutionName}`
                 : "Adicione aqui seus cartões e contas para manter um controle indivídual de cada um deles"}
             </SubtitlePage>
           </Container>

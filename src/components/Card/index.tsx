@@ -1,6 +1,7 @@
 import React from "react";
 import { BulletsIcon } from "../../icons/Icons";
 import {
+  BorderWallet,
   Bullets,
   ButtonText,
   CardContent,
@@ -8,9 +9,12 @@ import {
   Container,
   DataCard,
   InstitutionName,
+  LineWallet,
   Name,
   TouchAddCard,
   Value,
+  ValueWallet,
+  WalletContent,
 } from "./styles";
 import chip from "../../assets/chip.png";
 import { Card } from "../../types";
@@ -25,6 +29,30 @@ interface CardProps {
 export const CardComponent = ({ card }: CardProps) => {
   const navigation = useNavigation();
   const { setUpdateCard } = useUpdateDataContext();
+
+  if (card?.institutionName === "Carteira") {
+    return (
+      <Container>
+        <WalletContent
+          style={{ backgroundColor: card?.colorBackground, opacity: 1 }}
+          onPress={() => {
+            setUpdateCard(card);
+            navigation.navigate("CardForm");
+          }}
+        >
+          <LineWallet />
+
+          <BorderWallet />
+
+          <ValueWallet>
+            <Value style={{ color: card?.colorText }}>
+              {formatCurrency(Number(card?.currentValue))}
+            </Value>
+          </ValueWallet>
+        </WalletContent>
+      </Container>
+    );
+  }
 
   return (
     <Container>
@@ -43,7 +71,7 @@ export const CardComponent = ({ card }: CardProps) => {
 
         <DataCard>
           <Value style={{ color: card?.colorText }}>
-            {formatCurrency(card?.currentValue)}
+            {formatCurrency(Number(card?.currentValue))}
           </Value>
           <Name style={{ color: card?.colorText }}>{card?.name}</Name>
         </DataCard>

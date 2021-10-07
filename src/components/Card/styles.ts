@@ -22,6 +22,46 @@ export const CardContent = styled.TouchableOpacity`
   opacity: 0.4;
 `;
 
+export const WalletContent = styled.TouchableOpacity`
+  width: 100%;
+  max-width: 299px;
+  height: 172px;
+  border-width: 4px;
+  border-style: solid;
+  border-color: #ffbf00;
+  border-radius: 10px;
+  padding: 20px;
+
+  opacity: 0.4;
+
+  justify-content: center;
+`;
+
+export const LineWallet = styled.View`
+  width: 50px;
+  height: 4px;
+  background-color: #ffbf00;
+  border-radius: 4px;
+  position: relative;
+  left: 8px;
+  top: -10px;
+`;
+
+export const BorderWallet = styled.View`
+  width: 100px;
+  height: 50px;
+
+  position: absolute;
+  right: -3px;
+
+  border-width: 4px;
+  border-style: solid;
+  background-color: #ffbf00;
+  border-color: #ffbf00;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+`;
+
 export const TouchAddCard = styled.TouchableOpacity`
   position: absolute;
   font-family: "Roboto-Bold";
@@ -71,6 +111,11 @@ export const DataCard = styled.View`
   display: flex;
   flex-direction: column;
 `;
+
+export const ValueWallet = styled.View`
+  justify-content: center;
+`;
+
 export const InstitutionName = styled.Text`
   position: absolute;
   top: 110%;
