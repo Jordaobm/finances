@@ -32,12 +32,21 @@ export const AddOperationsText = styled.Text`
   color: white;
 `;
 
-export const ContainerCardOperations = styled.View`
+interface ContainerCardOperationsProps {
+  border?: boolean;
+}
+
+export const ContainerCardOperations = styled.View<ContainerCardOperationsProps>`
   width: 100%;
   background-color: white;
   margin-top: 8px;
   border-radius: 10px;
   padding: 8px;
+
+  border-width: ${(props) => (props?.border ? "1px" : 0)};
+  border-style: dashed;
+  border-color: #c6c6c6;
+  border-radius: 10px;
 `;
 
 export const NotOperation = styled.Text`

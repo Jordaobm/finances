@@ -22,6 +22,7 @@ interface OperationsProps {
   addOperation?: boolean;
   operationText?: string;
   listOperations?: Operation[];
+  border?: boolean;
 }
 
 export const Operations = ({
@@ -30,6 +31,7 @@ export const Operations = ({
   addOperation = true,
   operationText,
   listOperations,
+  border,
 }: OperationsProps) => {
   const { operations } = useUpdateDataContext();
   let operationsFilter = operations;
@@ -69,7 +71,7 @@ export const Operations = ({
             </AddOperations>
           )}
         </ContentText>
-        <ContainerCardOperations>
+        <ContainerCardOperations border={border}>
           {operationsFilter?.length > 0 ? (
             <CardOperation operations={operationsFilter} />
           ) : (

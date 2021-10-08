@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ActivityIndicator, ScrollView, StatusBar, Text } from "react-native";
 import Toast from "react-native-toast-message";
-import operacoes from "../../assets/operacoes.png";
+import charts from "../../assets/charts.png";
 import { Header } from "../../components/Header";
 import { Input } from "../../components/Input";
 import { Navigation } from "../../components/Navigation";
@@ -10,6 +10,7 @@ import { useUpdateDataContext } from "../../context/UpdateDataContext";
 import { SearchIcon } from "../../icons/Icons";
 import { getOperationForFilter } from "../../services/realm";
 import {
+  ChartsContainer,
   Container,
   ContainerImage,
   ContainerInput,
@@ -24,7 +25,7 @@ import {
   TitlePage,
 } from "./styles";
 
-export const Operation = () => {
+export const Charts = () => {
   const { setFilterOperations, filterOperations } = useUpdateDataContext();
 
   const [loading, setLoading] = useState(false);
@@ -38,20 +39,18 @@ export const Operation = () => {
     <>
       <StatusBar hidden />
 
-      <ScrollView style={{ flex: 1, backgroundColor: "white" }}>
+      <ScrollView style={{ flex: 1, backgroundColor: "#FBFBFB" }}>
         <Header color="#595959" onlySettings />
 
         <Container>
-          <TitlePage>Operações</TitlePage>
+          <TitlePage>Análises e gráficos</TitlePage>
           <SubtitlePage>
-            Entradas e saídas. As operações são todos os registros que você faz
-            na aplicação. Valores recebidos, valores pagos e/ou retirados de
-            seus fundos, tudo deve ser registrado para ter o controle de suas
-            finanças
+            Nesta área você poderá encontrar por análises e gráficos que
+            evidenciem suas entradas e saídas durante o período que selecionar
           </SubtitlePage>
 
           <ContainerImage>
-            <OperationImage source={operacoes} />
+            <OperationImage source={charts} />
           </ContainerImage>
 
           <Filter>
@@ -112,23 +111,9 @@ export const Operation = () => {
             </FilterButton>
           </Filter>
         </Container>
-
-        <ContainerOperation>
-          {loading ? (
-            <LoadingContainer>
-              <ActivityIndicator color="rgba(1, 55, 148, 0.8)" />
-            </LoadingContainer>
-          ) : (
-            <Operations
-              border
-              addOperation={false}
-              color="#595959"
-              operationText="Operações encontradas"
-              listOperations={filterOperations}
-            />
-          )}
-        </ContainerOperation>
       </ScrollView>
+
+      <ChartsContainer></ChartsContainer>
 
       <Navigation activeRoute="Operation" />
     </>

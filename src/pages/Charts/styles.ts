@@ -64,7 +64,7 @@ export const ContainerImage = styled.View`
 
 export const OperationImage = styled.Image`
   width: 100%;
-  height: 258px;
+  height: 230.68px;
 `;
 
 export const ContainerInput = styled.View`
@@ -101,4 +101,10 @@ export const LoadingContainer = styled.View`
   align-items: center;
   width: 100%;
   height: 200px;
+`;
+
+export const ChartsContainer = styled.View`
+  width: 100%;
+  min-height: 50px;
+  background-color: #fbfbfb;
 `;

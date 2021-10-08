@@ -8,10 +8,15 @@ import {
   ContainerCard,
   ContentCard,
   DateText,
-  Line,
+  IsTransfer,
   TextOperation,
   Value,
+  ContainerText,
   ValueAndMonth,
+  ContainerTitle,
+  CategoryContainer,
+  TitleCategory,
+  Icone,
 } from "./styles";
 
 export const CardCategories = ({ categories }: CardCategoryProps) => {
@@ -33,24 +38,21 @@ export const CardCategories = ({ categories }: CardCategoryProps) => {
             }}
           >
             <ContentCard>
-              <Bullet color={category?.color} />
-              <TextOperation>{category?.name}</TextOperation>
-
+              <CategoryContainer>
+                <Bullet color={category?.color} />
+                <TitleCategory>{category?.name}</TitleCategory>
+              </CategoryContainer>
               <ValueAndMonth>
                 <Value color={category?.color}>
                   {formatCurrency(Number(category?.accumuledValue))}
                 </Value>
-
-                {operations?.find((e) => e?.category?.id === category?.id)
-                  ?.date && (
-                  <DateText>
-                    última adição em{" "}
-                    {
-                      operations?.find((e) => e?.category?.id === category?.id)
-                        ?.date
-                    }
-                  </DateText>
-                )}
+                <DateText>
+                  última adição em{" "}
+                  {
+                    operations?.find((e) => e?.category?.id === category?.id)
+                      ?.date
+                  }
+                </DateText>
               </ValueAndMonth>
             </ContentCard>
           </ContainerCard>

@@ -1,6 +1,6 @@
 import React from "react";
+import Svg, { Circle, Path, Rect, Text } from "react-native-svg";
 import { PieChart } from "react-native-svg-charts";
-import { Text, G, Circle } from "react-native-svg";
 import { useUpdateDataContext } from "../../context/UpdateDataContext";
 import { Category } from "../../types";
 
@@ -41,17 +41,29 @@ export const OutputChart = () => {
     return slices.map((slice, index) => {
       const { labelCentroid, pieCentroid, data } = slice;
       return (
-        <Text
-          key={index}
-          x={pieCentroid[0]}
-          y={pieCentroid[1]}
-          fill={"white"}
-          textAnchor={"middle"}
-          alignmentBaseline={"middle"}
-          fontSize={12}
-        >
-          {`${data?.amount?.replace(".", ",")}%  ${data.category}`}
-        </Text>
+        <>
+          <Text
+            key={index}
+            x={labelCentroid[0]}
+            y={labelCentroid[1]}
+            fill={"white"}
+            textAnchor={"middle"}
+            alignmentBaseline={"text-bottom"}
+            fontSize={10}
+          >
+            {`${data?.amount?.replace(".", ",")}% `}
+          </Text>
+          <Text
+            x={labelCentroid[0]}
+            y={labelCentroid[1] - 12}
+            fill={"white"}
+            textAnchor={"middle"}
+            alignmentBaseline={"text-bottom"}
+            fontSize={10}
+          >
+            {`${data.category}`}
+          </Text>
+        </>
       );
     });
   };
@@ -61,7 +73,8 @@ export const OutputChart = () => {
       style={{ height: 200 }}
       valueAccessor={({ item }) => item.amount}
       data={data}
-      outerRadius={"95%"}
+      spacing={0}
+      outerRadius={"100%"}
     >
       <Labels />
     </PieChart>

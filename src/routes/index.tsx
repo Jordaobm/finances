@@ -7,6 +7,7 @@ import { CardForm } from "../pages/CardForm";
 import { Cards } from "../pages/Cards";
 import { Categories } from "../pages/Categories";
 import { CategoryForm } from "../pages/CategoryForm";
+import { Charts } from "../pages/Charts";
 import { Configuration } from "../pages/Configuration";
 import { Home } from "../pages/Home";
 import { Operation } from "../pages/Operation";
@@ -46,6 +47,7 @@ export const NavigationRoutes = () => {
         <Navigation.Screen name="Cards" component={Cards} />
         <Navigation.Screen name="Configuration" component={Configuration} />
         <Navigation.Screen name="Operation" component={Operation} />
+        <Navigation.Screen name="Charts" component={Charts} />
       </Navigation.Navigator>
       <ToastWrapper ref={(ref) => ToastWrapper.setRef(ref)} />
     </>

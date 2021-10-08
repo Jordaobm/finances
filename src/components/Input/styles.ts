@@ -19,11 +19,11 @@ export const ContainerInput = styled.View<ContainerInputProps>`
 export const CustomInput = styled.TextInput`
   margin: 0;
   padding: 0;
-  color: #595959;
+  font-size: 16px;
 `;
 
 export const InputStyle = styled(TextInputMask)`
   margin: 0;
   padding: 0;
-  color: #595959;
+  font-size: 16px;
 `;
