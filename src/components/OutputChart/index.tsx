@@ -1,8 +1,8 @@
 import React from "react";
-import Svg, { Circle, Path, Rect, Text } from "react-native-svg";
+import { Text } from "react-native-svg";
 import { PieChart } from "react-native-svg-charts";
-import { useUpdateDataContext } from "../../context/UpdateDataContext";
-import { Category } from "../../types";
+import { Category, Operation } from "../../types";
+import { Container, Title } from "./styles";
 
 interface LabelProps {
   slices: any;
@@ -10,9 +10,17 @@ interface LabelProps {
   width: number;
 }
 
-export const OutputChart = () => {
-  const { operations } = useUpdateDataContext();
+interface OutputChartProps {
+  operations: Operation[];
+  colorText?: string;
+  title?: string;
+}
 
+export const OutputChart = ({
+  operations,
+  colorText,
+  title,
+}: OutputChartProps) => {
   const outPutOperations = operations?.filter((e) => e?.type === "OUTPUT");
   let outPutCategories: Category[] = [];
 
@@ -41,12 +49,12 @@ export const OutputChart = () => {
     return slices.map((slice, index) => {
       const { labelCentroid, pieCentroid, data } = slice;
       return (
-        <>
+        <React.Fragment key={index}>
           <Text
             key={index}
             x={labelCentroid[0]}
             y={labelCentroid[1]}
-            fill={"white"}
+            fill={colorText ? colorText : "white"}
             textAnchor={"middle"}
             alignmentBaseline={"text-bottom"}
             fontSize={10}
@@ -56,27 +64,30 @@ export const OutputChart = () => {
           <Text
             x={labelCentroid[0]}
             y={labelCentroid[1] - 12}
-            fill={"white"}
+            fill={colorText ? colorText : "white"}
             textAnchor={"middle"}
             alignmentBaseline={"text-bottom"}
             fontSize={10}
           >
             {`${data.category}`}
           </Text>
-        </>
+        </React.Fragment>
       );
     });
   };
 
   return (
-    <PieChart
-      style={{ height: 200 }}
-      valueAccessor={({ item }) => item.amount}
-      data={data}
-      spacing={0}
-      outerRadius={"100%"}
-    >
-      <Labels />
-    </PieChart>
+    <Container>
+      {title && <Title>{title}</Title>}
+      <PieChart
+        style={{ height: 200 }}
+        valueAccessor={({ item }) => item.amount}
+        data={data}
+        spacing={0}
+        outerRadius={"100%"}
+      >
+        <Labels />
+      </PieChart>
+    </Container>
   );
 };

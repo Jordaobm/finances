@@ -1,25 +1,25 @@
 import { useNavigation } from "@react-navigation/core";
 import React from "react";
 import { useUpdateDataContext } from "../../context/UpdateDataContext";
-import { CardCategoryProps, CardOperationProps } from "../../types";
+import { Category } from "../../types";
 import { formatCurrency } from "../../utils/formatCurrency";
 import {
   Bullet,
+  CategoryContainer,
   ContainerCard,
   ContentCard,
   DateText,
-  IsTransfer,
-  TextOperation,
-  Value,
-  ContainerText,
-  ValueAndMonth,
-  ContainerTitle,
-  CategoryContainer,
   TitleCategory,
-  Icone,
+  Value,
+  ValueAndMonth,
 } from "./styles";
 
-export const CardCategories = ({ categories }: CardCategoryProps) => {
+export interface CardCategoryProps {
+  categories: Category[];
+  border?: boolean;
+}
+
+export const CardCategories = ({ categories, border }: CardCategoryProps) => {
   const { operations } = useUpdateDataContext();
 
   const navigation = useNavigation();

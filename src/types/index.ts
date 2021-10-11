@@ -47,10 +47,6 @@ export interface CardOperationProps {
   operations: Operation[];
 }
 
-export interface CardCategoryProps {
-  categories: Category[];
-}
-
 export interface NavigationProps {
   activeRoute: string;
   activeColor?: string;

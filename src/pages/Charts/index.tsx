@@ -1,39 +1,83 @@
-import React, { useState } from "react";
-import { ActivityIndicator, ScrollView, StatusBar, Text } from "react-native";
+import React, { useEffect, useState } from "react";
+import { ScrollView, StatusBar } from "react-native";
 import Toast from "react-native-toast-message";
 import charts from "../../assets/charts.png";
+import { CardCategories } from "../../components/CardCategories";
+import {
+  ContainerCardOperations,
+  NotOperation,
+  NotOperationSpan,
+} from "../../components/CategoriesList/styles";
 import { Header } from "../../components/Header";
 import { Input } from "../../components/Input";
 import { Navigation } from "../../components/Navigation";
-import { Operations } from "../../components/Operations";
+import { OutputChart } from "../../components/OutputChart";
 import { useUpdateDataContext } from "../../context/UpdateDataContext";
 import { SearchIcon } from "../../icons/Icons";
 import { getOperationForFilter } from "../../services/realm";
+import { Category, Operation } from "../../types";
 import {
   ChartsContainer,
   Container,
   ContainerImage,
   ContainerInput,
-  ContainerOperation,
   Filter,
   FilterButton,
   FilterButtonText,
   FilterText,
-  LoadingContainer,
   OperationImage,
   SubtitlePage,
   TitlePage,
 } from "./styles";
 
 export const Charts = () => {
-  const { setFilterOperations, filterOperations } = useUpdateDataContext();
+  const { config } = useUpdateDataContext();
+
+  const [operations, setOperations] = useState<Operation[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
 
   const [loading, setLoading] = useState(false);
 
   const [form, setForm] = useState({
-    initialDate: "",
-    finishDate: "",
+    initialDate: config?.firstDayMonth || "",
+    finishDate: config?.lastDayMonth || "",
   });
+
+  useEffect(async () => {
+    const operationsFilter = await (
+      await getOperationForFilter(form)
+    )?.filter((e) => e?.type === "OUTPUT");
+
+    setOperations(operationsFilter);
+  }, []);
+
+  useEffect(() => {
+    let categoriesFilter: Category[] = [];
+
+    operations?.forEach((operation) => {
+      if (
+        categoriesFilter?.findIndex(
+          (e) => e?.id === operation?.category?.id
+        ) === -1
+      ) {
+        categoriesFilter.push(operation?.category);
+      }
+    });
+
+    categoriesFilter = categoriesFilter?.map((category) => {
+      let operationByCategory = operations?.filter(
+        (e) => e?.category?.id === category?.id
+      );
+
+      let accumuledValue = 0;
+      operationByCategory.forEach((e) => {
+        accumuledValue = accumuledValue + Number(e?.value);
+      });
+
+      return { ...category, accumuledValue };
+    });
+    setCategories(categoriesFilter);
+  }, [operations]);
 
   return (
     <>
@@ -98,7 +142,11 @@ export const Charts = () => {
                   });
                 } else {
                   setLoading(true);
-                  setFilterOperations(await getOperationForFilter(form));
+                  setOperations(
+                    await (
+                      await getOperationForFilter(form)
+                    )?.filter((e) => e?.type === "OUTPUT")
+                  );
                   setTimeout(() => {
                     setLoading(false);
                   }, 2000);
@@ -111,11 +159,32 @@ export const Charts = () => {
             </FilterButton>
           </Filter>
         </Container>
+
+        <ChartsContainer>
+          <OutputChart
+            operations={operations}
+            colorText={"#343434"}
+            title="Gastos por categoria"
+          />
+
+          <ContainerCardOperations
+            style={{ marginTop: 18, backgroundColor: "#FBFBFB" }}
+          >
+            {categories?.length > 0 ? (
+              <CardCategories categories={categories} />
+            ) : (
+              <>
+                <NotOperation>Ainda não há categorias cadastradas</NotOperation>
+                <NotOperationSpan>
+                  Cadastre uma operação e ela aparecerá aqui!
+                </NotOperationSpan>
+              </>
+            )}
+          </ContainerCardOperations>
+        </ChartsContainer>
       </ScrollView>
 
-      <ChartsContainer></ChartsContainer>
-
-      <Navigation activeRoute="Operation" />
+      <Navigation activeRoute="Charts" />
     </>
   );
 };

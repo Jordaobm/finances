@@ -73,12 +73,8 @@ export const Navigation = ({
           navigation.navigate("Charts");
         }}
       >
-        <ChartIcon
-          color={activeRoute === "Operation" ? activeColor : "#595959"}
-        />
+        <ChartIcon color={activeRoute === "Charts" ? activeColor : "#595959"} />
       </NavigationButton>
-
-      <NavigationButton></NavigationButton>
     </Content>
   );
 };

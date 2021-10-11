@@ -58,7 +58,7 @@ export const Home = () => {
 
             <ContainerGraph>
               {operations?.filter((e) => e?.type === "OUTPUT")?.length > 0 && (
-                <OutputChart />
+                <OutputChart operations={operations} />
               )}
             </ContainerGraph>
           </CurrentValueContainer>

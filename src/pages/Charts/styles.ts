@@ -107,4 +107,7 @@ export const ChartsContainer = styled.View`
   width: 100%;
   min-height: 50px;
   background-color: #fbfbfb;
+
+  margin-bottom: 70px;
+  padding: 32px;
 `;
