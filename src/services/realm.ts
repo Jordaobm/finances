@@ -204,6 +204,7 @@ export async function addOrExcludeOperationAndUpdateCard(
   if (exclude) {
     if (receivedOperation?.id) {
       operation = await getOperationById(receivedOperation?.id);
+      operation = { ...operation, type: receivedOperation?.type };
     }
   }
 

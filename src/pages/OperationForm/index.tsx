@@ -1,23 +1,24 @@
 import { useNavigation } from "@react-navigation/core";
-import React, { useRef, useState } from "react";
-import { ScrollView, StatusBar, TextInput } from "react-native";
+import React, { useState } from "react";
+import { ActivityIndicator, ScrollView, StatusBar } from "react-native";
 import Toast from "react-native-toast-message";
 import { Input } from "../../components/Input";
 import { Select } from "../../components/Select";
 import { useUpdateDataContext } from "../../context/UpdateDataContext";
-import { operations, typeOperation } from "../../database";
+import { typeOperation } from "../../database";
 import { ArrowLeftIcon, TrashIcon } from "../../icons/Icons";
 import Card from "../../schemas/CardSchema";
 import {
-  getCards,
-  getOperations,
   addOrExcludeOperationAndUpdateCard,
-  getCategories,
-  getCarteira,
   createOperationPouped,
   deleteOperationPouped,
+  getCards,
+  getCarteira,
+  getCategories,
+  getOperations,
 } from "../../services/realm";
 import { Category, Operation } from "../../types";
+import { ContainerLoading } from "../Charts/styles";
 import {
   AcceptText,
   Action,
@@ -61,6 +62,9 @@ export const OperationForm = () => {
           type: "",
         } as Operation)
   );
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   const cardAndCarteira = [...cards, wallet];
 
@@ -397,20 +401,32 @@ export const OperationForm = () => {
             {updateOperation?.id && (
               <DeleteButton
                 onPress={async () => {
+                  setDeleteLoading(true);
+
                   if (form?.type !== "POUPED") {
                     await deleteOperation(form, true);
-                    navigation.goBack();
                     setUpdateOperation({} as Operation);
                   } else {
                     await deletePouped(form);
-                    navigation.goBack();
                     setUpdateOperation({} as Operation);
                   }
+                  setTimeout(() => {
+                    setDeleteLoading(false);
+                    navigation.goBack();
+                  }, 1000);
                 }}
               >
-                <DeleteText>Excluir operação</DeleteText>
+                {deleteLoading ? (
+                  <ContainerLoading>
+                    <ActivityIndicator color="#FF6F6F" />
+                  </ContainerLoading>
+                ) : (
+                  <>
+                    <DeleteText>Excluir operação</DeleteText>
 
-                <TrashIcon color="#FF6F6F" />
+                    <TrashIcon color="#FF6F6F" />
+                  </>
+                )}
               </DeleteButton>
             )}
           </FormContainer>
@@ -419,14 +435,15 @@ export const OperationForm = () => {
       <Actions>
         <Action
           onPress={() => {
-            navigation.goBack();
             setUpdateOperation({} as Operation);
+            navigation.goBack();
           }}
         >
           <CancelText>Cancelar</CancelText>
         </Action>
         <Action
           onPress={async () => {
+            setIsLoading(true);
             if (validateForm(form)) {
               if (form?.type !== "POUPED") {
                 if (!updateOperation?.id) {
@@ -436,16 +453,32 @@ export const OperationForm = () => {
                 }
                 setUpdateOperation({} as Operation);
               } else {
-                // pouped
-                await savePouped(form);
-                setUpdateOperation({} as Operation);
+                if (updateOperation?.id) {
+                  // editando transferência
+                  await deletePouped(form);
+                  await savePouped(form);
+
+                  console.log("editar transferência");
+                } else {
+                  await savePouped(form);
+                }
               }
             }
-            navigation.goBack();
+            setTimeout(() => {
+              setUpdateOperation({} as Operation);
+              setIsLoading(false);
+              navigation.goBack();
+            }, 1000);
           }}
         >
           <AcceptText>
-            {updateOperation?.id ? "Salvar" : "Cadastrar"}
+            {isLoading ? (
+              <ActivityIndicator color="#3cc75e" />
+            ) : updateOperation?.id ? (
+              "Salvar"
+            ) : (
+              "Cadastrar"
+            )}
           </AcceptText>
         </Action>
       </Actions>

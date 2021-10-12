@@ -55,7 +55,7 @@ export const CustomCarousel: React.SFC<CustomCarouselProps> = ({
   useEffect(() => {
     setCarouselItems([{} as Card, ...cardsWithWallets]);
     renderCarousel();
-  }, [cards]);
+  }, [cards, wallet]);
 
   const renderItem = useCallback(({ item }: RenderItemProps) => {
     if (item?.id) {
