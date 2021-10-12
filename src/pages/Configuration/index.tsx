@@ -7,6 +7,7 @@ import { useUpdateDataContext } from "../../context/UpdateDataContext";
 import { ArrowLeftIcon } from "../../icons/Icons";
 import { Config } from "../../types";
 import { monthAndYearToDate } from "../../utils/monthAndYearToDate";
+import pck from "../../../package.json";
 import {
   AcceptText,
   Action,
@@ -18,6 +19,7 @@ import {
   GoBack,
   SubtitlePage,
   TitlePage,
+  Version,
 } from "./styles";
 
 export const Configuration = () => {
@@ -97,6 +99,7 @@ export const Configuration = () => {
               />
             </ContainerInput>
           </FormContainer>
+          <Version>Versão {pck?.version}</Version>
         </Container>
       </ScrollView>
       <Actions>

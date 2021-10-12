@@ -1,6 +1,5 @@
 import { useNavigation } from "@react-navigation/core";
 import React from "react";
-import { Text } from "react-native";
 import { useUpdateDataContext } from "../../context/UpdateDataContext";
 import {
   InputOperationCoin,
@@ -11,18 +10,19 @@ import { CardOperationProps } from "../../types";
 import { formatCurrency } from "../../utils/formatCurrency";
 import {
   Bullet,
+  CategoryContainer,
   ContainerCard,
+  ContainerNameCategory,
+  ContainerText,
+  ContainerTitle,
   ContentCard,
   DateText,
+  Icone,
   IsTransfer,
   TextOperation,
-  Value,
-  ContainerText,
-  ValueAndMonth,
-  ContainerTitle,
-  CategoryContainer,
   TitleCategory,
-  Icone,
+  Value,
+  ValueAndMonth,
 } from "./styles";
 
 export const CardOperation = ({ operations }: CardOperationProps) => {
@@ -57,7 +57,9 @@ export const CardOperation = ({ operations }: CardOperationProps) => {
 
               <CategoryContainer>
                 <Bullet color={operation?.category?.color} />
-                <TitleCategory>{operation?.category?.name}</TitleCategory>
+                <ContainerNameCategory>
+                  <TitleCategory>{operation?.category?.name}</TitleCategory>
+                </ContainerNameCategory>
               </CategoryContainer>
               <ContainerTitle>
                 {operation?.for?.id ? (

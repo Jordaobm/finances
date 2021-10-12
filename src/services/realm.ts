@@ -4,7 +4,7 @@ import CategorySchema from "../schemas/CategorySchema";
 import CardSchema from "../schemas/CardSchema";
 import OperationSchema from "../schemas/OperationSchema";
 import ConfigurationSchema from "../schemas/ConfigurationSchema";
-import { Card, Category, Config, Operation } from "../types";
+import { Card, Category, Config, FormChartFilter, Operation } from "../types";
 import { newDateToMonthAndYear } from "../utils/newDateToMonthAndYear";
 import { format, lastDayOfMonth, startOfMonth } from "date-fns";
 import { dateToString, stringToDate } from "../utils/formatDate";
@@ -431,10 +431,7 @@ export async function getOperationsByCategory(category: Category) {
   return operations;
 }
 
-export async function getOperationForFilter(filter: {
-  initialDate: string;
-  finishDate: string;
-}) {
+export async function getOperationForFilter(filter: FormChartFilter) {
   const realm = await Realm.open({
     path: "mydb",
     schema: [CategorySchema, CardSchema, OperationSchema, ConfigurationSchema],

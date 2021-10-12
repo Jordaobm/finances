@@ -130,3 +130,10 @@ export const DeleteText = styled.Text`
   font-size: 16px;
   text-align: center;
 `;
+
+export const Version = styled.Text`
+  margin-top: 10px;
+  font-family: "Roboto-Regular";
+  font-size: 10px;
+  color: #c6c6c6;
+`;

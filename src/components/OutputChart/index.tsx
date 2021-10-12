@@ -46,7 +46,7 @@ export const OutputChart = ({
   }));
 
   const Labels = ({ slices, height, width }: LabelProps) => {
-    return slices.map((slice, index) => {
+    return slices.map((slice: any, index: number) => {
       const { labelCentroid, pieCentroid, data } = slice;
       return (
         <React.Fragment key={index}>
@@ -81,7 +81,7 @@ export const OutputChart = ({
       {title && <Title>{title}</Title>}
       <PieChart
         style={{ height: 200 }}
-        valueAccessor={({ item }) => item.amount}
+        valueAccessor={({ item }: any) => item?.amount}
         data={data}
         spacing={0}
         outerRadius={"100%"}

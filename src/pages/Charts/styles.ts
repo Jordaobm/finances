@@ -107,7 +107,21 @@ export const ChartsContainer = styled.View`
   width: 100%;
   min-height: 50px;
   background-color: #fbfbfb;
-
-  margin-bottom: 70px;
   padding: 32px;
+`;
+
+export const ContainerLoading = styled.View`
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const OutputCategoryChart = styled.View``;
+
+export const MostUsedCard = styled.View``;
+export const Title = styled.Text`
+  font-size: 18px;
+  color: #595959;
+  font-family: "Roboto-Medium";
+  margin-bottom: 10px;
 `;

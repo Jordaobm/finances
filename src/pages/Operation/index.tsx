@@ -13,6 +13,7 @@ import {
   Container,
   ContainerImage,
   ContainerInput,
+  ContainerLoading,
   ContainerOperation,
   Filter,
   FilterButton,
@@ -106,9 +107,16 @@ export const Operation = () => {
                 }
               }}
             >
-              <FilterButtonText>Buscar</FilterButtonText>
-
-              <SearchIcon color="#fff" />
+              {loading ? (
+                <ContainerLoading>
+                  <ActivityIndicator color="#fff" />
+                </ContainerLoading>
+              ) : (
+                <>
+                  <FilterButtonText>Buscar</FilterButtonText>
+                  <SearchIcon color="#fff" />
+                </>
+              )}
             </FilterButton>
           </Filter>
         </Container>

@@ -41,7 +41,7 @@ export const ContainerCardOperations = styled.View`
   border-style: dashed;
   border-color: #c6c6c6;
   border-radius: 10px;
-  margin-bottom: 70px;
+  margin-bottom: 30px;
 `;
 
 export const NotOperation = styled.Text`

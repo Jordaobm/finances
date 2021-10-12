@@ -13,6 +13,7 @@ export const Icone = styled.View`
 export const CategoryContainer = styled.View`
   flex-direction: row;
   align-items: center;
+  max-width: 85%;
 `;
 
 export const ContainerCard = styled.TouchableOpacity`
@@ -29,6 +30,7 @@ export const TitleCategory = styled.Text`
   font-size: 18px;
   font-family: "Roboto-Medium";
   color: #595959;
+  width: 100%;
 `;
 
 export const IsTransfer = styled.Text`
@@ -44,6 +46,11 @@ export const ContainerTitle = styled.View`
   align-items: center;
   display: flex;
   flex-direction: row;
+`;
+
+export const ContainerNameCategory = styled.View`
+  flex-direction: column;
+  max-width: 85%;
 `;
 
 export const ValueAndMonth = styled.View``;

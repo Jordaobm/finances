@@ -7,7 +7,7 @@ import {
   getOperations,
   updateConfigRealm,
 } from "../services/realm";
-import { Card, Category, Config, Operation } from "../types";
+import { Card, Category, Config, Operation, FormChartFilter } from "../types";
 
 interface UpdateDataContextProps {
   updateCategory: Category;
@@ -41,6 +41,15 @@ interface UpdateDataContextProps {
 
   filterOperations: Operation[];
   setFilterOperations: (operations: Operation[]) => void;
+
+  pageChartOperationsByFilter: Operation[];
+  setPageChartOperationsByFilter: (operations: Operation[]) => void;
+
+  pageChartCategoriesByFilter: Category[];
+  setPageChartCategoriesByFilter: (categories: Category[]) => void;
+
+  formChartFilter: FormChartFilter;
+  setFormChartFilter: (form: FormChartFilter) => void;
 }
 const UpdateDataContext = createContext({} as UpdateDataContextProps);
 
@@ -69,6 +78,16 @@ export const UpdateDataContextProvider = ({
   const [config, setConfig] = useState<Config>({} as Config);
 
   const [filterOperations, setFilterOperations] = useState<Operation[]>([]);
+
+  const [formChartFilter, setFormChartFilter] = useState<FormChartFilter>(
+    {} as FormChartFilter
+  );
+
+  const [pageChartOperationsByFilter, setPageChartOperationsByFilter] =
+    useState<Operation[]>([]);
+
+  const [pageChartCategoriesByFilter, setPageChartCategoriesByFilter] =
+    useState<Category[]>([]);
 
   async function updateConfig(config: Config) {
     setConfig(await updateConfigRealm(config).then((data) => data));
@@ -105,6 +124,12 @@ export const UpdateDataContextProvider = ({
         updateConfig,
         filterOperations,
         setFilterOperations,
+        pageChartOperationsByFilter,
+        setPageChartOperationsByFilter,
+        pageChartCategoriesByFilter,
+        setPageChartCategoriesByFilter,
+        formChartFilter,
+        setFormChartFilter,
       }}
     >
       {children}

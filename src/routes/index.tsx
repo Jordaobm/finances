@@ -17,21 +17,51 @@ import {
   getCarteira,
   getCategories,
   getConfiguration,
+  getOperationForFilter,
   getOperations,
 } from "../services/realm";
+import { Category } from "../types";
+import { extractCategoriesByOperations } from "../utils/extractCategoriesByOperations";
 
 const Navigation = createNativeStackNavigator();
 
 export const NavigationRoutes = () => {
-  const { setCategories, setConfig, setCards, setWallet, setOperations } =
-    useUpdateDataContext();
+  const {
+    setCategories,
+    setConfig,
+    setCards,
+    setWallet,
+    setOperations,
+    setPageChartOperationsByFilter,
+    setPageChartCategoriesByFilter,
+    setFormChartFilter,
+  } = useUpdateDataContext();
 
   useEffect(async () => {
     setCategories(await getCategories().then((data) => data));
-    setConfig(await getConfiguration().then((data) => data));
+    const cfg = await getConfiguration().then((data) => data);
+    setConfig(cfg);
     setCards(await getCards().then((data) => data));
     setWallet(await getCarteira().then((data) => data));
     setOperations(await getOperations().then((data) => data));
+
+    const operationsForChart = await getOperationForFilter({
+      initialDate: cfg?.firstDayMonth || "",
+      finishDate: cfg?.lastDayMonth || "",
+    });
+
+    if (cfg?.firstDayMonth && cfg?.lastDayMonth) {
+      setFormChartFilter({
+        initialDate: cfg.firstDayMonth,
+        finishDate: cfg.lastDayMonth,
+      });
+    }
+
+    setPageChartOperationsByFilter(operationsForChart);
+
+    setPageChartCategoriesByFilter(
+      extractCategoriesByOperations(operationsForChart)
+    );
 
     SplashScreen.hide();
   }, []);

@@ -102,3 +102,9 @@ export const LoadingContainer = styled.View`
   width: 100%;
   height: 200px;
 `;
+
+export const ContainerLoading = styled.View`
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+`;

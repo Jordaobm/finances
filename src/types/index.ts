@@ -79,3 +79,8 @@ export interface InitialValue {
   operations: Operation[];
   config: Config;
 }
+
+export interface FormChartFilter {
+  initialDate: string;
+  finishDate: string;
+}
