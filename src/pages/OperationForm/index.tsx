@@ -40,11 +40,12 @@ export const OperationForm = () => {
     categories,
     cards,
     wallet,
-    setCards,
-    setOperations,
-    operations,
-    setCategories,
-    setWallet,
+    saveOperation,
+    editOperation,
+    savePouped,
+    editPouped,
+    deletePouped,
+    deleteOperation,
   } = useUpdateDataContext();
 
   const [form, setForm] = useState<Operation>(
@@ -69,70 +70,6 @@ export const OperationForm = () => {
   const cardAndCarteira = [...cards, wallet];
 
   const navigation = useNavigation();
-
-  async function saveOperation(operation: Operation, showMessage: boolean) {
-    const formattedOperation: Operation = {
-      ...operation,
-      value: Number(operation?.value),
-    };
-
-    await addOrExcludeOperationAndUpdateCard(formattedOperation, false);
-    setCards(await getCards().then((data) => data));
-    setOperations(await getOperations());
-    setCategories(await getCategories().then((data) => data));
-    setWallet(await getCarteira().then((data) => data));
-    if (showMessage) {
-      Toast.show({
-        type: "success",
-        text1: "Operação adicionada com sucesso",
-        text2: `A operação ${formattedOperation?.name} foi vinculada à ${formattedOperation?.card?.institutionName}`,
-        autoHide: true,
-      });
-    }
-  }
-
-  async function deleteOperation(operation: Operation, showMessage: boolean) {
-    const formattedOperation: Operation = {
-      ...operation,
-      type:
-        operation?.type === "INPUT"
-          ? "OUTPUT"
-          : operation?.type === "OUTPUT"
-          ? "INPUT"
-          : operation?.type,
-      value: Number(operation?.value),
-    };
-
-    await addOrExcludeOperationAndUpdateCard(formattedOperation, true);
-    setCards(await getCards().then((data) => data));
-    setOperations(await getOperations());
-    setCategories(await getCategories().then((data) => data));
-    setWallet(await getCarteira().then((data) => data));
-    if (showMessage) {
-      Toast.show({
-        type: "success",
-        text1: "Operação excluída com sucesso",
-        text2: `A operação ${formattedOperation?.name} foi desvinculada à ${formattedOperation?.card?.institutionName}`,
-        autoHide: true,
-      });
-    }
-  }
-
-  async function editOperation(operation: Operation) {
-    const excludeOp = operations?.find((op) => op?.id === operation?.id);
-
-    if (excludeOp) {
-      await deleteOperation(excludeOp, false);
-      await saveOperation(operation, false);
-    }
-    setCategories(await getCategories().then((data) => data));
-    setWallet(await getCarteira().then((data) => data));
-    Toast.show({
-      type: "success",
-      text1: "Operação editada com sucesso",
-      autoHide: true,
-    });
-  }
 
   const validateForm = (operation: Operation) => {
     let isValid = true;
@@ -162,50 +99,44 @@ export const OperationForm = () => {
     return isValid;
   };
 
-  async function savePouped(operation: Operation) {
-    await createOperationPouped(operation);
-    setCards(await getCards().then((data) => data));
-    setOperations(await getOperations());
-    setCategories(await getCategories().then((data) => data));
-    setWallet(await getCarteira().then((data) => data));
-    Toast.show({
-      type: "success",
-      text1: "Transferência realizada com sucesso",
-      text2: `O valor foi transferido do ${
-        form?.origin?.institutionName
-          ? form?.origin?.institutionName
-          : form?.origin?.name
-      } para o ${
-        form?.for?.institutionName
-          ? form?.for?.institutionName
-          : form?.for?.name
-      }`,
-      autoHide: true,
+  const submitForm = (form: Operation) => {
+    if (validateForm(form)) {
+      if (form?.type !== "POUPED") {
+        if (!updateOperation?.id) {
+          saveOperation(form, true);
+        } else {
+          editOperation(form);
+        }
+        setUpdateOperation({} as Operation);
+      } else {
+        if (updateOperation?.id) {
+          editPouped(form);
+        } else {
+          savePouped(form);
+        }
+      }
+    }
+
+    setUpdateOperation({} as Operation);
+    setIsLoading(false);
+    navigation.goBack();
+  };
+
+  async function delay() {
+    return new Promise(function (resolve) {
+      setTimeout(resolve, 3000);
     });
   }
 
-  async function deletePouped(operation: Operation) {
-    if (operation?.id) {
-      await deleteOperationPouped(operation?.id?.toString());
-      setCards(await getCards().then((data) => data));
-      setOperations(await getOperations());
-      setCategories(await getCategories().then((data) => data));
-      setWallet(await getCarteira().then((data) => data));
-      Toast.show({
-        type: "success",
-        text1: "Transferência excluida com sucesso",
-        text2: `O valor foi transferido do ${
-          form?.origin?.institutionName
-            ? form?.origin?.institutionName
-            : form?.origin?.name
-        } para o ${
-          form?.for?.institutionName
-            ? form?.for?.institutionName
-            : form?.for?.name
-        }`,
-        autoHide: true,
-      });
+  async function deleteOp(form: Operation) {
+    if (form?.type === "POUPED") {
+      await deletePouped(form);
+    } else {
+      await deleteOperation(form, true);
     }
+    setDeleteLoading((state) => false);
+    setUpdateOperation({} as Operation);
+    navigation.goBack();
   }
 
   return (
@@ -400,20 +331,9 @@ export const OperationForm = () => {
             )}
             {updateOperation?.id && (
               <DeleteButton
-                onPress={async () => {
-                  setDeleteLoading(true);
-
-                  if (form?.type !== "POUPED") {
-                    await deleteOperation(form, true);
-                    setUpdateOperation({} as Operation);
-                  } else {
-                    await deletePouped(form);
-                    setUpdateOperation({} as Operation);
-                  }
-                  setTimeout(() => {
-                    setDeleteLoading(false);
-                    navigation.goBack();
-                  }, 1000);
+                onPress={() => {
+                  setDeleteLoading((state) => true);
+                  deleteOp(form);
                 }}
               >
                 {deleteLoading ? (
@@ -442,33 +362,9 @@ export const OperationForm = () => {
           <CancelText>Cancelar</CancelText>
         </Action>
         <Action
-          onPress={async () => {
+          onPress={() => {
             setIsLoading(true);
-            if (validateForm(form)) {
-              if (form?.type !== "POUPED") {
-                if (!updateOperation?.id) {
-                  await saveOperation(form, true);
-                } else {
-                  await editOperation(form);
-                }
-                setUpdateOperation({} as Operation);
-              } else {
-                if (updateOperation?.id) {
-                  // editando transferência
-                  await deletePouped(form);
-                  await savePouped(form);
-
-                  console.log("editar transferência");
-                } else {
-                  await savePouped(form);
-                }
-              }
-            }
-            setTimeout(() => {
-              setUpdateOperation({} as Operation);
-              setIsLoading(false);
-              navigation.goBack();
-            }, 1000);
+            submitForm(form);
           }}
         >
           <AcceptText>

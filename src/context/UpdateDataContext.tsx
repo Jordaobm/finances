@@ -1,5 +1,9 @@
 import React, { createContext, ReactNode, useContext, useState } from "react";
+import Toast from "react-native-toast-message";
 import {
+  addOrExcludeOperationAndUpdateCard,
+  createOperationPouped,
+  deleteOperationPouped,
   getCards,
   getCarteira,
   getCategories,
@@ -7,7 +11,7 @@ import {
   getOperations,
   updateConfigRealm,
 } from "../services/realm";
-import { Card, Category, Config, Operation, FormChartFilter } from "../types";
+import { Card, Category, Config, FormChartFilter, Operation } from "../types";
 
 interface UpdateDataContextProps {
   updateCategory: Category;
@@ -50,6 +54,17 @@ interface UpdateDataContextProps {
 
   formChartFilter: FormChartFilter;
   setFormChartFilter: (form: FormChartFilter) => void;
+
+  // métodos de banco de dados
+  saveOperation: (operation: Operation, showMessage: boolean) => Promise<void>;
+  deleteOperation: (
+    operation: Operation,
+    showMessage: boolean
+  ) => Promise<void>;
+  editOperation: (operation: Operation) => Promise<void>;
+  savePouped: (operation: Operation) => Promise<void>;
+  deletePouped: (operation: Operation) => Promise<void>;
+  editPouped: (operation: Operation) => Promise<void>;
 }
 const UpdateDataContext = createContext({} as UpdateDataContextProps);
 
@@ -91,13 +106,129 @@ export const UpdateDataContextProvider = ({
 
   async function updateConfig(config: Config) {
     setConfig(await updateConfigRealm(config).then((data) => data));
-
     // atualizando informações
     setCategories(await getCategories().then((data) => data));
     setCards(await getCards().then((data) => data));
     setWallet(await getCarteira().then((data) => data));
     setOperations(await getOperations().then((data) => data));
     setConfig(await getConfiguration().then((data) => data));
+  }
+
+  // MÉTODOS DO BANCO DE DADOS
+
+  async function saveOperation(operation: Operation, showMessage: boolean) {
+    const formattedOperation: Operation = {
+      ...operation,
+      value: Number(operation?.value),
+    };
+
+    await addOrExcludeOperationAndUpdateCard(formattedOperation, false);
+    setCards(await getCards().then((data) => data));
+    setOperations(await getOperations());
+    setCategories(await getCategories().then((data) => data));
+    setWallet(await getCarteira().then((data) => data));
+    if (showMessage) {
+      Toast.show({
+        type: "success",
+        text1: "Operação adicionada com sucesso",
+        text2: `A operação ${formattedOperation?.name} foi vinculada à ${formattedOperation?.card?.institutionName}`,
+        autoHide: true,
+      });
+    }
+  }
+
+  async function deleteOperation(operation: Operation, showMessage: boolean) {
+    const formattedOperation: Operation = {
+      ...operation,
+      type:
+        operation?.type === "INPUT"
+          ? "OUTPUT"
+          : operation?.type === "OUTPUT"
+          ? "INPUT"
+          : operation?.type,
+      value: Number(operation?.value),
+    };
+
+    await addOrExcludeOperationAndUpdateCard(formattedOperation, true);
+    setCards(await getCards().then((data) => data));
+    setOperations(await getOperations());
+    setCategories(await getCategories().then((data) => data));
+    setWallet(await getCarteira().then((data) => data));
+    if (showMessage) {
+      Toast.show({
+        type: "success",
+        text1: "Operação excluída com sucesso",
+        text2: `A operação ${formattedOperation?.name} foi desvinculada à ${formattedOperation?.card?.institutionName}`,
+        autoHide: true,
+      });
+    }
+  }
+
+  async function editOperation(operation: Operation) {
+    const excludeOp = operations?.find((op) => op?.id === operation?.id);
+
+    if (excludeOp) {
+      await deleteOperation(excludeOp, false);
+      await saveOperation(operation, false);
+    }
+    setCategories(await getCategories().then((data) => data));
+    setWallet(await getCarteira().then((data) => data));
+    Toast.show({
+      type: "success",
+      text1: "Operação editada com sucesso",
+      autoHide: true,
+    });
+  }
+
+  async function savePouped(operation: Operation) {
+    await createOperationPouped(operation);
+    setCards(await getCards().then((data) => data));
+    setOperations(await getOperations());
+    setCategories(await getCategories().then((data) => data));
+    setWallet(await getCarteira().then((data) => data));
+    Toast.show({
+      type: "success",
+      text1: "Transferência realizada com sucesso",
+      text2: `O valor foi transferido do ${
+        operation?.origin?.institutionName
+          ? operation?.origin?.institutionName
+          : operation?.origin?.name
+      } para o ${
+        operation?.for?.institutionName
+          ? operation?.for?.institutionName
+          : operation?.for?.name
+      }`,
+      autoHide: true,
+    });
+  }
+
+  async function deletePouped(operation: Operation) {
+    if (operation?.id) {
+      await deleteOperationPouped(operation?.id?.toString());
+      setCards(await getCards().then((data) => data));
+      setOperations(await getOperations());
+      setCategories(await getCategories().then((data) => data));
+      setWallet(await getCarteira().then((data) => data));
+      Toast.show({
+        type: "success",
+        text1: "Transferência excluida com sucesso",
+        text2: `O valor foi transferido do ${
+          operation?.origin?.institutionName
+            ? operation?.origin?.institutionName
+            : operation?.origin?.name
+        } para o ${
+          operation?.for?.institutionName
+            ? operation?.for?.institutionName
+            : operation?.for?.name
+        }`,
+        autoHide: true,
+      });
+    }
+  }
+
+  async function editPouped(operation: Operation) {
+    await deletePouped(operation);
+    await savePouped(operation);
   }
 
   return (
@@ -130,6 +261,12 @@ export const UpdateDataContextProvider = ({
         setPageChartCategoriesByFilter,
         formChartFilter,
         setFormChartFilter,
+        saveOperation,
+        deleteOperation,
+        editOperation,
+        savePouped,
+        deletePouped,
+        editPouped,
       }}
     >
       {children}
