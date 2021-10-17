@@ -3,6 +3,7 @@ package com.finances;
 import com.facebook.react.ReactActivity;
 import org.devio.rn.splashscreen.SplashScreen; // Adicione esse import
 import android.os.Bundle; // Adicione esse import
+import com.rnfs.RNFSPackage;
 
 public class MainActivity extends ReactActivity {
 

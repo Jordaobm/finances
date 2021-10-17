@@ -137,3 +137,66 @@ export const Version = styled.Text`
   font-size: 10px;
   color: #c6c6c6;
 `;
+
+export const ContainerAction = styled.View`
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 16px 0;
+`;
+export const ExportData = styled.TouchableOpacity``;
+export const ExportDataText = styled.Text`
+  color: #ff6f6f;
+  font-family: "Roboto-Regular";
+  font-size: 12px;
+  text-align: center;
+`;
+export const ImportDataText = styled.Text`
+  color: #3cc75e;
+  font-family: "Roboto-Regular";
+  font-size: 12px;
+  text-align: center;
+`;
+export const ImportData = styled.TouchableOpacity``;
+
+export const FileDB = styled.TouchableOpacity`
+  padding: 16px;
+`;
+
+export const FileDBText = styled.Text`
+  font-size: 16px;
+  font-family: "Roboto-Regular";
+  color: #595959;
+  width: 100%;
+`;
+export const FileDBData = styled.Text`
+  font-size: 12px;
+  font-family: "Roboto-Regular";
+  color: #c1c1c1;
+`;
+
+export const FileDBPath = styled.Text`
+  font-size: 7px;
+  font-family: "Roboto-Regular";
+  color: #c8c8c8;
+  width: 100%;
+`;
+
+export const ContainerFilesDB = styled.View`
+  border-width: 1px;
+  border-style: dashed;
+  border-color: #c6c6c6;
+  border-radius: 10px;
+
+  width: 100%;
+  background-color: white;
+  margin: 16px 0;
+  border-radius: 10px;
+  padding: 8px;
+`;
+
+export const Icone = styled.View`
+  position: absolute;
+  top: 14px;
+  right: 10px;
+`;

@@ -332,3 +332,60 @@ export const WalletIcon = ({ color }: IconProps) => {
     </Svg>
   );
 };
+
+export const BackupIcon = ({ color }: IconProps) => {
+  return (
+    <Svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <Path
+        d="M21.67 14.3L21.27 19.3C21.12 20.83 21 22 18.29 22H5.71001C3.00001 22 2.88001 20.83 2.73001 19.3L2.33001 14.3C2.25001 13.47 2.51001 12.7 2.98001 12.11C2.99001 12.1 2.99001 12.1 3.00001 12.09C3.55001 11.42 4.38001 11 5.31001 11H18.69C19.62 11 20.44 11.42 20.98 12.07C20.99 12.08 21 12.09 21 12.1C21.49 12.69 21.76 13.46 21.67 14.3Z"
+        stroke={color}
+        stroke-width="1.5"
+        stroke-miterlimit="10"
+      />
+      <Path
+        d="M3.5 11.43V6.28003C3.5 2.88003 4.35 2.03003 7.75 2.03003H9.02C10.29 2.03003 10.58 2.41003 11.06 3.05003L12.33 4.75003C12.65 5.17003 12.84 5.43003 13.69 5.43003H16.24C19.64 5.43003 20.49 6.28003 20.49 9.68003V11.47"
+        stroke={color}
+        stroke-width="1.5"
+        stroke-miterlimit="10"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <Path
+        d="M9.42993 17H14.5699"
+        stroke={color}
+        stroke-width="1.5"
+        stroke-miterlimit="10"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </Svg>
+  );
+};
+
+export const RefreshIcon = ({ color }: IconProps) => {
+  return (
+    <Svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <Path
+        d="M22 12C22 17.52 17.52 22 12 22C6.48 22 3.11 16.44 3.11 16.44M3.11 16.44H7.63M3.11 16.44V21.44M2 12C2 6.48 6.44 2 12 2C18.67 2 22 7.56 22 7.56M22 7.56V2.56M22 7.56H17.56"
+        stroke={color}
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </Svg>
+  );
+};
+
+export const CheckIcon = ({ color }: IconProps) => {
+  return (
+    <Svg width="50" height="50" viewBox="0 0 24 24" fill="none">
+      <Path
+        d="M7.75 12L10.58 14.83L16.25 9.17004"
+        stroke={color}
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </Svg>
+  );
+};

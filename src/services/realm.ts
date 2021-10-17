@@ -4,23 +4,36 @@ import CategorySchema from "../schemas/CategorySchema";
 import CardSchema from "../schemas/CardSchema";
 import OperationSchema from "../schemas/OperationSchema";
 import ConfigurationSchema from "../schemas/ConfigurationSchema";
-import { Card, Category, Config, FormChartFilter, Operation } from "../types";
+import {
+  Card,
+  Category,
+  Config,
+  FormChartFilter,
+  Operation,
+  OperationDB,
+} from "../types";
 import { newDateToMonthAndYear } from "../utils/newDateToMonthAndYear";
 import { format, lastDayOfMonth, startOfMonth } from "date-fns";
 import { dateToString, stringToDate } from "../utils/formatDate";
 
-export default function getRealm() {
-  return Realm.open({
-    path: "mydb",
-    schema: [CategorySchema, CardSchema, OperationSchema, ConfigurationSchema],
+const cfg = {
+  path: "mydb",
+  schema: [CategorySchema, CardSchema, OperationSchema, ConfigurationSchema],
+};
+
+export async function clearDB() {
+  const realm = await Realm.open(cfg);
+  realm.write(() => {
+    realm.deleteAll();
   });
 }
 
+export default function getRealm() {
+  return Realm.open(cfg);
+}
+
 export async function getCategories() {
-  const realm = await Realm.open({
-    path: "mydb",
-    schema: [CategorySchema, CardSchema, OperationSchema, ConfigurationSchema],
-  });
+  const realm = await Realm.open(cfg);
 
   const data = realm.objects("Category");
 
@@ -54,10 +67,7 @@ export async function getCategories() {
 }
 
 export async function getCards() {
-  const realm = await Realm.open({
-    path: "mydb",
-    schema: [CategorySchema, CardSchema, OperationSchema, ConfigurationSchema],
-  });
+  const realm = await Realm.open(cfg);
 
   const data = realm.objects("Card");
 
@@ -82,10 +92,7 @@ export async function getCards() {
 }
 
 export async function getConfiguration() {
-  const realm = await Realm.open({
-    path: "mydb",
-    schema: [CategorySchema, CardSchema, OperationSchema, ConfigurationSchema],
-  });
+  const realm = await Realm.open(cfg);
 
   const data = realm.objects("Configuration").filtered("id= $0", "1");
 
@@ -126,10 +133,7 @@ export async function getConfiguration() {
 }
 
 export async function updateConfigRealm(config: Config) {
-  const realm = await Realm.open({
-    path: "mydb",
-    schema: [CategorySchema, CardSchema, OperationSchema, ConfigurationSchema],
-  });
+  const realm = await Realm.open(cfg);
 
   const collection = realm.objects("Configuration").filtered("id= $0", `1`);
   realm.write(() => {
@@ -144,10 +148,7 @@ export async function updateConfigRealm(config: Config) {
 }
 
 export async function getCarteira() {
-  const realm = await Realm.open({
-    path: "mydb",
-    schema: [CategorySchema, CardSchema, OperationSchema, ConfigurationSchema],
-  });
+  const realm = await Realm.open(cfg);
 
   const data = realm.objects("Card").filtered("id= $0", "1");
 
@@ -194,10 +195,7 @@ export async function addOrExcludeOperationAndUpdateCard(
   receivedOperation: Operation,
   exclude: Boolean
 ) {
-  const realm = await Realm.open({
-    path: "mydb",
-    schema: [CategorySchema, CardSchema, OperationSchema, ConfigurationSchema],
-  });
+  const realm = await Realm.open(cfg);
 
   let operation = receivedOperation;
 
@@ -251,10 +249,7 @@ export async function addOrExcludeOperationAndUpdateCard(
 }
 
 export async function getCategory(idCategory: string) {
-  const realm = await Realm.open({
-    path: "mydb",
-    schema: [CategorySchema, CardSchema, OperationSchema, ConfigurationSchema],
-  });
+  const realm = await Realm.open(cfg);
 
   const data = realm.objects("Category").filtered("id= $0", `${idCategory}`);
 
@@ -288,10 +283,7 @@ export async function getCategory(idCategory: string) {
 }
 
 export async function getCard(idCard: string) {
-  const realm = await Realm.open({
-    path: "mydb",
-    schema: [CategorySchema, CardSchema, OperationSchema, ConfigurationSchema],
-  });
+  const realm = await Realm.open(cfg);
 
   const data = realm.objects("Card").filtered("id= $0", `${idCard}`);
 
@@ -319,10 +311,7 @@ export async function getCard(idCard: string) {
 }
 
 export async function getOperationById(operationId: string) {
-  const realm = await Realm.open({
-    path: "mydb",
-    schema: [CategorySchema, CardSchema, OperationSchema, ConfigurationSchema],
-  });
+  const realm = await Realm.open(cfg);
 
   const operations: Operation[] = [];
 
@@ -348,10 +337,7 @@ export async function getOperationById(operationId: string) {
 }
 
 export async function getOperations() {
-  const realm = await Realm.open({
-    path: "mydb",
-    schema: [CategorySchema, CardSchema, OperationSchema, ConfigurationSchema],
-  });
+  const realm = await Realm.open(cfg);
 
   const config = await getConfiguration();
   let data;
@@ -389,10 +375,7 @@ export async function getOperations() {
 }
 
 export async function getOperationsByCategory(category: Category) {
-  const realm = await Realm.open({
-    path: "mydb",
-    schema: [CategorySchema, CardSchema, OperationSchema, ConfigurationSchema],
-  });
+  const realm = await Realm.open(cfg);
 
   const config = await getConfiguration();
   let data;
@@ -433,10 +416,7 @@ export async function getOperationsByCategory(category: Category) {
 }
 
 export async function getOperationForFilter(filter: FormChartFilter) {
-  const realm = await Realm.open({
-    path: "mydb",
-    schema: [CategorySchema, CardSchema, OperationSchema, ConfigurationSchema],
-  });
+  const realm = await Realm.open(cfg);
 
   const data = realm
     .objects("Operation")
@@ -468,10 +448,7 @@ export async function getOperationForFilter(filter: FormChartFilter) {
 }
 
 export async function createOperationPouped(operation: Operation) {
-  const realm = await Realm.open({
-    path: "mydb",
-    schema: [CategorySchema, CardSchema, OperationSchema, ConfigurationSchema],
-  });
+  const realm = await Realm.open(cfg);
 
   if (operation?.origin?.id) {
     let updt: any = realm
@@ -513,10 +490,7 @@ export async function createOperationPouped(operation: Operation) {
 }
 
 export async function deleteOperationPouped(operationId: string) {
-  const realm = await Realm.open({
-    path: "mydb",
-    schema: [CategorySchema, CardSchema, OperationSchema, ConfigurationSchema],
-  });
+  const realm = await Realm.open(cfg);
 
   const operation = await getOperationById(operationId);
 
@@ -545,5 +519,37 @@ export async function deleteOperationPouped(operationId: string) {
     .filtered("id= $0", `${operationId}`);
   realm.write(() => {
     realm.delete(collection);
+  });
+}
+
+export async function createCard(card: Card) {
+  const realm = await Realm.open(cfg);
+
+  realm.write(() => {
+    realm.create("Card", card, "modified");
+  });
+}
+
+export async function createCategory(category: Category) {
+  const realm = await Realm.open(cfg);
+
+  realm.write(() => {
+    realm.create("Category", category, "modified");
+  });
+}
+
+export async function createConfiguration(configuration: Config) {
+  const realm = await Realm.open(cfg);
+
+  realm.write(() => {
+    realm.create("Configuration", configuration, "modified");
+  });
+}
+
+export async function createOperation(operation: OperationDB) {
+  const realm = await Realm.open(cfg);
+
+  realm.write(() => {
+    realm.create("Operation", operation, "modified");
   });
 }

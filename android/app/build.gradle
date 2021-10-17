@@ -130,7 +130,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "1.0.1"
+        versionName "1.0.2"
     }
     splits {
         abi {
@@ -213,6 +213,9 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+
+    implementation project(':react-native-fs')
+
 }
 
 // Run this once to be able to run the application with BUCK
