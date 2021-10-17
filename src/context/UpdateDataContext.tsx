@@ -8,10 +8,12 @@ import {
   getCarteira,
   getCategories,
   getConfiguration,
+  getOperationForFilter,
   getOperations,
   updateConfigRealm,
 } from "../services/realm";
 import { Card, Category, Config, FormChartFilter, Operation } from "../types";
+import { extractCategoriesByOperations } from "../utils/extractCategoriesByOperations";
 
 interface UpdateDataContextProps {
   updateCategory: Category;
@@ -65,6 +67,8 @@ interface UpdateDataContextProps {
   savePouped: (operation: Operation) => Promise<void>;
   deletePouped: (operation: Operation) => Promise<void>;
   editPouped: (operation: Operation) => Promise<void>;
+
+  reloadValues: (reloadValuesLoading: any) => void;
 }
 const UpdateDataContext = createContext({} as UpdateDataContextProps);
 
@@ -112,6 +116,45 @@ export const UpdateDataContextProvider = ({
     setWallet(await getCarteira().then((data) => data));
     setOperations(await getOperations().then((data) => data));
     setConfig(await getConfiguration().then((data) => data));
+  }
+
+  async function reloadValues(reloadValuesLoading: any) {
+    // atualizando informações
+    reloadValuesLoading(0);
+    setCategories(await getCategories().then((data) => data));
+
+    reloadValuesLoading(20);
+    setCards(await getCards().then((data) => data));
+
+    reloadValuesLoading(40);
+    setWallet(await getCarteira().then((data) => data));
+
+    reloadValuesLoading(60);
+    setOperations(await getOperations().then((data) => data));
+
+    reloadValuesLoading(80);
+    const cfg = await getConfiguration().then((data) => data);
+    setConfig(cfg);
+
+    const operationsForChart = await getOperationForFilter({
+      initialDate: cfg?.firstDayMonth || "",
+      finishDate: cfg?.lastDayMonth || "",
+    });
+
+    if (cfg?.firstDayMonth && cfg?.lastDayMonth) {
+      setFormChartFilter({
+        initialDate: cfg.firstDayMonth,
+        finishDate: cfg.lastDayMonth,
+      });
+    }
+
+    setPageChartOperationsByFilter(operationsForChart);
+
+    setPageChartCategoriesByFilter(
+      extractCategoriesByOperations(operationsForChart)
+    );
+
+    reloadValuesLoading(100);
   }
 
   // MÉTODOS DO BANCO DE DADOS
@@ -267,6 +310,7 @@ export const UpdateDataContextProvider = ({
         savePouped,
         deletePouped,
         editPouped,
+        reloadValues,
       }}
     >
       {children}

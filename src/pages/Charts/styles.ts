@@ -125,3 +125,13 @@ export const Title = styled.Text`
   font-family: "Roboto-Medium";
   margin-bottom: 10px;
 `;
+
+export const ContainerNotOperation = styled.View`
+  margin: 20px 0;
+`;
+
+export const NotOperation = styled.Text`
+  font-family: "Roboto-Medium";
+  font-size: 16px;
+  color: #7e7e7e;
+`;

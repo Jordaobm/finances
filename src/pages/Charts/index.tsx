@@ -5,7 +5,6 @@ import charts from "../../assets/charts.png";
 import { CardCategories } from "../../components/CardCategories";
 import {
   ContainerCardOperations,
-  NotOperation,
   NotOperationSpan,
 } from "../../components/CategoriesList/styles";
 import { Header } from "../../components/Header";
@@ -24,6 +23,7 @@ import {
   ContainerImage,
   ContainerInput,
   ContainerLoading,
+  ContainerNotOperation,
   Filter,
   FilterButton,
   FilterButtonText,
@@ -33,6 +33,7 @@ import {
   OutputCategoryChart,
   SubtitlePage,
   TitlePage,
+  NotOperation,
 } from "./styles";
 
 export const Charts = () => {
@@ -53,6 +54,8 @@ export const Charts = () => {
       extractCategoriesByOperations(pageChartOperationsByFilter)
     );
   }, [pageChartOperationsByFilter]);
+
+  console.log(pageChartOperationsByFilter);
 
   return (
     <>
@@ -145,43 +148,59 @@ export const Charts = () => {
             <ActivityIndicator color="rgba(1, 55, 148, 0.8)" />
           ) : (
             <>
-              <OutputCategoryChart>
-                <OutputChart
-                  operations={pageChartOperationsByFilter}
-                  colorText={"#343434"}
-                  title="Gastos por categoria"
-                />
+              {pageChartOperationsByFilter?.length === 0 ? (
+                <ContainerNotOperation>
+                  <NotOperation>
+                    Não há operações para o gráfico de categorias
+                  </NotOperation>
+                </ContainerNotOperation>
+              ) : (
+                <OutputCategoryChart>
+                  <OutputChart
+                    operations={pageChartOperationsByFilter}
+                    colorText={"#343434"}
+                    title="Gastos por categoria"
+                  />
 
-                <ContainerCardOperations
-                  style={{ marginTop: 18, backgroundColor: "#FBFBFB" }}
-                >
-                  {pageChartCategoriesByFilter?.length > 0 ? (
-                    <CardCategories
-                      categories={extractCategoriesByOperations(
-                        pageChartOperationsByFilter,
-                        "OUTPUT"
-                      )}
-                    />
-                  ) : (
-                    <>
-                      <NotOperation>
-                        Ainda não há categorias cadastradas
-                      </NotOperation>
-                      <NotOperationSpan>
-                        Cadastre uma operação e ela aparecerá aqui!
-                      </NotOperationSpan>
-                    </>
-                  )}
-                </ContainerCardOperations>
-              </OutputCategoryChart>
+                  <ContainerCardOperations
+                    style={{ marginTop: 18, backgroundColor: "#FBFBFB" }}
+                  >
+                    {pageChartCategoriesByFilter?.length > 0 ? (
+                      <CardCategories
+                        categories={extractCategoriesByOperations(
+                          pageChartOperationsByFilter,
+                          "OUTPUT"
+                        )}
+                      />
+                    ) : (
+                      <>
+                        <NotOperation>
+                          Ainda não há categorias cadastradas
+                        </NotOperation>
+                        <NotOperationSpan>
+                          Cadastre uma operação e ela aparecerá aqui!
+                        </NotOperationSpan>
+                      </>
+                    )}
+                  </ContainerCardOperations>
+                </OutputCategoryChart>
+              )}
 
-              <MostUsedCard>
-                <MostUsedCardChart
-                  operations={pageChartOperationsByFilter}
-                  colorText={"#FBFBFB"}
-                  title="Gastos em cada cartão"
-                />
-              </MostUsedCard>
+              {pageChartOperationsByFilter?.length === 0 ? (
+                <ContainerNotOperation>
+                  <NotOperation>
+                    Não há operações para o gráfico de uso de cartões
+                  </NotOperation>
+                </ContainerNotOperation>
+              ) : (
+                <MostUsedCard>
+                  <MostUsedCardChart
+                    operations={pageChartOperationsByFilter}
+                    colorText={"#FBFBFB"}
+                    title="Gastos em cada cartão"
+                  />
+                </MostUsedCard>
+              )}
             </>
           )}
         </ChartsContainer>

@@ -35,6 +35,18 @@ export interface Operation {
   for?: Card;
 }
 
+export interface OperationDB {
+  id?: string;
+  type: string;
+  name: string;
+  value: number | string;
+  id_category?: string;
+  date: Date;
+  id_card?: string;
+  id_origin?: string;
+  id_for?: string;
+}
+
 export interface Category {
   id?: string;
   name: string;
@@ -83,4 +95,16 @@ export interface InitialValue {
 export interface FormChartFilter {
   initialDate: string;
   finishDate: string;
+}
+
+export interface File {
+  name: string;
+  path: string;
+}
+
+export interface RestoreDB {
+  cards: Card[];
+  categories: Category[];
+  configurations: Config;
+  operations: Operation[];
 }
