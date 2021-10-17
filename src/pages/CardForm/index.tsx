@@ -273,8 +273,7 @@ export const CardForm = ({}) => {
               !form?.name ||
               form?.name == "" ||
               !form?.institutionName ||
-              form?.institutionName == "" ||
-              !form?.currentValue
+              form?.institutionName == ""
             ) {
               Toast.show({
                 type: "error",
