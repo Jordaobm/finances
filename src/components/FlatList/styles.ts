@@ -1,5 +1,18 @@
 import styled from "styled-components/native";
 
+export const FlatListContainer = styled.SafeAreaView`
+  padding: 0 32px;
+  position: relative;
+  top: -72px;
+  width: 100%;
+`;
+
+export const OperationsText = styled.Text`
+  font-family: "Roboto-Medium";
+  font-size: 16px;
+  color: white;
+`;
+
 export const Container = styled.View`
   padding: 0 32px;
   position: relative;
@@ -20,12 +33,6 @@ export const AddOperations = styled.TouchableOpacity`
   align-items: center;
 `;
 
-export const OperationsText = styled.Text`
-  font-family: "Roboto-Medium";
-  font-size: 16px;
-  color: white;
-`;
-
 export const AddOperationsText = styled.Text`
   font-family: "Roboto-Regular";
   font-size: 12px;
@@ -34,9 +41,10 @@ export const AddOperationsText = styled.Text`
 
 interface ContainerCardOperationsProps {
   border?: boolean;
+  renderItem: any;
 }
 
-export const ContainerCardOperations = styled.View<ContainerCardOperationsProps>`
+export const ContainerCardOperations = styled.FlatList<ContainerCardOperationsProps>`
   width: 100%;
   background-color: white;
   margin-top: 8px;
@@ -62,5 +70,8 @@ export const NotOperationSpan = styled.Text`
 `;
 
 export const ContainerNotOperation = styled.View`
-  padding: 8px;
+  padding: 16px;
+  margin-top: 8px;
+  background-color: white;
+  border-radius: 10px;
 `;

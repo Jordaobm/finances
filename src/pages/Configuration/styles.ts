@@ -195,7 +195,7 @@ export const ContainerFilesDB = styled.View`
   padding: 8px;
 `;
 
-export const Icone = styled.View`
+export const Icone = styled.TouchableOpacity`
   position: absolute;
   top: 14px;
   right: 10px;
