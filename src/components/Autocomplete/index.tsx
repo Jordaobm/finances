@@ -1,13 +1,8 @@
 import React, { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { ArrowDown } from "../../icons/Icons";
-import { AutocompleteOption } from "../../types";
+import { AutocompleteOption, CustomAutocompleteProps } from "../../types";
 import { Container, ContainerItem, CustomAutocompleteStyle } from "./styles";
-
-interface CustomAutocompleteProps {
-  data: AutocompleteOption[];
-  placeholder?: string;
-}
 
 export const CustomAutocomplete = ({
   data,

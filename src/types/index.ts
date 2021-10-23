@@ -108,3 +108,8 @@ export interface RestoreDB {
   configurations: Config;
   operations: Operation[];
 }
+
+export interface CustomAutocompleteProps {
+  data: AutocompleteOption[];
+  placeholder?: string;
+}
