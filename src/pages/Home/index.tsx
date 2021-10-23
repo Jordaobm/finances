@@ -1,8 +1,8 @@
 import React from "react";
 import { ScrollView, StatusBar } from "react-native";
+import { FlatListOperations } from "../../components/FlatList";
 import { Header } from "../../components/Header";
 import { Navigation } from "../../components/Navigation";
-import { Operations } from "../../components/Operations";
 import { OperationsCards } from "../../components/OperationsCards";
 import { OutputChart } from "../../components/OutputChart";
 import { useUpdateDataContext } from "../../context/UpdateDataContext";
@@ -63,7 +63,7 @@ export const Home = () => {
             </ContainerGraph>
           </CurrentValueContainer>
         </Background>
-        <Operations />
+        <FlatListOperations />
       </ScrollView>
       <Navigation activeRoute="Home" />
     </>

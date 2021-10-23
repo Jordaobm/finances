@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { ActivityIndicator, ScrollView, StatusBar, Text } from "react-native";
 import Toast from "react-native-toast-message";
 import operacoes from "../../assets/operacoes.png";
+import { FlatListOperations } from "../../components/FlatList";
 import { Header } from "../../components/Header";
 import { Input } from "../../components/Input";
 import { Navigation } from "../../components/Navigation";
-import { Operations } from "../../components/Operations";
 import { useUpdateDataContext } from "../../context/UpdateDataContext";
 import { SearchIcon } from "../../icons/Icons";
 import { getOperationForFilter } from "../../services/realm";
@@ -127,7 +127,7 @@ export const Operation = () => {
               <ActivityIndicator color="rgba(1, 55, 148, 0.8)" />
             </LoadingContainer>
           ) : (
-            <Operations
+            <FlatListOperations
               border
               addOperation={false}
               color="#595959"

@@ -1,7 +1,10 @@
-import { format, lastDayOfMonth, startOfMonth } from "date-fns";
-import React from "react";
-import { Text } from "react-native";
+import { format } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
+import React from "react";
+import arrowDown from "../../assets/arrow-down.png";
+import arrowUp from "../../assets/arrow-up.png";
+import { useUpdateDataContext } from "../../context/UpdateDataContext";
+import { formatCurrency } from "../../utils/formatCurrency";
 import {
   Container,
   ContainerCards,
@@ -15,10 +18,6 @@ import {
   TitleContainer,
   Value,
 } from "./styles";
-import arrowUp from "../../assets/arrow-up.png";
-import arrowDown from "../../assets/arrow-down.png";
-import { formatCurrency } from "../../utils/formatCurrency";
-import { useUpdateDataContext } from "../../context/UpdateDataContext";
 
 export const OperationsCards = () => {
   const date = format(new Date(), "MMMM", { locale: ptBR })?.split("-")[0];

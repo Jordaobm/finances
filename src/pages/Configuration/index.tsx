@@ -9,6 +9,7 @@ import { BackupDB } from "../../components/BackupDB";
 import { Input } from "../../components/Input";
 import { useUpdateDataContext } from "../../context/UpdateDataContext";
 import { ArrowLeftIcon, BackupIcon } from "../../icons/Icons";
+import { deleteFile } from "../../services/deleteFile";
 import { exportData } from "../../services/exportFile";
 import { readFiles, readFileToDB } from "../../services/importFile";
 import { Config, File } from "../../types";
@@ -180,7 +181,7 @@ export const Configuration = () => {
                   Toast.show({
                     type: "success",
                     text1: "Backup criado com sucesso",
-                    text2: `O backup foi criado e pode ser acesso em /Android/data/`,
+                    text2: `O backup foi criado e pode ser acessado em Android/Download `,
                     autoHide: true,
                   });
                 } else {
@@ -191,6 +192,9 @@ export const Configuration = () => {
                     autoHide: true,
                   });
                 }
+
+                const receivedFiles = await readFiles();
+                setFiles(receivedFiles);
               }}
             >
               <ExportDataText>Exportar dados</ExportDataText>
@@ -218,8 +222,14 @@ export const Configuration = () => {
                     </FileDBData>
                     <FileDBPath>{file?.path}</FileDBPath>
 
-                    <Icone>
-                      <BackupIcon color="#3CC75E" />
+                    <Icone
+                      onPress={async () => {
+                        await deleteFile(file.path);
+                        const receivedFiles = await readFiles();
+                        setFiles(receivedFiles);
+                      }}
+                    >
+                      <BackupIcon color="#FF6F6F" />
                     </Icone>
                   </FileDB>
                 );

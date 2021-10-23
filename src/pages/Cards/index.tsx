@@ -3,9 +3,9 @@ import { ScrollView, StatusBar, View } from "react-native";
 import cardImage from "../../assets/card.png";
 import { FakeCard } from "../../components/Card";
 import { CustomCarousel } from "../../components/Carousel";
+import { FlatListOperations } from "../../components/FlatList";
 import { Header } from "../../components/Header";
 import { Navigation } from "../../components/Navigation";
-import { Operations } from "../../components/Operations";
 import { useUpdateDataContext } from "../../context/UpdateDataContext";
 import { hexToRgb } from "../../utils/colors";
 import {
@@ -105,7 +105,7 @@ export const Cards = () => {
             </ContainerCards>
           )}
         </ContainerColor>
-        {selectedCard?.id && <Operations card={selectedCard} />}
+        {selectedCard?.id && <FlatListOperations card={selectedCard} />}
       </ScrollView>
 
       <Navigation
