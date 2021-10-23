@@ -2,6 +2,7 @@ import { PermissionsAndroid } from "react-native";
 import RNFS from "react-native-fs";
 import {
   getCards,
+  getCarteira,
   getCategories,
   getConfiguration,
   getOperations,
@@ -28,7 +29,10 @@ export async function exportData() {
       }
     );
     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-      const cards = await getCards().then((data) => data);
+      const cards = [
+        ...(await getCards().then((data) => data)),
+        await getCarteira().then((data) => data),
+      ];
       const categories = await getCategories().then((data) => data);
       const configurations = await getConfiguration().then((data) => data);
       const operations = await getOperations().then((data) => data);

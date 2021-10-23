@@ -55,8 +55,6 @@ export const Charts = () => {
     );
   }, [pageChartOperationsByFilter]);
 
-  console.log(pageChartOperationsByFilter);
-
   return (
     <>
       <StatusBar hidden />
