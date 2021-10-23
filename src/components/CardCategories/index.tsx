@@ -3,6 +3,7 @@ import React from "react";
 import { useUpdateDataContext } from "../../context/UpdateDataContext";
 import { Category } from "../../types";
 import { formatCurrency } from "../../utils/formatCurrency";
+import { getLastOperationByCategory } from "../../utils/getLastOperation";
 import {
   Bullet,
   CategoryContainer,
@@ -19,7 +20,7 @@ export interface CardCategoryProps {
   border?: boolean;
 }
 
-export const CardCategories = ({ categories, border }: CardCategoryProps) => {
+export const CardCategories = ({ categories }: CardCategoryProps) => {
   const { operations } = useUpdateDataContext();
 
   const navigation = useNavigation();
@@ -48,10 +49,7 @@ export const CardCategories = ({ categories, border }: CardCategoryProps) => {
                 </Value>
                 <DateText>
                   última adição em{" "}
-                  {
-                    operations?.find((e) => e?.category?.id === category?.id)
-                      ?.date
-                  }
+                  {getLastOperationByCategory(operations, category)?.date}
                 </DateText>
               </ValueAndMonth>
             </ContentCard>

@@ -2,6 +2,7 @@ import { PermissionsAndroid } from "react-native";
 import RNFS from "react-native-fs";
 import { File, Operation, OperationDB, RestoreDB } from "../types";
 import { stringToDate } from "../utils/formatDate";
+import { getLastOperation } from "../utils/getLastOperation";
 import {
   clearDB,
   createCard,
@@ -92,16 +93,7 @@ export async function readLastOperation(path: string) {
   const result = await RNFS.readFile(path).then(async (res) => {
     const restoreDB: RestoreDB = JSON.parse(res);
 
-    return restoreDB?.operations?.sort(
-      (operationA: Operation, operationB: Operation) => {
-        if (operationA?.id && operationB?.id) {
-          if (operationA?.id > operationB?.id) {
-            return -1;
-          }
-        }
-        return 0;
-      }
-    )[0];
+    return getLastOperation(restoreDB?.operations);
   });
 
   return result;
