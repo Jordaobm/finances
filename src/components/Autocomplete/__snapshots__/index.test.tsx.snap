@@ -1,0 +1,124 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component CustomAutocomplete 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "borderColor": "#f5f5f5",
+        "borderRadius": 10,
+        "borderStyle": "solid",
+        "borderWidth": 1,
+        "flexDirection": "row",
+        "paddingBottom": 4,
+        "paddingLeft": 14,
+        "paddingRight": 14,
+        "paddingTop": 4,
+        "position": "relative",
+      },
+    ]
+  }
+>
+  <Autocomplete
+    containerStyle={
+      Object {
+        "borderColor": "rgba(0,0,0,0)",
+        "position": "relative",
+        "width": "100%",
+      }
+    }
+    data={Array []}
+    flatListProps={
+      Object {
+        "keyExtractor": [Function],
+        "keyboardShouldPersistTaps": "always",
+        "renderItem": [Function],
+      }
+    }
+    inputContainerStyle={
+      Object {
+        "borderColor": "rgba(0,0,0,0)",
+      }
+    }
+    listContainerStyle={
+      Object {
+        "borderColor": "rgba(0,0,0,0)",
+        "left": -5,
+        "position": "absolute",
+        "top": 40,
+        "width": "100%",
+      }
+    }
+    onBlur={[Function]}
+    onChangeText={[Function]}
+    onFocus={[Function]}
+    placeholder="Teste"
+    placeholderTextColor="#c6c6c6"
+    style={
+      Array [
+        Object {
+          "borderColor": "white",
+        },
+        Object {
+          "color": "#595959",
+        },
+      ]
+    }
+    value=""
+  />
+  <View
+    style={
+      Object {
+        "paddingTop": 10,
+      }
+    }
+  >
+    <RNSVGSvgView
+      align="xMidYMid"
+      bbHeight="24"
+      bbWidth="24"
+      fill="none"
+      focusable={false}
+      height="24"
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "flex": 0,
+            "height": 24,
+            "width": 24,
+          },
+        ]
+      }
+      vbHeight={24}
+      vbWidth={24}
+      width="24"
+    >
+      <RNSVGGroup
+        fill={null}
+        propList={
+          Array [
+            "fill",
+          ]
+        }
+      >
+        <RNSVGPath
+          d="M19.92 8.95L13.4 15.47C12.63 16.24 11.37 16.24 10.6 15.47L4.07996 8.95"
+          propList={
+            Array [
+              "stroke",
+            ]
+          }
+          stroke={4291217094}
+        />
+      </RNSVGGroup>
+    </RNSVGSvgView>
+  </View>
+</View>
+`;

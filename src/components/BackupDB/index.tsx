@@ -1,6 +1,5 @@
 import { useNavigation } from "@react-navigation/core";
 import React from "react";
-import { Text } from "react-native";
 import { CheckIcon, RefreshIcon } from "../../icons/Icons";
 import {
   CloseAndReturn,
