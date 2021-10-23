@@ -87,3 +87,22 @@ export async function readFileToDB(path: string, callbackLoading: any) {
     callbackLoading(100);
   });
 }
+
+export async function readLastOperation(path: string) {
+  const result = await RNFS.readFile(path).then(async (res) => {
+    const restoreDB: RestoreDB = JSON.parse(res);
+
+    return restoreDB?.operations?.sort(
+      (operationA: Operation, operationB: Operation) => {
+        if (operationA?.id && operationB?.id) {
+          if (operationA?.id > operationB?.id) {
+            return -1;
+          }
+        }
+        return 0;
+      }
+    )[0];
+  });
+
+  return result;
+}

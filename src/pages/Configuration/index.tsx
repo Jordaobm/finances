@@ -1,18 +1,24 @@
 import { useNavigation } from "@react-navigation/core";
 import { format, lastDayOfMonth, startOfMonth } from "date-fns";
 import React, { useEffect, useState } from "react";
-import { ScrollView, StatusBar } from "react-native";
+import { ScrollView, StatusBar, Text } from "react-native";
 import Toast from "react-native-toast-message";
 import pck from "../../../package.json";
 import db from "../../assets/db.jpg";
 import { BackupDB } from "../../components/BackupDB";
+import { CustomModal } from "../../components/CustomModal";
+import { FlatListOperationItem } from "../../components/FlatList/FlatListOperationItem";
 import { Input } from "../../components/Input";
 import { useUpdateDataContext } from "../../context/UpdateDataContext";
 import { ArrowLeftIcon, BackupIcon } from "../../icons/Icons";
 import { deleteFile } from "../../services/deleteFile";
 import { exportData } from "../../services/exportFile";
-import { readFiles, readFileToDB } from "../../services/importFile";
-import { Config, File } from "../../types";
+import {
+  readFiles,
+  readFileToDB,
+  readLastOperation,
+} from "../../services/importFile";
+import { Config, File, Operation } from "../../types";
 import { dateToStringWithHour } from "../../utils/formatDate";
 import { monthAndYearToDate } from "../../utils/monthAndYearToDate";
 import {
@@ -26,6 +32,8 @@ import {
   ContainerFilesDB,
   ContainerImage,
   ContainerInput,
+  ContainerOperation,
+  ContentOperation,
   ExportData,
   ExportDataText,
   FileDB,
@@ -37,6 +45,7 @@ import {
   Icone,
   ImportData,
   ImportDataText,
+  LastOperationText,
   SubtitlePage,
   TitlePage,
   Version,
@@ -51,6 +60,15 @@ export const Configuration = () => {
   const [files, setFiles] = useState<File[]>([]);
   const [statusLoadingDataForDB, setStatusLoadingDataForDB] = useState(0);
   const [statusLoadingDataForApp, setStatusLoadingDataForApp] = useState(0);
+
+  const [selectedFile, setSelectedFile] = useState<File>({} as File);
+
+  const [showModalRestore, setShowModalRestore] = useState(false);
+  const [showModalDeleteFile, setShowModalDeleteFile] = useState(false);
+
+  const [lastOperation, setLastOperation] = useState<Operation>(
+    {} as Operation
+  );
 
   const [backupDB, setBackupDB] = useState(false);
 
@@ -170,7 +188,7 @@ export const Configuration = () => {
                 setFiles(receivedFiles);
               }}
             >
-              <ImportDataText>Importar dados</ImportDataText>
+              <ImportDataText>Buscar dados</ImportDataText>
             </ImportData>
 
             <ExportData
@@ -208,8 +226,9 @@ export const Configuration = () => {
                   <FileDB
                     key={file?.name}
                     onPress={async () => {
-                      setBackupDB(true);
-                      readFileToDB(file?.path, loadingDataForDB);
+                      setSelectedFile(file);
+                      setLastOperation(await readLastOperation(file?.path));
+                      setShowModalRestore(true);
                     }}
                   >
                     <FileDBText>Backup</FileDBText>
@@ -224,9 +243,9 @@ export const Configuration = () => {
 
                     <Icone
                       onPress={async () => {
-                        await deleteFile(file.path);
-                        const receivedFiles = await readFiles();
-                        setFiles(receivedFiles);
+                        setSelectedFile(file);
+                        setLastOperation(await readLastOperation(file?.path));
+                        setShowModalDeleteFile(true);
                       }}
                     >
                       <BackupIcon color="#FF6F6F" />
@@ -255,6 +274,51 @@ export const Configuration = () => {
           <AcceptText>Salvar</AcceptText>
         </Action>
       </Actions>
+
+      <CustomModal
+        setShow={setShowModalRestore}
+        show={showModalRestore}
+        text={`Deseja restaurar finances com os dados de ${selectedFile?.name}`}
+        children={
+          <ContainerOperation>
+            <LastOperationText>Ultima operação adicionada:</LastOperationText>
+            <ContentOperation>
+              <FlatListOperationItem operation={lastOperation} />
+            </ContentOperation>
+          </ContainerOperation>
+        }
+        onConfirm={async () => {
+          setBackupDB(true);
+          await readFileToDB(selectedFile?.path, loadingDataForDB);
+        }}
+        onCancel={() => {
+          setSelectedFile({} as File);
+          setLastOperation({} as Operation);
+        }}
+      />
+
+      <CustomModal
+        setShow={setShowModalDeleteFile}
+        show={showModalDeleteFile}
+        text={`Deseja deletar o backup  ${selectedFile?.name}`}
+        children={
+          <ContainerOperation>
+            <LastOperationText>Ultima operação adicionada:</LastOperationText>
+            <ContentOperation>
+              <FlatListOperationItem operation={lastOperation} />
+            </ContentOperation>
+          </ContainerOperation>
+        }
+        onConfirm={async () => {
+          await deleteFile(selectedFile.path);
+          const receivedFiles = await readFiles();
+          setFiles(receivedFiles);
+        }}
+        onCancel={() => {
+          setSelectedFile({} as File);
+          setLastOperation({} as Operation);
+        }}
+      />
     </>
   );
 };

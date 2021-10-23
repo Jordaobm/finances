@@ -200,3 +200,18 @@ export const Icone = styled.TouchableOpacity`
   top: 14px;
   right: 10px;
 `;
+
+export const LastOperationText = styled.Text`
+  color: #7e7e7e;
+  font-family: "Roboto-Regular";
+  font-size: 14px;
+  margin-top: 10px;
+`;
+
+export const ContainerOperation = styled.View`
+  width: 100%;
+`;
+
+export const ContentOperation = styled.View`
+  opacity: 0.5;
+`;
