@@ -36,6 +36,7 @@ export const ContainerGraph = styled.View`
 export const Container = styled.View`
   padding: 0 32px;
   margin-top: 12px;
+  margin-bottom: 12px;
 `;
 
 export const TitlePage = styled.Text`
