@@ -21,11 +21,9 @@ export interface CardCategoryProps {
 }
 
 export const CardCategories = ({ categories }: CardCategoryProps) => {
-  const { operations } = useUpdateDataContext();
+  const { operations, setUpdateCategory } = useUpdateDataContext();
 
   const navigation = useNavigation();
-
-  const { setUpdateCategory } = useUpdateDataContext();
 
   return (
     <>

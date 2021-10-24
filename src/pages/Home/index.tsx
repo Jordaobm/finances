@@ -32,6 +32,8 @@ export const Home = () => {
     }
   });
 
+  console.log(operations);
+
   return (
     <>
       <StatusBar
