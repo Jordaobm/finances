@@ -34,6 +34,7 @@ export const CardComponent = ({ card }: CardProps) => {
     return (
       <Container>
         <WalletContent
+          testID="walletContent"
           style={{ backgroundColor: card?.colorBackground, opacity: 1 }}
           onPress={() => {
             setUpdateCard(card);
@@ -58,6 +59,7 @@ export const CardComponent = ({ card }: CardProps) => {
     <Container>
       <CardContent
         style={{ backgroundColor: card?.colorBackground, opacity: 1 }}
+        testID="cardContent"
         onPress={() => {
           setUpdateCard(card);
           navigation.navigate("CardForm");
@@ -89,7 +91,10 @@ export const FakeCard = () => {
 
   return (
     <Container>
-      <CardContent onPress={() => navigation.navigate("CardForm")}>
+      <CardContent
+        testID="cardContent"
+        onPress={() => navigation.navigate("CardForm")}
+      >
         <Bullets style={{ opacity: 0.2 }}>
           <BulletsIcon color="#595959" />
         </Bullets>
@@ -105,7 +110,10 @@ export const FakeCard = () => {
           Instituição financeira
         </InstitutionName>
       </CardContent>
-      <TouchAddCard onPress={() => navigation.navigate("CardForm")}>
+      <TouchAddCard
+        testID="addCard"
+        onPress={() => navigation.navigate("CardForm")}
+      >
         <ButtonText>Toque para adicionar um cartão</ButtonText>
       </TouchAddCard>
     </Container>

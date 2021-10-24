@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for utils/getLastOperation.ts</title>
+    <title>Code coverage report for utils/formatDate.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../index.html">All files</a> / <a href="index.html">utils</a> getLastOperation.ts</h1>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">utils</a> formatDate.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">18.18% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>2/11</span>
+                <span class='fraction'>0/6</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
-                <span class="quiet">Branches</span>
-                <span class='fraction'>0/12</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">40% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/5</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">18.18% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>2/11</span>
+                <span class='fraction'>0/6</span>
             </div>
         
             
@@ -77,69 +77,45 @@
 <a name='L18'></a><a href='#L18'>18</a>
 <a name='L19'></a><a href='#L19'>19</a>
 <a name='L20'></a><a href='#L20'>20</a>
-<a name='L21'></a><a href='#L21'>21</a>
-<a name='L22'></a><a href='#L22'>22</a>
-<a name='L23'></a><a href='#L23'>23</a>
-<a name='L24'></a><a href='#L24'>24</a>
-<a name='L25'></a><a href='#L25'>25</a>
-<a name='L26'></a><a href='#L26'>26</a>
-<a name='L27'></a><a href='#L27'>27</a>
-<a name='L28'></a><a href='#L28'>28</a>
-<a name='L29'></a><a href='#L29'>29</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L21'></a><a href='#L21'>21</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Operation, Category } from "../types";
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { format } from "date-fns";
 &nbsp;
-export function getLastOperationByCategory(
-  operations: Operation[],
-  category: Category
-) {
-  return operations
-    ?.filter((operation) =&gt; operation?.category?.id === category?.id)
-    ?.sort(<span class="fstat-no" title="function not covered" >(o</span>perationA: Operation, operationB: Operation) =&gt; {
-<span class="cstat-no" title="statement not covered" >      if (operationA?.id &amp;&amp; operationB?.id) {</span>
-<span class="cstat-no" title="statement not covered" >        if (operationA?.id &gt; operationB?.id) {</span>
-<span class="cstat-no" title="statement not covered" >          return -1;</span>
-        }
-      }
-<span class="cstat-no" title="statement not covered" >      return 0;</span>
-    })[0];
+export function <span class="fstat-no" title="function not covered" >getDayAndMonthByDate(</span>date: Date) {
+  const value = <span class="cstat-no" title="statement not covered" >format(date, "dd'/'MM");</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  return value;</span>
 }
 &nbsp;
-export function <span class="fstat-no" title="function not covered" >getLastOperation(</span>operations: Operation[]) {
-<span class="cstat-no" title="statement not covered" >  return operations?.sort(<span class="fstat-no" title="function not covered" >(o</span>perationA: Operation, operationB: Operation) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    if (operationA?.id &amp;&amp; operationB?.id) {</span>
-<span class="cstat-no" title="statement not covered" >      if (operationA?.id &gt; operationB?.id) {</span>
-<span class="cstat-no" title="statement not covered" >        return -1;</span>
-      }
-    }
-<span class="cstat-no" title="statement not covered" >    return 0;</span>
-  })[0];
+export function <span class="fstat-no" title="function not covered" >dateToString(</span>date: Date) {
+<span class="cstat-no" title="statement not covered" >  return format(date, "dd'/'MM'/'yyyy");</span>
+}
+&nbsp;
+export function <span class="fstat-no" title="function not covered" >dateToStringWithHour(</span>date: Date) {
+<span class="cstat-no" title="statement not covered" >  return format(date, "dd'/'MM'/'yyyy 'às' H':'mm");</span>
+}
+&nbsp;
+export function <span class="fstat-no" title="function not covered" >stringToDate(</span>date: string) {
+  const split = <span class="cstat-no" title="statement not covered" >date?.split("/");</span>
+<span class="cstat-no" title="statement not covered" >  return new Date(`${split[2]}/${split[1]}/${split[0]}`);</span>
 }
 &nbsp;</pre></td></tr></table></pre>
 
@@ -148,7 +124,7 @@ export function <span class="fstat-no" title="function not covered" >getLastOper
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Sun Oct 24 2021 02:42:50 GMT-0300 (Horário Padrão de Brasília)
+                at Sun Oct 24 2021 02:38:04 GMT-0300 (Horário Padrão de Brasília)
             </div>
         </div>
         <script src="../prettify.js"></script>
