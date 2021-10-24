@@ -44,6 +44,7 @@ exports[`Component Card for Carteira 1`] = `
         "width": "100%",
       }
     }
+    testID="walletContent"
   >
     <View
       style={
@@ -150,6 +151,7 @@ exports[`Component Card for Fake Card 1`] = `
         "width": "100%",
       }
     }
+    testID="cardContent"
   >
     <View
       style={
@@ -342,6 +344,7 @@ exports[`Component Card for Fake Card 1`] = `
         "position": "absolute",
       }
     }
+    testID="addCard"
   >
     <Text
       style={
@@ -404,6 +407,7 @@ exports[`Component Card for other cards 1`] = `
         "width": "100%",
       }
     }
+    testID="cardContent"
   >
     <View
       style={
