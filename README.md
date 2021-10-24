@@ -1,6 +1,20 @@
-<h1>finances</h1>
+<div align="center">
+  <img alt="finances" title="finances" src="https://github.com/Jordaobm/finances/blob/main/android/app/src/main/ic_launcher-playstore.png" width="300px" />
+</div>
 
-⚠️ Este Readme está sendo escrito em desenvolvimento e não representa o projeto final, e sim um protótipo
+[badge-branches]: https://github.com/Jordaobm/finances/blob/main/coverage/badge-branches.svg
+[badge-functions]: https://github.com/Jordaobm/finances/blob/main/coverage/badge-functions.svg
+[badge-lines]: https://github.com/Jordaobm/finances/blob/main/coverage/badge-lines.svg
+[badge-statements]: https://github.com/Jordaobm/finances/blob/main/coverage/badge-statements.svg
+
+
+![Badge-branches][badge-branches] 
+![Badge-functions][badge-functions] 
+![Badge-lines][badge-lines] 
+![Badge-statements][badge-statements] 
+<h1>🚀finances🚀</h1>
+
+🚧⚠️ Este Readme está sendo escrito em desenvolvimento e não representa o projeto final, e sim um protótipo⚠️🚧
 
 https://whimsical.com/Rt77peGDS1p4hNwEU4Ditj
 
