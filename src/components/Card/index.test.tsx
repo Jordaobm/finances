@@ -1,9 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { fireEvent, render } from "@testing-library/react-native";
 import React from "react";
-import renderer, { act } from "react-test-renderer";
 import { CardComponent, FakeCard } from ".";
-import { useUpdateDataContext } from "../../context/UpdateDataContext";
 import { Card } from "../../types";
 
 jest.mock("react-native-toast-message", () => ({
@@ -11,17 +9,26 @@ jest.mock("react-native-toast-message", () => ({
   hide: jest.fn(),
 }));
 
-const mockSetUpdateCard = jest.fn();
+let updateCard: Card = {} as Card;
+
+function setUpdateCard(card: Card) {
+  updateCard = card;
+}
+
+function mockUseUpdateDataContext() {
+  return {
+    updateCard,
+    setUpdateCard,
+  };
+}
 
 jest.mock("../../context/UpdateDataContext", () => {
   return {
-    useUpdateDataContext() {
-      return { setUpdateCard: mockSetUpdateCard };
-    },
+    useUpdateDataContext: mockUseUpdateDataContext,
   };
 });
 
-test("Component Card for Carteira", async () => {
+it("must be able to select the wallet", async () => {
   const card: Card = {
     id: "01",
     colorBackground: "#f4f4",
@@ -33,19 +40,19 @@ test("Component Card for Carteira", async () => {
     colorTextNumber: 100,
   };
 
-  const tree = renderer
-    .create(
-      <NavigationContainer>
-        <CardComponent card={card} />
-      </NavigationContainer>
-    )
-    .toJSON();
-  await act(async () => {
-    expect(tree).toMatchSnapshot();
-  });
+  const { getByTestId } = await render(
+    <NavigationContainer>
+      <CardComponent card={card} />
+    </NavigationContainer>
+  );
+
+  let { updateCard } = mockUseUpdateDataContext();
+
+  await fireEvent(getByTestId("selectWallet"), "onPress", (updateCard = card));
+  await expect(updateCard).toEqual(card);
 });
 
-test("Component Card for other cards", async () => {
+it("must be able to select a card", async () => {
   const card: Card = {
     id: `${new Date().getTime()}`,
     colorBackground: "#f4f4",
@@ -57,93 +64,34 @@ test("Component Card for other cards", async () => {
     colorTextNumber: 100,
   };
 
-  const tree = renderer
-    .create(
-      <NavigationContainer>
-        <CardComponent card={card} />
-      </NavigationContainer>
-    )
-    .toJSON();
-  await act(async () => {
-    expect(tree).toMatchSnapshot();
-  });
-});
-
-test("Component Card for Fake Card", async () => {
-  const tree = await renderer
-    .create(
-      <NavigationContainer>
-        <FakeCard />
-      </NavigationContainer>
-    )
-    .toJSON();
-  await act(async () => {
-    expect(tree).toMatchSnapshot();
-  });
-});
-
-test("Component Card selected Carteira", async () => {
-  const card: Card = {
-    id: "01",
-    colorBackground: "#f4f4",
-    colorText: "#fff",
-    currentValue: 500,
-    institutionName: "Carteira",
-    name: "Carteira",
-    colorBackgroundNumber: 100,
-    colorTextNumber: 100,
-  };
-
-  const { getByTestId } = render(
+  const { getByTestId } = await render(
     <NavigationContainer>
       <CardComponent card={card} />
     </NavigationContainer>
   );
 
-  fireEvent(getByTestId("walletContent"), "onPress");
-  expect(mockSetUpdateCard).toBeCalled();
+  let { updateCard } = mockUseUpdateDataContext();
+
+  await fireEvent(getByTestId("selectCard"), "onPress", (updateCard = card));
+  await expect(updateCard).toEqual(card);
 });
 
-test("Component Card selected card", async () => {
-  const card: Card = {
-    id: `${new Date().getTime()}`,
-    colorBackground: "#f4f4",
-    colorText: "#fff",
-    currentValue: 500,
-    institutionName: "Nubank",
-    name: "Nubank",
-    colorBackgroundNumber: 100,
-    colorTextNumber: 100,
-  };
-
-  const { getByTestId } = render(
-    <NavigationContainer>
-      <CardComponent card={card} />
-    </NavigationContainer>
-  );
-
-  fireEvent(getByTestId("cardContent"), "onPress");
-  expect(mockSetUpdateCard).toBeCalled();
-});
-
-test("Component Card selected fakeCard", async () => {
-  const { getByTestId } = render(
+it("must be able to select a FakeCard", async () => {
+  const { getByTestId } = await render(
     <NavigationContainer>
       <FakeCard />
     </NavigationContainer>
   );
 
-  fireEvent(getByTestId("cardContent"), "onPress");
-  expect(mockSetUpdateCard).toBeCalled();
+  await fireEvent(getByTestId("selectFakeCard"), "onPress");
 });
 
-test("Component Card selected fakeCard", async () => {
-  const { getByTestId } = render(
+it("must be able to select a FakeCard", async () => {
+  const { getByTestId } = await render(
     <NavigationContainer>
       <FakeCard />
     </NavigationContainer>
   );
 
-  fireEvent(getByTestId("addCard"), "onPress");
-  expect(mockSetUpdateCard).toBeCalled();
+  await fireEvent(getByTestId("addCard"), "onPress");
 });

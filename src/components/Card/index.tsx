@@ -34,7 +34,7 @@ export const CardComponent = ({ card }: CardProps) => {
     return (
       <Container>
         <WalletContent
-          testID="walletContent"
+          testID="selectWallet"
           style={{ backgroundColor: card?.colorBackground, opacity: 1 }}
           onPress={() => {
             setUpdateCard(card);
@@ -59,7 +59,7 @@ export const CardComponent = ({ card }: CardProps) => {
     <Container>
       <CardContent
         style={{ backgroundColor: card?.colorBackground, opacity: 1 }}
-        testID="cardContent"
+        testID="selectCard"
         onPress={() => {
           setUpdateCard(card);
           navigation.navigate("CardForm");
@@ -92,7 +92,7 @@ export const FakeCard = () => {
   return (
     <Container>
       <CardContent
-        testID="cardContent"
+        testID="selectFakeCard"
         onPress={() => navigation.navigate("CardForm")}
       >
         <Bullets style={{ opacity: 0.2 }}>

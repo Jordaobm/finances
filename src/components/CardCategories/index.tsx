@@ -30,6 +30,7 @@ export const CardCategories = ({ categories }: CardCategoryProps) => {
       {categories?.map((category, index) => {
         return (
           <ContainerCard
+            testID="addCategory"
             key={index}
             onPress={() => {
               setUpdateCategory(category);
