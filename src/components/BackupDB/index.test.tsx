@@ -1,9 +1,9 @@
 import { NavigationContainer } from "@react-navigation/native";
 import React from "react";
-import renderer from "react-test-renderer";
 import { BackupDB } from ".";
+import renderer, { act } from "react-test-renderer";
 
-test("Component CustomAutocomplete", () => {
+test("Component BackupDB load data", async () => {
   let loadingDataAPP = 0;
 
   function setLoadingDataAPP(value: number) {
@@ -16,7 +16,40 @@ test("Component CustomAutocomplete", () => {
     loadingDataDB = value;
   }
 
-  let backupDB = false;
+  function setBackupDB(value: boolean) {
+    return value;
+  }
+
+  const tree = renderer
+    .create(
+      <NavigationContainer>
+        <BackupDB
+          loadingDataAPP={loadingDataDB}
+          loadingDataDB={loadingDataDB}
+          setBackupDB={setBackupDB}
+          setStatusLoadingDataForApp={setLoadingDataAPP}
+          setStatusLoadingDataForDB={setLoadingDataDB}
+        />
+      </NavigationContainer>
+    )
+    .toJSON();
+  await act(async () => {
+    expect(tree).toMatchSnapshot();
+  });
+});
+
+test("Component BackupDB load APP complete", async () => {
+  let loadingDataAPP = 100;
+
+  function setLoadingDataAPP(value: number) {
+    loadingDataAPP = value;
+  }
+
+  let loadingDataDB = 10;
+
+  function setLoadingDataDB(value: number) {
+    loadingDataDB = value;
+  }
 
   function setBackupDB(value: boolean) {
     return value;
@@ -26,8 +59,8 @@ test("Component CustomAutocomplete", () => {
     .create(
       <NavigationContainer>
         <BackupDB
-          loadingDataAPP={0}
-          loadingDataDB={10}
+          loadingDataAPP={loadingDataAPP}
+          loadingDataDB={loadingDataDB}
           setBackupDB={setBackupDB}
           setStatusLoadingDataForApp={setLoadingDataAPP}
           setStatusLoadingDataForDB={setLoadingDataDB}
@@ -35,5 +68,77 @@ test("Component CustomAutocomplete", () => {
       </NavigationContainer>
     )
     .toJSON();
-  expect(tree).toMatchSnapshot();
+  await act(async () => {
+    expect(tree).toMatchSnapshot();
+  });
+});
+
+test("Component BackupDB load DB complete", async () => {
+  let loadingDataAPP = 100;
+
+  function setLoadingDataAPP(value: number) {
+    loadingDataAPP = value;
+  }
+
+  let loadingDataDB = 100;
+
+  function setLoadingDataDB(value: number) {
+    loadingDataDB = value;
+  }
+
+  function setBackupDB(value: boolean) {
+    return value;
+  }
+
+  const tree = renderer
+    .create(
+      <NavigationContainer>
+        <BackupDB
+          loadingDataAPP={loadingDataAPP}
+          loadingDataDB={loadingDataDB}
+          setBackupDB={setBackupDB}
+          setStatusLoadingDataForApp={setLoadingDataAPP}
+          setStatusLoadingDataForDB={setLoadingDataDB}
+        />
+      </NavigationContainer>
+    )
+    .toJSON();
+  await act(async () => {
+    expect(tree).toMatchSnapshot();
+  });
+});
+
+test("Component BackupDB load DB complete", async () => {
+  let loadingDataAPP = 90;
+
+  function setLoadingDataAPP(value: number) {
+    loadingDataAPP = value;
+  }
+
+  let loadingDataDB = 100;
+
+  function setLoadingDataDB(value: number) {
+    loadingDataDB = value;
+  }
+
+  function setBackupDB(value: boolean) {
+    return value;
+  }
+
+  const tree = renderer
+    .create(
+      <NavigationContainer>
+        <BackupDB
+          loadingDataAPP={loadingDataAPP}
+          loadingDataDB={loadingDataDB}
+          setBackupDB={setBackupDB}
+          setStatusLoadingDataForApp={setLoadingDataAPP}
+          setStatusLoadingDataForDB={setLoadingDataDB}
+        />
+      </NavigationContainer>
+    )
+    .toJSON();
+  await act(async () => {
+    expect(tree).toMatchSnapshot();
+  });
 });

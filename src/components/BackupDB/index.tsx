@@ -70,6 +70,7 @@ export const BackupDB = ({
 
           {loadingDataAPP === 100 && (
             <CloseAndReturn
+              testID="closeAndReturn"
               onPress={() => {
                 setStatusLoadingDataForDB(0);
                 setStatusLoadingDataForApp(0);
