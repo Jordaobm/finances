@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/core";
+import { useNavigation } from "@react-navigation/native";
 import React, { useRef, useState } from "react";
 import { ScrollView, StatusBar } from "react-native";
 import Toast from "react-native-toast-message";

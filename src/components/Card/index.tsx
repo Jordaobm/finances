@@ -18,7 +18,7 @@ import {
 } from "./styles";
 import chip from "../../assets/chip.png";
 import { Card } from "../../types";
-import { useNavigation } from "@react-navigation/core";
+import { useNavigation } from "@react-navigation/native";
 import { formatCurrency } from "../../utils/formatCurrency";
 import { useUpdateDataContext } from "../../context/UpdateDataContext";
 

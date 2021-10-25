@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/core";
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { useUpdateDataContext } from "../../../context/UpdateDataContext";
 import {
