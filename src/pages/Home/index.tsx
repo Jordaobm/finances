@@ -1,6 +1,6 @@
 import React from "react";
 import { ScrollView, StatusBar } from "react-native";
-import { FlatListOperations } from "../../components/FlatList";
+import { FlatListOperations } from "../../components/FlatListOperations";
 import { Header } from "../../components/Header";
 import { Navigation } from "../../components/Navigation";
 import { OperationsCards } from "../../components/OperationsCards";

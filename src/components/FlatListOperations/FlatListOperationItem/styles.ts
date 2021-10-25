@@ -18,7 +18,8 @@ export const CategoryContainer = styled.View`
 
 export const ContainerCard = styled.TouchableOpacity`
   background-color: white;
-  margin: 10px;
+  border-radius: 10px;
+  padding: 16px;
 `;
 
 export const TextOperation = styled.Text`

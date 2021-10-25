@@ -3,7 +3,7 @@ import { ScrollView, StatusBar, View } from "react-native";
 import cardImage from "../../assets/card.png";
 import { FakeCard } from "../../components/Card";
 import { CustomCarousel } from "../../components/Carousel";
-import { FlatListOperations } from "../../components/FlatList";
+import { FlatListOperations } from "../../components/FlatListOperations";
 import { Header } from "../../components/Header";
 import { Navigation } from "../../components/Navigation";
 import { useUpdateDataContext } from "../../context/UpdateDataContext";

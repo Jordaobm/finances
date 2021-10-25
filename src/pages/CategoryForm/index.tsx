@@ -1,7 +1,8 @@
 import { useNavigation } from "@react-navigation/core";
 import React, { useState } from "react";
-import { ScrollView, StatusBar } from "react-native";
+import { ScrollView, StatusBar, Text } from "react-native";
 import Toast from "react-native-toast-message";
+import { FlatListOperations } from "../../components/FlatListOperations";
 import { Input } from "../../components/Input";
 import { InputColor } from "../../components/InputColor";
 import { useUpdateDataContext } from "../../context/UpdateDataContext";
@@ -24,8 +25,13 @@ import {
 } from "./styles";
 
 export const CategoryForm = () => {
-  const { updateCategory, setUpdateCategory, setCategories, setOperations } =
-    useUpdateDataContext();
+  const {
+    updateCategory,
+    setUpdateCategory,
+    setCategories,
+    setOperations,
+    operations,
+  } = useUpdateDataContext();
   const [form, setForm] = useState<Category>(
     updateCategory?.id
       ? updateCategory
@@ -157,6 +163,18 @@ export const CategoryForm = () => {
               </DeleteButton>
             )}
           </FormContainer>
+          {updateCategory?.id && (
+            <FlatListOperations
+              styles={{ top: 64, marginBottom: 64 }}
+              addOperation={false}
+              operationText="Operações desta categoria"
+              color="#595959"
+              smallPadding
+              listOperations={operations?.filter(
+                (operation) => operation?.category?.id === updateCategory?.id
+              )}
+            />
+          )}
         </Container>
       </ScrollView>
       <Actions>

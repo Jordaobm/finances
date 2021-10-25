@@ -7,7 +7,7 @@ import pck from "../../../package.json";
 import db from "../../assets/db.jpg";
 import { BackupDB } from "../../components/BackupDB";
 import { CustomModal } from "../../components/CustomModal";
-import { FlatListOperationItem } from "../../components/FlatList/FlatListOperationItem";
+import { FlatListOperationItem } from "../../components/FlatListOperations/FlatListOperationItem";
 import { Input } from "../../components/Input";
 import { useUpdateDataContext } from "../../context/UpdateDataContext";
 import { ArrowLeftIcon, BackupIcon } from "../../icons/Icons";
@@ -227,7 +227,14 @@ export const Configuration = () => {
                     key={file?.name}
                     onPress={async () => {
                       setSelectedFile(file);
-                      setLastOperation(await readLastOperation(file?.path));
+                      const lastOperation = await readLastOperation(file?.path);
+
+                      if (lastOperation) {
+                        setLastOperation(lastOperation);
+                      } else {
+                        setLastOperation({} as Operation);
+                      }
+
                       setShowModalRestore(true);
                     }}
                   >
@@ -244,7 +251,15 @@ export const Configuration = () => {
                     <Icone
                       onPress={async () => {
                         setSelectedFile(file);
-                        setLastOperation(await readLastOperation(file?.path));
+                        const lastOperation = await readLastOperation(
+                          file?.path
+                        );
+
+                        if (lastOperation) {
+                          setLastOperation(lastOperation);
+                        } else {
+                          setLastOperation({} as Operation);
+                        }
                         setShowModalDeleteFile(true);
                       }}
                     >
@@ -283,7 +298,11 @@ export const Configuration = () => {
           <ContainerOperation>
             <LastOperationText>Ultima operação adicionada:</LastOperationText>
             <ContentOperation>
-              <FlatListOperationItem operation={lastOperation} />
+              {lastOperation?.id ? (
+                <FlatListOperationItem operation={lastOperation} />
+              ) : (
+                <Text>Não foram encontradas operações neste backup!</Text>
+              )}
             </ContentOperation>
           </ContainerOperation>
         }
@@ -305,7 +324,11 @@ export const Configuration = () => {
           <ContainerOperation>
             <LastOperationText>Ultima operação adicionada:</LastOperationText>
             <ContentOperation>
-              <FlatListOperationItem operation={lastOperation} />
+              {lastOperation?.id ? (
+                <FlatListOperationItem operation={lastOperation} />
+              ) : (
+                <Text>Não foram encontradas operações neste backup!</Text>
+              )}
             </ContentOperation>
           </ContainerOperation>
         }

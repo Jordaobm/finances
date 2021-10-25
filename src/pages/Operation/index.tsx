@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ActivityIndicator, ScrollView, StatusBar, Text } from "react-native";
 import Toast from "react-native-toast-message";
 import operacoes from "../../assets/operacoes.png";
-import { FlatListOperations } from "../../components/FlatList";
+import { FlatListOperations } from "../../components/FlatListOperations";
 import { Header } from "../../components/Header";
 import { Input } from "../../components/Input";
 import { Navigation } from "../../components/Navigation";

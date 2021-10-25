@@ -93,7 +93,9 @@ export async function readLastOperation(path: string) {
   const result = await RNFS.readFile(path).then(async (res) => {
     const restoreDB: RestoreDB = JSON.parse(res);
 
-    return getLastOperation(restoreDB?.operations);
+    if (restoreDB?.operations?.length !== 0) {
+      return getLastOperation(restoreDB?.operations);
+    }
   });
 
   return result;

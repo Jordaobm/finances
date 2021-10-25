@@ -1,5 +1,6 @@
 import { useNavigation } from "@react-navigation/core";
 import React from "react";
+import { CSSObject } from "styled-components";
 import { useUpdateDataContext } from "../../context/UpdateDataContext";
 import { PlusIcon } from "../../icons/Icons";
 import { Card, Operation } from "../../types";
@@ -23,6 +24,8 @@ interface FlatListOperationsProps {
   operationText?: string;
   listOperations?: Operation[];
   border?: boolean;
+  styles?: any;
+  smallPadding?: boolean;
 }
 
 export interface RenderItemProps {
@@ -36,6 +39,8 @@ export const FlatListOperations = ({
   operationText,
   listOperations,
   border,
+  styles,
+  smallPadding,
 }: FlatListOperationsProps) => {
   const { operations } = useUpdateDataContext();
   let operationsFilter = operations;
@@ -58,7 +63,7 @@ export const FlatListOperations = ({
   const navigation = useNavigation();
 
   return (
-    <FlatListContainer>
+    <FlatListContainer style={{ ...styles }} smallPadding={smallPadding}>
       <ContentText>
         <OperationsText style={{ color: color ? color : "#fff" }}>
           {operationText ? operationText : "Operações recentes"}
@@ -76,6 +81,7 @@ export const FlatListOperations = ({
 
       {operationsFilter?.length !== 0 ? (
         <ContainerCardOperations
+          border={border}
           data={operationsFilter}
           renderItem={({ item }: RenderItemProps) => (
             <FlatListOperationItem operation={item} />

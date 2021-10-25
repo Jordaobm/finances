@@ -1,10 +1,14 @@
 import styled from "styled-components/native";
 
-export const FlatListContainer = styled.SafeAreaView`
-  padding: 0 32px;
+interface FlatListContainerProps {
+  smallPadding?: boolean;
+}
+
+export const FlatListContainer = styled.SafeAreaView<FlatListContainerProps>`
   position: relative;
   top: -72px;
   width: 100%;
+  padding: ${(props) => (props?.smallPadding ? "0 0px" : "0 32px")};
 `;
 
 export const OperationsText = styled.Text`
@@ -49,7 +53,6 @@ export const ContainerCardOperations = styled.FlatList<ContainerCardOperationsPr
   background-color: white;
   margin-top: 8px;
   border-radius: 10px;
-  padding: 8px;
 
   border-width: ${(props) => (props?.border ? "1px" : 0)};
   border-style: dashed;
