@@ -1,15 +1,14 @@
 {
   "name": "finances",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "coverage": "jest -u --coverage",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "test:badges": "jest-coverage-badges"
+    "coverage": "jest -u --coverage && jest-coverage-badges",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
     "@react-native-picker/picker": "^2.1.0",
