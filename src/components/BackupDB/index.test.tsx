@@ -5,6 +5,17 @@ import renderer, { act } from "react-test-renderer";
 
 import { render, fireEvent } from "@testing-library/react-native";
 
+jest.mock("@react-navigation/native", () => {
+  const actualNav = jest.requireActual("@react-navigation/native");
+  return {
+    ...actualNav,
+    useNavigation: () => ({
+      navigate: jest.fn(),
+      dispatch: jest.fn(),
+    }),
+  };
+});
+
 test("Component BackupDB load data", async () => {
   let loadingDataAPP = 0;
 

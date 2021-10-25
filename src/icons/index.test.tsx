@@ -19,6 +19,17 @@ import {
   WalletIcon,
 } from "./Icons";
 
+jest.mock("@react-navigation/native", () => {
+  const actualNav = jest.requireActual("@react-navigation/native");
+  return {
+    ...actualNav,
+    useNavigation: () => ({
+      navigate: jest.fn(),
+      dispatch: jest.fn(),
+    }),
+  };
+});
+
 it("must be able to render all icons", async () => {
   let color = "#3CC75E";
 

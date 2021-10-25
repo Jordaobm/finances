@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/core";
+import { useNavigation } from "@react-navigation/native";
 import { format } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 import React from "react";

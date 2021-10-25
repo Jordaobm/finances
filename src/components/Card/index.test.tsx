@@ -9,6 +9,17 @@ jest.mock("react-native-toast-message", () => ({
   hide: jest.fn(),
 }));
 
+jest.mock("@react-navigation/native", () => {
+  const actualNav = jest.requireActual("@react-navigation/native");
+  return {
+    ...actualNav,
+    useNavigation: () => ({
+      navigate: jest.fn(),
+      dispatch: jest.fn(),
+    }),
+  };
+});
+
 let updateCard: Card = {} as Card;
 
 function setUpdateCard(card: Card) {

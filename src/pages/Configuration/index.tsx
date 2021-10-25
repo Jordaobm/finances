@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/core";
+import { useNavigation } from "@react-navigation/native";
 import { format, lastDayOfMonth, startOfMonth } from "date-fns";
 import React, { useEffect, useState } from "react";
 import { ScrollView, StatusBar, Text } from "react-native";

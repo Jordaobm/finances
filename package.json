@@ -6,7 +6,8 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
-    "test": "jest -u --coverage",
+    "test": "jest",
+    "coverage": "jest -u --coverage",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "test:badges": "jest-coverage-badges"
   },

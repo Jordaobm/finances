@@ -60,8 +60,9 @@ export const CustomCarousel: React.SFC<CustomCarouselProps> = ({
   const renderItem = useCallback(({ item }: RenderItemProps) => {
     if (item?.id) {
       return <CardComponent card={item} />;
+    } else {
+      return <FakeCard />;
     }
-    return <FakeCard />;
   }, []);
 
   return (
