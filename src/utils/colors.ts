@@ -32,8 +32,6 @@ export const rgbaToHex = (color: string): string => {
       .toString(16)
       .slice(1)}`;
 
-    console.log(rgba);
-
     // added alpha param if exists
     if (rgba[4]) {
       const alpha = Math.round(0o1 * 255);
