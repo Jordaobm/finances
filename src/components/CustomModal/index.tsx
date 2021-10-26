@@ -28,20 +28,14 @@ export const CustomModal = ({
 }: CustomModalProps) => {
   return (
     <Container>
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={show}
-        onRequestClose={() => {
-          setShow(!show);
-        }}
-      >
+      <Modal animationType="fade" transparent={true} visible={show}>
         <Content>
           <View style={styles.modalView}>
             <TextModal>{text}</TextModal>
             {children}
             <Actions>
               <ActionButton
+                testID="actionCancel"
                 onPress={() => {
                   setShow(!show);
                   onCancel();
@@ -51,6 +45,7 @@ export const CustomModal = ({
               </ActionButton>
 
               <ActionButton
+                testID="actionConfirm"
                 onPress={() => {
                   setShow(!show);
                   onConfirm();

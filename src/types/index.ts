@@ -5,6 +5,7 @@ export interface IconProps {
 export interface HeaderProps {
   color: "white" | "#595959";
   onlySettings?: boolean;
+  receivedDate?: Date;
 }
 
 export interface Card {

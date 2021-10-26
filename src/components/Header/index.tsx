@@ -15,8 +15,12 @@ import {
   Settings,
 } from "./styles";
 
-export const Header = ({ color, onlySettings = false }: HeaderProps) => {
-  const date = format(new Date(), "cccc', 'dd 'de' MMMM", { locale: ptBR });
+export const Header = ({
+  color,
+  onlySettings = false,
+  receivedDate = new Date(),
+}: HeaderProps) => {
+  const date = format(receivedDate, "cccc', 'dd 'de' MMMM", { locale: ptBR });
 
   const navigation = useNavigation();
 
@@ -32,7 +36,10 @@ export const Header = ({ color, onlySettings = false }: HeaderProps) => {
 
   return (
     <Container>
-      <Button onPress={() => navigation.navigate("Configuration")}>
+      <Button
+        testID="navigateToConfiguration"
+        onPress={() => navigation.navigate("Configuration")}
+      >
         <Settings source={settings} style={{ tintColor: color }} />
       </Button>
       {!onlySettings && (

@@ -30,6 +30,7 @@ export const Input = ({
           }}
           ref={reference}
           placeholderTextColor="#c6c6c6"
+          testID="input"
           onFocus={() => setActive(true)}
           onBlur={() => setActive(false)}
           {...rest}
@@ -47,6 +48,7 @@ export const Input = ({
             format: "MM/YYYY",
           }}
           ref={reference}
+          testID="input"
           placeholderTextColor="#c6c6c6"
           onFocus={() => setActive(true)}
           onBlur={() => setActive(false)}
@@ -65,6 +67,7 @@ export const Input = ({
             format: "DD/MM/YYYY",
           }}
           ref={reference}
+          testID="input"
           placeholderTextColor="#c6c6c6"
           onFocus={() => setActive(true)}
           onBlur={() => setActive(false)}
@@ -81,6 +84,7 @@ export const Input = ({
     >
       <CustomInput
         ref={reference}
+        testID="input"
         placeholderTextColor="#c6c6c6"
         onFocus={() => setActive(true)}
         onBlur={() => setActive(false)}

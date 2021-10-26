@@ -1,5 +1,4 @@
 import styled from "styled-components/native";
-import Draggable from "react-native-draggable";
 
 export const Container = styled.View`
   flex-direction: row;
@@ -45,4 +44,3 @@ export const Line = styled.View`
   height: 2px;
   background-color: #7e7e7e;
 `;
-export const Circle = styled(Draggable)``;

@@ -1,4 +1,5 @@
 import { Card, Category, Operation } from "../../types";
+import { hexToRgb, rgbaToHex } from "../colors";
 import { formatCurrency } from "../formatCurrency";
 import {
   getLastOperation,
@@ -171,4 +172,34 @@ it("must be able to format a negative number in BRL  ", async () => {
   const formatted = formatCurrency(value);
 
   expect(formatted).toEqual("- R$10,00");
+});
+
+it("should be able to convert hexToRGB  ", async () => {
+  const rgb = hexToRgb("#f1c8e3", "1");
+
+  expect(rgb?.replace("  ", "")).toEqual("rgba(241, 200, 227, 1)");
+});
+
+it("should be able to convert hexToRGB with RGB", async () => {
+  const rgb = hexToRgb("rgba(241, 200, 227, 1)", "1");
+
+  expect(rgb?.replace("  ", "")).toEqual("rgba(241, 200, 227, 1)");
+});
+
+it("should be able to convert hexToRGB with Null value", async () => {
+  const rgb = hexToRgb("", "1");
+
+  expect(rgb?.replace("  ", "")).toEqual("rgba(255, 255, 255)");
+});
+
+it("should be able to convert rgbaToHex Null value", async () => {
+  const rgb = rgbaToHex("");
+
+  expect(rgb?.replace("  ", "")).toEqual("");
+});
+
+it("should be able to convert rgbaToHex with invalid value", async () => {
+  const rgb = rgbaToHex("rgba(241, 200, 227, 1, 0)");
+
+  expect(rgb?.replace("  ", "")).toEqual("#f1c8e3FF");
 });

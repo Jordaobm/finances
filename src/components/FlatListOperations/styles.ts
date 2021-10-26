@@ -44,7 +44,6 @@ export const AddOperationsText = styled.Text`
 `;
 
 interface ContainerCardOperationsProps {
-  border?: boolean;
   renderItem: any;
 }
 
@@ -54,7 +53,6 @@ export const ContainerCardOperations = styled.FlatList<ContainerCardOperationsPr
   margin-top: 8px;
   border-radius: 10px;
 
-  border-width: ${(props) => (props?.border ? "1px" : 0)};
   border-style: dashed;
   border-color: #c6c6c6;
   border-radius: 10px;

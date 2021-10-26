@@ -23,7 +23,6 @@ interface FlatListOperationsProps {
   addOperation?: boolean;
   operationText?: string;
   listOperations?: Operation[];
-  border?: boolean;
   styles?: any;
   smallPadding?: boolean;
 }
@@ -38,7 +37,6 @@ export const FlatListOperations = ({
   addOperation = true,
   operationText,
   listOperations,
-  border,
   styles,
   smallPadding,
 }: FlatListOperationsProps) => {
@@ -50,15 +48,10 @@ export const FlatListOperations = ({
   }
 
   if (card?.institutionName || card?.name) {
-    operationsFilter = operationsFilter?.filter((operation) => {
-      if (operation?.card?.id === card?.id) {
-        return operation;
-      }
-
-      if (operation?.origin?.id === card?.id) {
-        return operation;
-      }
-    });
+    operationsFilter = operationsFilter?.filter(
+      (operation) =>
+        operation?.card?.id === card?.id || operation?.origin?.id === card?.id
+    );
   }
   const navigation = useNavigation();
 
@@ -70,7 +63,10 @@ export const FlatListOperations = ({
         </OperationsText>
 
         {addOperation && (
-          <AddOperations onPress={() => navigation.navigate("OperationForm")}>
+          <AddOperations
+            testID="addOperation"
+            onPress={() => navigation.navigate("OperationForm")}
+          >
             <AddOperationsText style={{ color: color ? color : "#fff" }}>
               Adicionar
             </AddOperationsText>
@@ -81,7 +77,6 @@ export const FlatListOperations = ({
 
       {operationsFilter?.length !== 0 ? (
         <ContainerCardOperations
-          border={border}
           data={operationsFilter}
           renderItem={({ item }: RenderItemProps) => (
             <FlatListOperationItem operation={item} />

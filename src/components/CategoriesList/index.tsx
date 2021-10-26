@@ -26,7 +26,10 @@ export const CategoriesList = () => {
         <ContentText>
           <OperationsText>Categorias adicionadas</OperationsText>
 
-          <AddOperations onPress={() => navigation.navigate("CategoryForm")}>
+          <AddOperations
+            testID="addCategoryButton"
+            onPress={() => navigation.navigate("CategoryForm")}
+          >
             <AddOperationsText>Adicionar</AddOperationsText>
             <PlusIcon color="#595959" />
           </AddOperations>

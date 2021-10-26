@@ -37,6 +37,7 @@ export const FlatListOperationItem = ({
 
   return (
     <ContainerCard
+      testID={`FlatListOperationItemAddOperation-${operation?.id}`}
       onPress={() => {
         navigation.navigate("OperationForm");
         setUpdateOperation(operation);

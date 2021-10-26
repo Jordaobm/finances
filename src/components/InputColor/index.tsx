@@ -1,25 +1,19 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
+import { hexToRgb } from "../../utils/colors";
 import {
   BoxColor,
   BoxInputColor,
-  Circle,
   Container,
   Content,
   Line,
   Placeholder,
 } from "./styles";
-import {
-  Alert,
-  GestureResponderEvent,
-  PanResponderGestureState,
-  Text,
-  View,
-} from "react-native";
-import { hexToRgb } from "../../utils/colors";
+
+import Draggable from "react-native-draggable";
 
 interface InputColorProps {
   onChangeColor: (color: string, number: number) => void;
-  initialColor: string;
+  initialColor?: string;
   initialNumber: number;
   placeholder?: string;
   palette?: boolean;
@@ -75,7 +69,7 @@ export const InputColor = ({
       <Content>
         <BoxInputColor>
           <Line />
-          <Circle
+          <Draggable
             x={valor()}
             y={1}
             renderSize={30}
