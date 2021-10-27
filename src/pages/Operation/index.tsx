@@ -5,7 +5,7 @@ import operacoes from "../../assets/operacoes.png";
 import { FlatListOperations } from "../../components/FlatListOperations";
 import { Header } from "../../components/Header";
 import { Input } from "../../components/Input";
-import { Navigation } from "../../components/Navigation";
+import { NavigationBar } from "../../components/Navigation";
 import { useUpdateDataContext } from "../../context/UpdateDataContext";
 import { SearchIcon } from "../../icons/Icons";
 import { getOperationForFilter } from "../../services/realm";
@@ -138,7 +138,7 @@ export const Operation = () => {
         </ContainerOperation>
       </ScrollView>
 
-      <Navigation activeRoute="Operation" />
+      <NavigationBar activeRoute="Operation" />
     </>
   );
 };

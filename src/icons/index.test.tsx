@@ -1,23 +1,29 @@
-import { NavigationContainer } from "@react-navigation/native";
-import { fireEvent, render } from "@testing-library/react-native";
+import { render } from "@testing-library/react-native";
 import React from "react";
-import { CardCategories } from ".";
 import {
-  ArrowLeftIcon,
-  BulletsIcon,
-  PlusIcon,
-  TrashIcon,
   ArrowDown,
+  ArrowLeftIcon,
   BackupIcon,
+  BulletsIcon,
   CardIcon,
   CheckIcon,
   InputOperationCoin,
   OutputOperationCoin,
+  PlusIcon,
   RefreshIcon,
   SearchIcon,
   TransferOperationIcon,
+  TrashIcon,
   WalletIcon,
 } from "./Icons";
+
+import {
+  ChartIcon,
+  HomeIcon,
+  MoneyIcon,
+  TagIcon,
+  WalletIcon as WalletIconNavigationIcons,
+} from "./NavigationIcons";
 
 jest.mock("@react-navigation/native", () => {
   const actualNav = jest.requireActual("@react-navigation/native");
@@ -62,6 +68,16 @@ it("must be able to render all icons", async () => {
       <TransferOperationIcon color={color} />
 
       <WalletIcon color={color} />
+
+      <ChartIcon color={color} />
+
+      <HomeIcon color={color} />
+
+      <MoneyIcon color={color} />
+
+      <TagIcon color={color} />
+
+      <WalletIconNavigationIcons color={color} />
     </>
   );
 });

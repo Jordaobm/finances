@@ -1,32 +1,30 @@
 import React from "react";
-import { Text } from "react-native-svg";
 import { PieChart } from "react-native-svg-charts";
-import { CardIcon, InputOperationCoin, WalletIcon } from "../../icons/Icons";
+import { CardIcon, WalletIcon } from "../../icons/Icons";
 import { Card, Operation } from "../../types";
 import { formatCurrency } from "../../utils/formatCurrency";
+import { Labels } from "./Labels";
 import {
-  Container,
-  Title,
-  ContainerCard,
-  SingleCard,
   Bullet,
+  Container,
+  ContainerCard,
+  ContainerCardName,
+  ContainerTitle,
+  Icone,
+  SingleCard,
+  Title,
   TitleCard,
   ValueCard,
-  ContainerCardName,
-  Icone,
-  ContainerTitle,
 } from "./styles";
-
-interface LabelProps {
-  slices: any;
-  height: number;
-  width: number;
-}
 
 interface OutputChartProps {
   operations: Operation[];
   colorText?: string;
   title?: string;
+}
+
+export function valueAccessor({ item }: any) {
+  return item?.amount;
 }
 
 export const MostUsedCardChart = ({
@@ -41,9 +39,7 @@ export const MostUsedCardChart = ({
 
   outPutOperations?.forEach((operation) => {
     if (!outPutCards?.find((e) => e?.id === operation?.card?.id)) {
-      if (operation?.card) {
-        outPutCards.push(operation?.card);
-      }
+      outPutCards.push(operation?.card);
     }
   });
 
@@ -69,48 +65,18 @@ export const MostUsedCardChart = ({
     cardName: card?.institutionName,
   }));
 
-  const Labels = ({ slices, height, width }: LabelProps) => {
-    return slices.map((slice: any, index: number) => {
-      const { labelCentroid, pieCentroid, data } = slice;
-      return (
-        <React.Fragment key={index}>
-          <Text
-            key={index}
-            x={labelCentroid[0]}
-            y={labelCentroid[1]}
-            fill={colorText ? colorText : "white"}
-            textAnchor={"middle"}
-            alignmentBaseline={"text-bottom"}
-            fontSize={10}
-          >
-            {`${data?.amount?.replace(".", ",")}% `}
-          </Text>
-          <Text
-            x={labelCentroid[0]}
-            y={labelCentroid[1] - 12}
-            fill={colorText ? colorText : "white"}
-            textAnchor={"middle"}
-            alignmentBaseline={"text-bottom"}
-            fontSize={10}
-          >
-            {`${data.cardName}`}
-          </Text>
-        </React.Fragment>
-      );
-    });
-  };
-
   return (
     <Container>
       {title && <Title>{title}</Title>}
       <PieChart
         style={{ height: 200 }}
-        valueAccessor={({ item }: any) => item?.amount}
+        testID="pieChartTestId"
+        valueAccessor={valueAccessor}
         data={data}
         spacing={0}
         outerRadius={"100%"}
       >
-        <Labels />
+        <Labels colorText={colorText} />
       </PieChart>
 
       <ContainerCard>

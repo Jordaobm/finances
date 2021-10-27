@@ -10,7 +10,7 @@ import {
 import { Header } from "../../components/Header";
 import { Input } from "../../components/Input";
 import { MostUsedCardChart } from "../../components/MostUsedCardChart";
-import { Navigation } from "../../components/Navigation";
+import { NavigationBar } from "../../components/Navigation";
 import { OutputChart } from "../../components/OutputChart";
 import { useUpdateDataContext } from "../../context/UpdateDataContext";
 import { SearchIcon } from "../../icons/Icons";
@@ -204,7 +204,7 @@ export const Charts = () => {
         </ChartsContainer>
       </ScrollView>
 
-      <Navigation activeRoute="Charts" />
+      <NavigationBar activeRoute="Charts" />
     </>
   );
 };

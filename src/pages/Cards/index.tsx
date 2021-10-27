@@ -5,7 +5,7 @@ import { FakeCard } from "../../components/Card";
 import { CustomCarousel } from "../../components/Carousel";
 import { FlatListOperations } from "../../components/FlatListOperations";
 import { Header } from "../../components/Header";
-import { Navigation } from "../../components/Navigation";
+import { NavigationBar } from "../../components/Navigation";
 import { useUpdateDataContext } from "../../context/UpdateDataContext";
 import { hexToRgb } from "../../utils/colors";
 import {
@@ -108,7 +108,7 @@ export const Cards = () => {
         {selectedCard?.id && <FlatListOperations card={selectedCard} />}
       </ScrollView>
 
-      <Navigation
+      <NavigationBar
         activeRoute="Cards"
         activeColor={
           selectedCard?.colorBackground

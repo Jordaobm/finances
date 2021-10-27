@@ -3,7 +3,7 @@ import { ScrollView, StatusBar } from "react-native";
 import categoriesImage from "../../assets/829.jpg";
 import { CategoriesList } from "../../components/CategoriesList";
 import { Header } from "../../components/Header";
-import { Navigation } from "../../components/Navigation";
+import { NavigationBar } from "../../components/Navigation";
 import {
   CategoriesImage,
   Container,
@@ -35,7 +35,7 @@ export const Categories = () => {
         </Container>
       </ScrollView>
 
-      <Navigation activeRoute="Categories" />
+      <NavigationBar activeRoute="Categories" />
     </>
   );
 };

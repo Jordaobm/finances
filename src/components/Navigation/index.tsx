@@ -1,5 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
+import { TouchableOpacity } from "react-native";
+import LinearGradient from "react-native-linear-gradient";
 import {
   ChartIcon,
   HomeIcon,
@@ -8,9 +10,9 @@ import {
   WalletIcon,
 } from "../../icons/NavigationIcons";
 import { NavigationProps } from "../../types";
-import { Content, Home, NavigationButton } from "./styles";
+import { Home } from "./styles";
 
-export const Navigation = ({
+export const NavigationBar = ({
   activeRoute,
   activeColor = "rgba(1, 55, 148, 0.8)",
   onNavigate,
@@ -18,7 +20,18 @@ export const Navigation = ({
   const navigation = useNavigation();
 
   return (
-    <Content
+    <LinearGradient
+      style={{
+        position: "absolute",
+        bottom: 0,
+        width: "100%",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        padding: "0 64px",
+        height: 58,
+        alignItems: "flex-end",
+        paddingBottom: 23,
+      }}
       colors={[
         "rgba(255, 255, 255, 0.0)",
         "rgba(255, 255, 255, 0.4)",
@@ -26,26 +39,29 @@ export const Navigation = ({
         "rgba(255, 255, 255, 1)",
       ]}
     >
-      <NavigationButton
+      <TouchableOpacity
         onPress={() => {
           onNavigate && onNavigate();
           navigation.navigate("Categories");
         }}
+        testID="navigateCategories"
       >
         <TagIcon
           color={activeRoute === "Categories" ? activeColor : "#595959"}
         />
-      </NavigationButton>
-      <NavigationButton
+      </TouchableOpacity>
+      <TouchableOpacity
+        testID="navigateCards"
         onPress={() => {
           onNavigate && onNavigate();
           navigation.navigate("Cards");
         }}
       >
         <WalletIcon color={activeRoute === "Cards" ? activeColor : "#595959"} />
-      </NavigationButton>
+      </TouchableOpacity>
 
-      <NavigationButton
+      <TouchableOpacity
+        testID="navigateHome"
         onPress={() => {
           onNavigate && onNavigate();
           navigation.navigate("Home");
@@ -54,9 +70,10 @@ export const Navigation = ({
         <Home color={activeColor}>
           <HomeIcon color={"white"} />
         </Home>
-      </NavigationButton>
+      </TouchableOpacity>
 
-      <NavigationButton
+      <TouchableOpacity
+        testID="navigateOperation"
         onPress={() => {
           onNavigate && onNavigate();
           navigation.navigate("Operation");
@@ -65,16 +82,17 @@ export const Navigation = ({
         <MoneyIcon
           color={activeRoute === "Operation" ? activeColor : "#595959"}
         />
-      </NavigationButton>
+      </TouchableOpacity>
 
-      <NavigationButton
+      <TouchableOpacity
+        testID="navigateCharts"
         onPress={() => {
           onNavigate && onNavigate();
           navigation.navigate("Charts");
         }}
       >
         <ChartIcon color={activeRoute === "Charts" ? activeColor : "#595959"} />
-      </NavigationButton>
-    </Content>
+      </TouchableOpacity>
+    </LinearGradient>
   );
 };
