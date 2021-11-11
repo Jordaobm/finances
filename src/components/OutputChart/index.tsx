@@ -2,6 +2,8 @@ import React from "react";
 import { Text } from "react-native-svg";
 import { PieChart } from "react-native-svg-charts";
 import { Category, Operation } from "../../types";
+import { valueAccessor } from "../MostUsedCardChart";
+import { Labels } from "../MostUsedCardChart/Labels";
 import { Container, Title } from "./styles";
 
 interface LabelProps {
@@ -45,48 +47,17 @@ export const OutputChart = ({
     category: category?.name,
   }));
 
-  const Labels = ({ slices, height, width }: LabelProps) => {
-    return slices.map((slice: any, index: number) => {
-      const { labelCentroid, pieCentroid, data } = slice;
-      return (
-        <React.Fragment key={index}>
-          <Text
-            key={index}
-            x={labelCentroid[0]}
-            y={labelCentroid[1]}
-            fill={colorText ? colorText : "white"}
-            textAnchor={"middle"}
-            alignmentBaseline={"text-bottom"}
-            fontSize={10}
-          >
-            {`${data?.amount?.replace(".", ",")}% `}
-          </Text>
-          <Text
-            x={labelCentroid[0]}
-            y={labelCentroid[1] - 12}
-            fill={colorText ? colorText : "white"}
-            textAnchor={"middle"}
-            alignmentBaseline={"text-bottom"}
-            fontSize={10}
-          >
-            {`${data.category}`}
-          </Text>
-        </React.Fragment>
-      );
-    });
-  };
-
   return (
     <Container>
       {title && <Title>{title}</Title>}
       <PieChart
         style={{ height: 200 }}
-        valueAccessor={({ item }: any) => item?.amount}
+        valueAccessor={valueAccessor}
         data={data}
         spacing={0}
         outerRadius={"100%"}
       >
-        <Labels />
+        <Labels colorText={colorText} />
       </PieChart>
     </Container>
   );
