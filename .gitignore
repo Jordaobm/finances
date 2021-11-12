@@ -34,6 +34,7 @@ local.properties
 node_modules/
 npm-debug.log
 yarn-error.log
+coverage/lcov-report/
 
 # BUCK
 buck-out/
