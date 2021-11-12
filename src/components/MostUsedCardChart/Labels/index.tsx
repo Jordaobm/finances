@@ -30,7 +30,7 @@ export const Labels = ({ slices, colorText }: LabelProps) => {
           alignmentBaseline={"text-bottom"}
           fontSize={10}
         >
-          {`${data.cardName}`}
+          {`${data.cardName || data?.category}`}
         </Text>
       </React.Fragment>
     );

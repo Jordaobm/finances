@@ -81,6 +81,10 @@ export const Configuration = () => {
   };
 
   useEffect(() => {
+    readFiles().then((data) => setFiles(data));
+  }, []);
+
+  useEffect(() => {
     if (statusLoadingDataForDB === 100) {
       reloadValues(reloadValuesForApp);
     }
@@ -186,6 +190,12 @@ export const Configuration = () => {
               onPress={async () => {
                 const receivedFiles = await readFiles();
                 setFiles(receivedFiles);
+                Toast.show({
+                  type: "success",
+                  text1: "Dados carregados",
+                  text2: `Os dados foram carregados de Android/Download `,
+                  autoHide: true,
+                });
               }}
             >
               <ImportDataText>Buscar dados</ImportDataText>

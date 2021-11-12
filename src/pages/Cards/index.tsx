@@ -76,7 +76,7 @@ export const Cards = () => {
             </SubtitlePage>
           </Container>
 
-          {cardsWithWallets.length === 0 ? (
+          {cardsWithWallets?.filter((e) => e?.id).length === 0 ? (
             <View style={{ margin: 32 }}>
               <FakeCard />
             </View>

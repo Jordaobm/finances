@@ -20,7 +20,7 @@ export const Header = ({
   onlySettings = false,
   receivedDate = new Date(),
 }: HeaderProps) => {
-  const date = format(receivedDate, "cccc', 'dd 'de' MMMM", { locale: ptBR });
+  const date = format(receivedDate, "cccc', 'dd 'zz' MMMM", { locale: ptBR });
 
   const navigation = useNavigation();
 
@@ -46,8 +46,8 @@ export const Header = ({
         <ContainerText>
           <Day style={{ color }}>{day},</Day>
           <Rest>
-            <DayNumber style={{ color }}>{rest?.split("de")[0]}de</DayNumber>
-            <Month style={{ color }}>{rest?.split("de")[1]}</Month>
+            <DayNumber style={{ color }}>{rest?.split("zz")[0]}de</DayNumber>
+            <Month style={{ color }}>{rest?.split("zz")[1]}</Month>
           </Rest>
         </ContainerText>
       )}

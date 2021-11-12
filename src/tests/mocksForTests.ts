@@ -176,3 +176,26 @@ export const mockOperations: Operation[] = [
     value: 150,
   },
 ];
+
+export const mockCards: Card[] = [
+  {
+    colorBackground: "#282b46",
+    colorBackgroundNumber: 47,
+    colorText: "rgba(270,270,270,1)",
+    colorTextNumber: 270,
+    currentValue: 1690,
+    id: "1",
+    institutionName: "Carteira",
+    name: "Carteira",
+  },
+  {
+    colorBackground: "rgba(130, 10, 209, 1  )",
+    colorBackgroundNumber: 178,
+    colorText: "#ffffff",
+    colorTextNumber: 275,
+    currentValue: 2850,
+    id: "1635202453826",
+    institutionName: "Nubank",
+    name: "Jordao Beghetto Massariol",
+  },
+];

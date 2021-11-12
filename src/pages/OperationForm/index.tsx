@@ -18,6 +18,7 @@ import {
   getOperations,
 } from "../../services/realm";
 import { Category, Operation } from "../../types";
+import { dateToString } from "../../utils/formatDate";
 import { ContainerLoading } from "../Charts/styles";
 import {
   AcceptText,
@@ -56,7 +57,7 @@ export const OperationForm = () => {
         }
       : ({
           category: {} as Category,
-          date: "",
+          date: dateToString(new Date()),
           name: "",
           value: "",
           card: {} as Card,

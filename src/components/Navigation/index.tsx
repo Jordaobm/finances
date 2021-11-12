@@ -27,8 +27,8 @@ export const NavigationBar = ({
         width: "100%",
         flexDirection: "row",
         justifyContent: "space-between",
-        padding: "0 64px",
         height: 58,
+        padding: 30,
         alignItems: "flex-end",
         paddingBottom: 23,
       }}

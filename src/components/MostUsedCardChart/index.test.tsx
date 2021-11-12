@@ -37,6 +37,21 @@ function mockPieChart({
       startAngle: 0,
       value: 100,
     },
+    {
+      data: {
+        amount: "100.00",
+        category: "Category",
+        key: "1635213044162",
+        svg: [Object],
+      },
+      endAngle: 6.283185307179587,
+      index: 0,
+      labelCentroid: [-2.871426524195212e-14, 75],
+      padAngle: 0,
+      pieCentroid: [-2.871426524195212e-14, 75],
+      startAngle: 0,
+      value: 100,
+    },
   ];
 
   return (

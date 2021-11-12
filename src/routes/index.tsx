@@ -1,6 +1,8 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { format, isBefore, lastDayOfMonth, startOfMonth } from "date-fns";
 import React, { useEffect } from "react";
 import SplashScreen from "react-native-splash-screen";
+import Toast from "react-native-toast-message";
 import ToastWrapper from "react-native-toast-message";
 import { useUpdateDataContext } from "../context/UpdateDataContext";
 import { CardForm } from "../pages/CardForm";
@@ -20,8 +22,10 @@ import {
   getOperationForFilter,
   getOperations,
 } from "../services/realm";
-import { Category } from "../types";
+import { Config } from "../types";
 import { extractCategoriesByOperations } from "../utils/extractCategoriesByOperations";
+import { stringToDate } from "../utils/formatDate";
+import { monthAndYearToDate } from "../utils/monthAndYearToDate";
 
 const Navigation = createNativeStackNavigator();
 
@@ -35,11 +39,42 @@ export const NavigationRoutes = () => {
     setPageChartOperationsByFilter,
     setPageChartCategoriesByFilter,
     setFormChartFilter,
+    updateConfig,
   } = useUpdateDataContext();
 
   useEffect(async () => {
     setCategories(await getCategories().then((data) => data));
-    const cfg = await getConfiguration().then((data) => data);
+    let cfg = await getConfiguration().then((data) => data);
+
+    // verificar se o mês mudou
+
+    if (cfg?.lastDayMonth) {
+      const lastDataCfg = stringToDate(cfg?.lastDayMonth);
+      const initialData = startOfMonth(new Date());
+
+      if (isBefore(lastDataCfg, initialData)) {
+        Toast.show({
+          type: "success",
+          text1: "Atualização de datas",
+          text2: `O mês virou e resolvemos atualizar suas configurações de datas para o mês atual`,
+          autoHide: true,
+        });
+
+        const newCfg: Config = {
+          firstDayMonth: format(startOfMonth(new Date()), "dd/MM/yyyy"),
+          lastDayMonth: format(lastDayOfMonth(new Date()), "dd/MM/yyyy"),
+          monthYear: `${
+            new Date()?.getMonth() + 1
+          }/${new Date()?.getFullYear()}`,
+          id: cfg?.id,
+        };
+
+        updateConfig(newCfg);
+
+        cfg = newCfg;
+      }
+    }
+
     setConfig(cfg);
     setCards(await getCards().then((data) => data));
     setWallet(await getCarteira().then((data) => data));
