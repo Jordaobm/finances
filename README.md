@@ -16,7 +16,7 @@
 
 🚧⚠️ Aplicação em fase de testes ⚠️🚧
 
-<h2>Sumário</h2>
+<h2 id="start">Sumário</h2>
 
 <ul>
   <li><a href="#sobre">Sobre a aplicação</a></li>
@@ -30,15 +30,19 @@
     <li><a href="#guiaUsoOperacoes">Operações</a></li>
     <li><a href="#guiaUsoAnalises">Análises e Gráficos</a></li>
     <li><a href="#guiaUsoHomeComOperacoes">Tela inicial com algumas operações cadastradas</a></li>
+    <li><a href="#guiaUsoConfigs">Configurações</a></li>
   </ul>
-    
   </li>
+  <li><a href="#tecs">Tecnologias utilizadas na aplicação</a>
+  <li><a href="#fim">Considerações finais</a>
+  <li><a href="#creditos">Créditos</a>
+
 </ul>
 
 <h2 id="sobre">💡 Sobre a aplicação</h2>
 Finances é um aplicativo de gerenciamento de contas onde o foco é simplificar a forma como você monta a sua planilha financeira de gastos. A ideia aqui é manter o usuário sempre informado do quanto gastou e quanto há entre seus gastos e ganhos.
 
-O projeto foi desenvolvido com base em um protótipo que fiz no figma algumas semanas antes de iniciar o desenvolvimento. Alguns componentes da aplicação foram adptados entre o protótipo e a versão final da aplicação, no entanto a ideia e usabilidade não foram afetadas com as mudanças.
+O projeto foi desenvolvido com base em um protótipo que fiz no figma algumas semanas antes de iniciar o desenvolvimento. Alguns componentes da aplicação foram adaptados entre o protótipo e a versão final da aplicação, no entanto a ideia e usabilidade não foram afetadas com as mudanças.
 
 <a href="https://www.figma.com/file/IE93rSHrUNDIwVIhdqCFJL/Finances?node-id=0%3A1"> 💎 Protótipo no figma</a>
 
@@ -53,7 +57,7 @@ Tenha instalado `node` e de preferência tenha também o `yarn` (pois o projeto 
 
 Clone este repositório usando o comando:
 
-<!--sec data-title="Your first command: OS X and Linux" data-id="OSX_Linux_whoami" data-collapse=true ces-->
+<!--sec data-title="" data-id="" data-collapse=true ces-->
 
     git clone https://github.com/Jordaobm/finances.git
 
@@ -61,7 +65,7 @@ Clone este repositório usando o comando:
 
 Instale as dependências necessárias usando o comando:
 
-<!--sec data-title="Your first command: OS X and Linux" data-id="OSX_Linux_whoami" data-collapse=true ces-->
+<!--sec data-title="" data-id="" data-collapse=true ces-->
 
     yarn || npm i
 
@@ -69,21 +73,21 @@ Instale as dependências necessárias usando o comando:
 
 Para iniciar o projeto, execute:
 
-<!--sec data-title="Your first command: OS X and Linux" data-id="OSX_Linux_whoami" data-collapse=true ces-->
+<!--sec data-title="" data-id="" data-collapse=true ces-->
 
     yarn android || npm run android
 
 <!--endsec-->
 
-O projeto consta com implementação de testes em seus componentes, para atualizar executar os testes, execute:
+O projeto conta com implementação de testes em seus componentes, para atualizar os testes, execute:
 
-<!--sec data-title="Your first command: OS X and Linux" data-id="OSX_Linux_whoami" data-collapse=true ces-->
+<!--sec data-title="" data-id="" data-collapse=true ces-->
 
     yarn coverage
 
 <!--endsec-->
 
-Esse comando irá atualizar os testes e gerar um novo arquivo de coverage que pode ser encontrado na raiz do projeto `./coverage`. Caso queira ver a porcentagem de abragência dos testes, basta entrar na pasta `./coverage/lcov-report` e abrir o arquivo `index.html` em seu navegador.
+Esse comando irá atualizar os testes e gerar um novo arquivo de coverage que pode ser encontrado na raiz do projeto em `./coverage`. Caso queira ver a porcentagem de abragência dos testes, basta entrar na pasta `./coverage/lcov-report` e abrir o arquivo `index.html` em seu navegador.
 
 <h2 id="guiaUso">📝 Guia rápido de uso da aplicação</h2>
 
@@ -160,7 +164,7 @@ Na tela de cartões serão exibidas informações como:
 
 <h3 id="guiaUsoOperacoes">Operações</h3>
 
-Operações são operações 😅. Operação é a forma como dei, dentro da aplicação, para todo o tipo de entrada/saída/transferência que existe na aplicação. Operações são o núcleo de toda a aplicação. O usuário poderá inserir operações com nome, valor, categoria à qual ela pertence, data em que a operação ocorreu e à qual carteira/conta/cartão está vinculada.
+Operações são operações 😅. Operação é o nome que atribuí, dentro da aplicação, para todo o tipo de entrada/saída/transferência que existe na aplicação. Operações são o núcleo de toda a aplicação. O usuário poderá inserir operações com nome, valor, categoria à qual ela pertence, data em que a operação ocorreu e à qual carteira/conta/cartão está vinculada.
 
 Para acessar as operações, basta clicar no quarto ícone (da esquerda para a direita) na barra de navegação.
 
@@ -200,15 +204,98 @@ Aqui temos um demonstrativo de como fica a listagem de operações na tela inici
   <img alt="Tela inicial com listagem de operações" title="Tela inicial com listagem de operações" src="https://github.com/Jordaobm/finances/blob/main/src/assets/document/homeAndOperations.png" width="400px" />
 </div>
 
+<h3 id="guiaUsoConfigs">Configurações</h3>
+
+Na tela de configurações o usuário poderá escolher o período que deseja utilizar para listar suas operações e realizar os cálculos dos gráficos das demais áreas da aplicação.
+
+Para acessar as operações, basta clicar no ícone de engrenagem presente na tela inicial da aplicação no canto superior direito.
+
+<div align="center">
+  <img alt="Tela de configurações" title="Tela de configurações" src="https://github.com/Jordaobm/finances/blob/main/src/assets/document/config.png" width="400px" />
+</div>
+
+A tela de configurações conta também com uma funcionalidade de importação / exportação de dados:
+
+<div align="center">
+  <img alt="Tela de configurações" title="Tela de configurações" src="https://github.com/Jordaobm/finances/blob/main/src/assets/document/importExportData.png" width="400px" />
+</div>
+
+Como funciona o backup ❓❔
+
+<h4>❤️ Exportar dados</h4>
+
+Para exportar os dados da aplicação, clique em exportar dados. A aplicação irá gerar um arquivo `.json` com todos os dados cadastrados pelo usuário até então. Esse arquivo ficará salvo em `Android/Download`. Por padrão a aplicação irá realizar a ação de buscar dados assim que finalizar a exportação, mostrando ao usuário que o arquivo foi criado e já pode ser importado.
+
+<h4>💚 Buscar dados</h4>
+
+Ao clicar em buscar dados, a aplicação fará uma varredura pela pasta`Android/Download` em, busca de arquivos de backup e listará os arquivos que encontrar logo abaixo.
+
+✅ Para importar os dados, basta clicar em cima do nome do arquivo que deseja importar e será exibido ao usuário um modal de confirmação da importação, caso prossiga com a importação a aplicação fará a importação e recarregará os dados da sessão.
+
+❌ Para excluir um arquivo de backup basta clicar no ícone em vermelho que aparecerá na listagem ao lado direito do nome do arquivo. A aplicação exibirá um modal de confirmação da exclusão e caso o usuário prossiga a exclusão será executada. Assim que a exclusão for finalizada, a ação de buscar dados será disparada, listando os arquivos novamente, mostrando ao usuário que o arquivo foi excluído.
+
+<h2 id="tecs">🛠 Tecnologias utilizadas na aplicação</h2>
+
+<ul>
+ <li>@react-native-picker/picker: ^2.1.0</li>
+  <li>@react-navigation/native: ^6.0.2</li>
+  <li>@react-navigation/native-stack: ^6.1.0</li>
+  <li>@types/react-native-autocomplete-input: ^5.0.0</li>
+  <li>@types/react-native-snap-carousel: ^3.8.4</li>
+  <li>@types/react-native-svg-charts: ^5.0.9</li>
+  <li>date-fns: ^2.23.0</li>
+  <li>jest-coverage-badges: ^1.1.2</li>
+  <li>react: 17.0.2</li>
+  <li>react-native: 0.65.1</li>
+  <li>react-native-autocomplete-input: ^5.0.2</li>
+  <li>react-native-draggable: ^3.3.0</li>
+  <li>react-native-fs: ^2.18.0</li>
+  <li>react-native-linear-gradient: ^2.5.6</li>
+  <li>react-native-masked-text: ^1.13.0</li>
+  <li>react-native-picker-select: ^8.0.4</li>
+  <li>react-native-safe-area-context: ^3.3.2</li>
+  <li>react-native-screens: ^3.7.1</li>
+  <li>react-native-snap-carousel: ^3.9.1</li>
+  <li>react-native-splash-screen: ^3.2.0</li>
+  <li>react-native-svg-charts: ^5.4.0</li>
+  <li>react-native-svg: ^12.1.1</li>
+  <li>react-native-svg-icon: ^0.10.0</li>
+  <li>react-native-toast-message: ^1.6.0</li>
+  <li>realm: ^10.8.0</li>
+  <li>styled-components: ^5.3.1</li>
+</ul>
+
+<h2 id="fim">👷 Considerações finais</h2>
+
+A aplicação é fruto de um estudo e conhecimento acerca de aplicações offline-first. Essa foi minha primeira aplicação utilizando este conceito aliado ao RealmDB (banco não-relacional offline).
+
+<a href="https://realm.io/">🗄 RealmDB</a>
+
+Pude aprender muito sobre o Realm e sobre o conceito com a construção dessa aplicação, além de construir uma aplicação que vai me auxiliar no dia-a-dia à manter as contas em dia e o controle total de meus ganhos e gastos.
+
+<h2 id="creditos">👨‍🎓 Créditos</h2>
+
+Durante o desenvolvimento do protótipo do projeto e da aplicação como um todo, utilizei imagens, ícones, Svgs e vetores encontrados na internet disponíveis gratuitamente pelos sites:
+
+<ul>
+  <li><a href="https://www.figma.com/file/bs8jWz3okbV4vR3G814Fpr/Figma">Icones utilizados - Figma</a></li>
+  <li><a href="https://www.flaticon.com/br/">Icones utilizados - Flaticon</a></li>
+  <li><a href="https://br.freepik.com/vetores/negocio">Negócio vetor criado por vectorpouch - br.freepik.com</a></li>
+  <li><a href="https://www.freepik.com/vectors/gold">Gold vector created by macrovector - www.freepik.com</a></li>
+  <li><a href="https://www.freepik.com/vectors/business">Business vector created by pikisuperstar - www.freepik.com</a></li>  
+</ul>
+
+<a href="#start">👆 Voltar ao Sumário</a>
+
 ### Autor
 
 ---
 
-<a href="https://github.com/Jordaobm">
- <img style="border-radius: "50px";" src="https://avatars.githubusercontent.com/u/70074016?v=4" width="100px;" alt="Jordão"/>
+<a href="https://github.com/Jordaobm" target="_blank">
+ <img src="https://avatars.githubusercontent.com/u/70074016?v=4" width="100px;" alt="Jordão"/>
  <br />
  <sub><b>Jordão Beghetto Massariol</b></sub></a> <a href="https://github.com/Jordaobm" title="Jordão">🚀</a>
 
 Feito com ❤️ por Jordão Beghetto Massariol 👋🏽 Entre em contato!
 
-<a href="https://twitter.com/JordoMass"><img alt="Twitter" src="https://img.shields.io/twitter/url?style=social"></a>
+<a href="https://www.linkedin.com/in/jord%C3%A3o-beghetto-massariol-9a9800105/"><img alt="Linkedin" src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white"></a>
