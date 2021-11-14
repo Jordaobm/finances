@@ -7,172 +7,207 @@
 [badge-lines]: https://github.com/Jordaobm/finances/blob/main/coverage/badge-lines.svg
 [badge-statements]: https://github.com/Jordaobm/finances/blob/main/coverage/badge-statements.svg
 
+![Badge-branches][badge-branches]
+![Badge-functions][badge-functions]
+![Badge-lines][badge-lines]
+![Badge-statements][badge-statements]
 
-![Badge-branches][badge-branches] 
-![Badge-functions][badge-functions] 
-![Badge-lines][badge-lines] 
-![Badge-statements][badge-statements] 
 <h1>🚀finances🚀</h1>
 
-🚧⚠️ Este Readme está sendo escrito em desenvolvimento e não representa o projeto final, e sim um protótipo⚠️🚧
+🚧⚠️ Aplicação em fase de testes ⚠️🚧
 
-https://whimsical.com/Rt77peGDS1p4hNwEU4Ditj
+<h2>Sumário</h2>
 
-Finances é um aplicativo de gerenciamento de contas onde o foco é simplificar a forma como você monta a sua planilha financeira de gastos.
+<ul>
+  <li><a href="#sobre">Sobre a aplicação</a></li>
+  <li><a href="#guia">Guia rápido para executar o projeto</a></li>
+  <li><a href="#guiaUso">Guia rápido de uso da aplicação</a>
+  <ul>
+    <li><a href="#guiaUsoHome">Tela inicial (Home)</a></li>
+    <li><a href="#guiaUsoNavigation">Navegação</a></li>
+    <li><a href="#guiaUsoCategorias">Categorias</a></li>
+    <li><a href="#guiaUsoCartoes">Contas e cartões</a></li>
+    <li><a href="#guiaUsoOperacoes">Operações</a></li>
+    <li><a href="#guiaUsoAnalises">Análises e Gráficos</a></li>
+    <li><a href="#guiaUsoHomeComOperacoes">Tela inicial com algumas operações cadastradas</a></li>
+  </ul>
+    
+  </li>
+</ul>
 
-Fluxo da aplicação:
+<h2 id="sobre">💡 Sobre a aplicação</h2>
+Finances é um aplicativo de gerenciamento de contas onde o foco é simplificar a forma como você monta a sua planilha financeira de gastos. A ideia aqui é manter o usuário sempre informado do quanto gastou e quanto há entre seus gastos e ganhos.
 
-<h2>Home</h2>
+O projeto foi desenvolvido com base em um protótipo que fiz no figma algumas semanas antes de iniciar o desenvolvimento. Alguns componentes da aplicação foram adptados entre o protótipo e a versão final da aplicação, no entanto a ideia e usabilidade não foram afetadas com as mudanças.
 
-O usuário entrará na aplicação e já estará na tela home.
+<a href="https://www.figma.com/file/IE93rSHrUNDIwVIhdqCFJL/Finances?node-id=0%3A1"> 💎 Protótipo no figma</a>
 
-A tela home exibirá as operações do usuário no mês atual. Entradas e saídas.
+<h2 id="guia">🧪 Guia rápido para executar o projeto</h2>
+Para iniciar o projeto, primeiro certifique-se de ter um ambiente android/IOS configurado em sua máquina ou um aparelho que possa ser usado via cabo.
 
-As entradas e saídas serão apenas do mês corrente.
+Para o desenvolvimento desse projeto utilizei a última versão do `Android Studio` e segui o passo à passo do guia de instalação do mesmo, que você pode encontrar aqui:
 
-O Valor atual será o calculo entre as Entradas e saídas juntamente com o fechamento do mês passado.
-Exemplo: Sabendo que no mês de agosto, tivemos R$ 2.000,00 de entrada durante o mês, e R$ 1.900,00 de saída, sobraram R$ 100,00 do mês anterior. O valor total do mês de setembro começará com R$ 100,00 (do mês anterior);
+<a href="https://developer.android.com/studio?hl=pt&gclid=Cj0KCQiA4b2MBhD2ARIsAIrcB-TAFgv26igH7mL4RniWL72Et7fszQXlQM3Scnqy0EYsGpmtaRd_WlIaAnQsEALw_wcB&gclsrc=aw.ds"> 📱 Android Studio</a>
 
-<div align="center">
-  <img alt="finances" title="finances" src="https://github.com/Jordaobm/finances/blob/main/src/assets/document/1.png" width="300px" />
-</div>
+Tenha instalado `node` e de preferência tenha também o `yarn` (pois o projeto conta com yarn.lock).
 
-No gráfico que está apresentado na home teremos uma relação dos itens "saída".
+Clone este repositório usando o comando:
 
-Exemplo: Você cadastrou até agora dois itens de "saída":
+<!--sec data-title="Your first command: OS X and Linux" data-id="OSX_Linux_whoami" data-collapse=true ces-->
 
-- Mercado - R$ 700,00
-- Internet - R$ 400,00
+    git clone https://github.com/Jordaobm/finances.git
 
-Ou seja, até agora temos R$ 1.100,00 de saída... e o gráfico ficará responsável por mostrar o quanto cada item de saída é representado dentro do valor total de saída (R$ 1.100,00).
+<!--endsec-->
 
-Mais abaixo temos uma listagem de operações. Nessa listagem ficarão as operações que ocorreram no mês corrente.
+Instale as dependências necessárias usando o comando:
 
-No fim da página, fixado, temos o menu de navegação.
+<!--sec data-title="Your first command: OS X and Linux" data-id="OSX_Linux_whoami" data-collapse=true ces-->
 
-<div align="center">
-  <img alt="finances" title="finances" src="https://github.com/Jordaobm/finances/blob/main/src/assets/document/2.png" width="300px" />
-</div>
+    yarn || npm i
 
-<h2>Categorias</h2>
+<!--endsec-->
 
-<div align="center">
-  <img alt="finances" title="finances" src="https://github.com/Jordaobm/finances/blob/main/src/assets/document/03.png" width="300px" />
-</div>
+Para iniciar o projeto, execute:
 
-Na tela de categorias, serão mostradas todas as categorias cadastradas. A função das categorias é unificar gastos parecidos para conseguir aninhar melhor os dados para exibição na tela de gráficos. Unificando os gastos e entradas por categorias o entendimento é aperfeiçoado. Para adicionar uma nova categoria, basta clicar n botão "Adicionar +"
+<!--sec data-title="Your first command: OS X and Linux" data-id="OSX_Linux_whoami" data-collapse=true ces-->
 
-<div align="center">
-  <img alt="finances" title="finances" src="https://github.com/Jordaobm/finances/blob/main/src/assets/document/04.png" width="300px" />
-</div>
+    yarn android || npm run android
 
-Para editar uma categoria basta clicar no card mostrado na tela de categorias e você será levado para a tela onde pode editar ou excluir a categoria
+<!--endsec-->
 
-<div align="center">
-  <img alt="finances" title="finances" src="https://github.com/Jordaobm/finances/blob/main/src/assets/document/05.png" width="300px" />
-</div>
+O projeto consta com implementação de testes em seus componentes, para atualizar executar os testes, execute:
 
-<h2>Contas e Cartões</h2>
+<!--sec data-title="Your first command: OS X and Linux" data-id="OSX_Linux_whoami" data-collapse=true ces-->
 
-<div align="center">
-  <img alt="finances" title="finances" src="https://github.com/Jordaobm/finances/blob/main/src/assets/document/06.png" width="300px" />
-</div>
+    yarn coverage
 
-Para adicionar operações é necessário ter uma carteira/cartão ou conta cadastrada. Por padrão o aplicativo disponibiliza a carteira, que é onde ocorre os lançamentos principais. É com base na carteira que a home exibe os dados. Como um centralizador de operações, a carteira é o local principal e é o foco das análises que veremos nas demais telas da aplicação. No entanto, todos nós, ou a maioria, possui cartões de crédito/contas bancárias, e é sempre importante manter esses caras por perto antes que fujam do controle. Na aba de Contas e Cartões podemos adicionar esses dados clicando na opção "Toque para adicionar um cartão", que nos levará à essa tela →
+<!--endsec-->
 
-<div align="center">
-  <img alt="finances" title="finances" src="https://github.com/Jordaobm/finances/blob/main/src/assets/document/07.png" width="300px" />
-</div>
+Esse comando irá atualizar os testes e gerar um novo arquivo de coverage que pode ser encontrado na raiz do projeto `./coverage`. Caso queira ver a porcentagem de abragência dos testes, basta entrar na pasta `./coverage/lcov-report` e abrir o arquivo `index.html` em seu navegador.
 
-Nessa tela teremos que preencher dados como o nome da instituição financeira, que aparecerá no cartão após o cadastro, nome presente no cartão e valor disponível na conta. As cores são meramente ilustrativas, no entanto é importante escolher cores de contraste para melhor experiência.
+<h2 id="guiaUso">📝 Guia rápido de uso da aplicação</h2>
 
-<div align="center">
-  <img alt="finances" title="finances" src="https://github.com/Jordaobm/finances/blob/main/src/assets/document/08.png" width="300px" />
-</div>
+Para usar a aplicação (ainda em fase de testes), disponibilizei um APK (Android Package) dentro de `src/assets/document` com o nome de `finances.apk`. Ele pode ser facilmente instalado em celulares e emuladores Android e representa uma versão de testes da aplicação.
 
-Ao adicionar um cartão, ele passará a ser listado dessa forma. Com um movimento de swipe para a esquerda em cima do cartão atual é possível alterar para o outro cartão cadastrado. As operações recentes seguem a mesma lógica da tela home, apareceram as operações do mês corrente
+<a href="https://github.com/Jordaobm/finances/blob/main/src/assets/document/finances.apk"> 🔨 Versão de testes (APK) da aplicação</a>
 
-<div align="center">
-  <img alt="finances" title="finances" src="https://github.com/Jordaobm/finances/blob/main/src/assets/document/09.png" width="300px" />
-</div>
+<h3 id="guiaUsoHome" >Tela inicial (Home)</h3>
 
-Ao lado do ultimo cartão da lista ficará disponível um espaço para adicionar um novo cartão.
-
-<h2>Operações</h2>
-
-O coração da aplicação. As operações são o alimentador do aplicativo. Com as operações conseguimos auxiliar você a controlar seus gastos.
-Para criar uma operação, você pode, na tela home, clicar no botão "adicionar +" que estará ao lado de "Operações recentes", ou navegar pelo menu até o icone de dinheiro.
-
-Navegando pelo menu, você será levado para essa tela. Aqui as operações serão listadas conforme o filtro aplicado pelo usuário. O usuário poderá filtrar pela data da operação e pelo nome. Aqui também o usuário poderá adicionar uma operação através do botão "adicionar +", ao lado de "Operações encontradas"
+Ao acessar a aplicação pela primeira vez, o usuário será levado à tela inicial (Home)
 
 <div align="center">
-  <img alt="finances" title="finances" src="https://github.com/Jordaobm/finances/blob/main/src/assets/document/10.png" width="300px" />
+  <img alt="Tela inicial da aplicação" title="Tela inicial da aplicação" src="https://github.com/Jordaobm/finances/blob/main/src/assets/document/home.png" width="400px" />
 </div>
+
+Na tela inicial (Home), serão exibidas informações como:
+
+<ul>
+  <li>Data atual</li>
+  <li>Período de datas que serão listadas as operações</li>
+  <li>Valor total das operações de entrada no período selecionado</li>
+  <li>Valor total das operações de saída no período selecionado</li>
+  <li>Valor total entre as operações de entrada e as operações de saída no período selecionado</li>
+  <li>Quando houver operações de saída, a tela mostrará um gráfico das operações de saída agrupadas por categoria </li>
+</ul>
+
+<h3 id="guiaUsoNavigation">Navegação</h3>
+
+Na barra de navegação da aplicação, ordenados da esquerda para direita temos as seguintes rotas:
+
+<ul>
+  <li>Categorias</li>
+  <li>Cartões</li>
+  <li>Tela Inicial (Home)</li>
+  <li>Operações</li>
+  <li>Análises e gráficos</li>
+</ul>
+
+<h3 id="guiaUsoCategorias">Categorias</h3>
+
+Dentro da aplicação as operações serão `categorizadas` e cada qual terá sua especificação. As categorias são uma forma de agruparmos os gastos e os ganhos em conjuntos semelhantes para que a aplicação possa apresentar gráficos relevantes sobre as operações.
+
+⚠️ Atenção: É necessário ter uma categoria cadastrada para então cadastrar uma operação... (Todas as operações devem estar relacionadas à uma categoria).
+
+Para acessar as categorias, basta clicar no primeiro ícone (da esquerda para a direita) na barra de navegação.
 
 <div align="center">
-  <img alt="finances" title="finances" src="https://github.com/Jordaobm/finances/blob/main/src/assets/document/11.png" width="300px" />
+  <img alt="Categorias" title="Categorias" src="https://github.com/Jordaobm/finances/blob/main/src/assets/document/categories.png" width="400px" />
 </div>
 
-Para adicionar uma nova operação, primeiro precisamos categorizá-las. Trata-se de uma entrada/saida ou uma poupança? É bem simples, entrada entrará na conta como uma soma. Saída entrará na conta como uma subtração, e poupança depende hehe... para poupança a tela muda um pouco de visual...
+Na tela de categorias serão exibidas informações como :
+
+<ul>
+  <li>Categorias cadastradas</li>
+</ul>
+
+<h3 id="guiaUsoCartoes">Contas e cartões</h3>
+
+Contas e cartões são a forma mais prática de armazenar dinheiro atualmente. Contas virtuais ou cartões geralmente são usados e têm seu espaço especial dentro da aplicação. Não se preocupe, nenhuma informação sensível é usada por aqui. Contas e cartões, dentro da aplicação, servem somente para dizer o quanto você tem em cada um deles, como uma forma de controlar e saber exatamente quanto você possuí disponível.
+
+Para acessar os Contas e cartões, basta clicar no segundo ícone (da esquerda para a direita) na barra de navegação.
 
 <div align="center">
-  <img alt="finances" title="finances" src="https://github.com/Jordaobm/finances/blob/main/src/assets/document/12.png" width="300px" />
+  <img alt="Contas e cartões" title="Contas e cartões" src="https://github.com/Jordaobm/finances/blob/main/src/assets/document/cards.png" width="400px" />
 </div>
 
-Caso a operação seja de poupança, significa que estamos retirando de algum lugar (geralmente da carteira para algum cartão/conta), então o aplicativo registrará duas operações. O aplicativo registrará uma operação de saída no item selecionado no input "De", e registrará uma operação de entrada no item selecionado no input "Para".
+Na tela de cartões serão exibidas informações como:
 
-Continuando com a explicação do formulário como um todo, o campo Nome conterá o nome da sua operação, Ex: Mercado, padaria, panificadora, ônibus etc.
+<ul>
+  <li>Carrosel horizontal que apresentará todos os cartões do usuário</li>
+  <li>Cada cartão (quando selecionado) exibirá as operações relacionadas à ele</li>
+  <li>Por padrão a aplicação traz a uma carteira previamente cadastrada. Essa carteira deve ser usada pelo usuário para representar o dinheiro que ele possuí em mãos mesmo (dinheiro físico)</li>
+</ul>
 
-O Valor da sua operação deverá ser preenchido obrigatóriamente
+<h3 id="guiaUsoOperacoes">Operações</h3>
 
-A Categoria da sua operação... você até pode criar uma operação sem categoria, porém não recomendamos, pois uma operação pode ser classificada em alguma categoria, já que a categoria serve para fazer o usuário pensar nos gastos que ele possui. A categoria também servirá mais adiante para conscientizar o usuário de seus gastos.
+Operações são operações 😅. Operação é a forma como dei, dentro da aplicação, para todo o tipo de entrada/saída/transferência que existe na aplicação. Operações são o núcleo de toda a aplicação. O usuário poderá inserir operações com nome, valor, categoria à qual ela pertence, data em que a operação ocorreu e à qual carteira/conta/cartão está vinculada.
 
-A Data, geralmente do dia em que ocorreu a operação.
-
-Vincular operação é um dado que estará presente nas operações de entrada e saída, para que saibamos em qual conta o usuário estará fazendo a operação.
-
-Para editar/excluir uma operação, basta o usuário clicar nela e ele será levado para essa tela
+Para acessar as operações, basta clicar no quarto ícone (da esquerda para a direita) na barra de navegação.
 
 <div align="center">
-  <img alt="finances" title="finances" src="https://github.com/Jordaobm/finances/blob/main/src/assets/document/13.png" width="300px" />
+  <img alt="Operações" title="Operações" src="https://github.com/Jordaobm/finances/blob/main/src/assets/document/operations.png" width="400px" />
 </div>
 
-## 🛠 Tecnologias
+Na tela de operações serão exibidas informações como:
 
-   - "@react-native-picker/picker": "^2.1.0",
-   - "@react-navigation/native": "^6.0.2",
-   - "@react-navigation/native-stack": "^6.1.0",
-   - "@types/react-native-autocomplete-input": "^5.0.0",
-   - "@types/react-native-snap-carousel": "^3.8.4",
-   - "@types/react-native-svg-charts": "^5.0.9",
-   - "date-fns": "^2.23.0",
-   - "react": "17.0.2",
-   - "react-native": "0.65.1",
-   - "react-native-autocomplete-input": "^5.0.2",
-   - "react-native-draggable": "^3.3.0",
-   - "react-native-linear-gradient": "^2.5.6",
-   - "react-native-masked-text": "^1.13.0",
-   - "react-native-picker-select": "^8.0.4",
-   - "react-native-safe-area-context": "^3.3.2",
-   - "react-native-screens": "^3.7.1",
-   - "react-native-snap-carousel": "^3.9.1",
-   - "react-native-splash-screen": "^3.2.0",
-   - "react-native-svg": "^12.1.1",
-   - "react-native-svg-charts": "^5.4.0",
-   - "react-native-svg-icon": "^0.10.0",
-   - "react-native-toast-message": "^1.6.0",
-   - "realm": "^10.8.0",
-   - "styled-components": "^5.3.1"
+<ul>
+  <li>Filtro de operações</li>
+  <li>Lista das operações filtradas</li>
+</ul>
 
+<h3 id="guiaUsoAnalises">Análises e Gráficos</h3>
+
+Análises e gráficos terão como objetivo conscientizar o usuário de seus maiores gastos, os destaques do mês e indiciar o vilão de seu orçamento.
+
+Para acessar as operações, basta clicar no quinto ícone (da esquerda para a direita) na barra de navegação.
+
+<div align="center">
+  <img alt="Análises" title="Análises" src="https://github.com/Jordaobm/finances/blob/main/src/assets/document/charts.png" width="400px" />
+</div>
+
+Na tela de Análises e Gráficos serão exibidas informações como:
+
+<ul>
+  <li>Gráficos comparativos e demonstrativos dos gastos agrupados por categoria e a listagem das categorias com seus valores</li>
+  <li>Gráficos comparativos e demonstrativos dos gastos por cartão/carteira/conta</li>
+</ul>
+
+<h3 id="guiaUsoHomeComOperacoes">Tela inicial com algumas operações cadastradas</h3>
+
+Aqui temos um demonstrativo de como fica a listagem de operações na tela inicial da aplicação.
+
+<div align="center">
+  <img alt="Tela inicial com listagem de operações" title="Tela inicial com listagem de operações" src="https://github.com/Jordaobm/finances/blob/main/src/assets/document/homeAndOperations.png" width="400px" />
+</div>
 
 ### Autor
+
 ---
 
 <a href="https://github.com/Jordaobm">
  <img style="border-radius: "50px";" src="https://avatars.githubusercontent.com/u/70074016?v=4" width="100px;" alt="Jordão"/>
  <br />
  <sub><b>Jordão Beghetto Massariol</b></sub></a> <a href="https://github.com/Jordaobm" title="Jordão">🚀</a>
-
 
 Feito com ❤️ por Jordão Beghetto Massariol 👋🏽 Entre em contato!
 
