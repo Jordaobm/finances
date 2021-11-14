@@ -6,7 +6,7 @@ import React from "react";
 it("should be able to render Header component", async () => {
   const { getByTestId } = await render(
     <NavigationContainer>
-      <Header color="#595959" />
+      <Header color="#595959" receivedDate={new Date("2021-11-13")} />
     </NavigationContainer>
   );
 

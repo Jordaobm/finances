@@ -1,4 +1,4 @@
-import { Card, Operation } from "../types";
+import { Card, Category, Operation } from "../types";
 
 export const mockOperations: Operation[] = [
   {
@@ -197,5 +197,36 @@ export const mockCards: Card[] = [
     id: "1635202453826",
     institutionName: "Nubank",
     name: "Jordao Beghetto Massariol",
+  },
+];
+
+export const mockCategories: Category[] = [
+  {
+    accumuledValue: 3000,
+    color: "#20b404",
+    id: "1635200733492",
+    name: "Salário",
+    number: 38.32405090332031,
+  },
+  {
+    accumuledValue: 450,
+    color: "#d4183f",
+    id: "1635202199541",
+    name: "Mercado",
+    number: 248.54851531982422,
+  },
+  {
+    accumuledValue: 1000,
+    color: "#e63ead",
+    id: "1635202480825",
+    name: "Transferencia",
+    number: 269.81818199157715,
+  },
+  {
+    accumuledValue: 10,
+    color: "#bbb515",
+    id: "1635209284607",
+    name: "Padaria",
+    number: 219.96956634521484,
   },
 ];

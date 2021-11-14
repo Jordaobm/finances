@@ -2,7 +2,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { fireEvent, render } from "@testing-library/react-native";
 import React from "react";
 import { CardCategories } from ".";
-import { Category } from "../../types";
+import { mockCategories, mockOperations } from "../../tests/mocksForTests";
+import { Category, Operation } from "../../types";
 
 jest.mock("react-native-toast-message", () => ({
   show: jest.fn(),
@@ -26,21 +27,12 @@ function setUpdateCategory(category: Category) {
   updateCategory = updateCategory;
 }
 
-let categories: Category[] = [
-  {
-    accumuledValue: 500,
-    color: "rgba(197, 48, 48, 1  )",
-    id: "1635000545505",
-    name: "Dinheiro da vovó",
-    number: 191.3680076599121,
-  },
-];
-
 function mockUseUpdateDataContext() {
   return {
     updateCategory,
     setUpdateCategory,
-    categories,
+    categories: mockCategories,
+    operations: mockOperations,
   };
 }
 
@@ -50,17 +42,25 @@ jest.mock("../../context/UpdateDataContext", () => {
   };
 });
 
-it("must be able to select a FakeCard", async () => {
+it("should be able to render CardCategories", async () => {
   const { getByTestId } = await render(
     <NavigationContainer>
-      <CardCategories categories={categories} />
+      <CardCategories categories={[mockCategories[0]]} />
     </NavigationContainer>
   );
 
   await fireEvent(
     getByTestId("addCategory"),
     "onPress",
-    (updateCategory = categories[0])
+    (updateCategory = mockCategories[0])
   );
-  await expect(updateCategory).toEqual(categories[0]);
+  await expect(updateCategory).toEqual(mockCategories[0]);
+});
+
+it("should be able to render CardCategories with not operations by category", async () => {
+  const { getByTestId } = await render(
+    <NavigationContainer>
+      <CardCategories categories={mockCategories} />
+    </NavigationContainer>
+  );
 });
