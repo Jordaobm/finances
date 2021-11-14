@@ -10,6 +10,7 @@ import {
   ContainerCardOperations,
   Content,
   ContentText,
+  ContainerNotOperation,
   NotOperation,
   NotOperationSpan,
   OperationsText,
@@ -38,12 +39,12 @@ export const CategoriesList = () => {
           {categories?.length > 0 ? (
             <CardCategories categories={categories} />
           ) : (
-            <>
+            <ContainerNotOperation>
               <NotOperation>Ainda não há categorias cadastradas</NotOperation>
               <NotOperationSpan>
                 Cadastre uma operação e ela aparecerá aqui!
               </NotOperationSpan>
-            </>
+            </ContainerNotOperation>
           )}
         </ContainerCardOperations>
       </Content>

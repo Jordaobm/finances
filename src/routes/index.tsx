@@ -50,13 +50,13 @@ export const NavigationRoutes = () => {
 
     if (cfg?.lastDayMonth) {
       const lastDataCfg = stringToDate(cfg?.lastDayMonth);
-      const initialData = startOfMonth(new Date());
+      const initialData = new Date();
 
       if (isBefore(lastDataCfg, initialData)) {
         Toast.show({
           type: "success",
           text1: "Atualização de datas",
-          text2: `O mês virou e resolvemos atualizar suas configurações de datas para o mês atual`,
+          text2: `A última data de seu período é menor que a data atual, atualizamos seu período.`,
           autoHide: true,
         });
 

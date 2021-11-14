@@ -44,6 +44,10 @@ export const ContainerCardOperations = styled.View`
   margin-bottom: 30px;
 `;
 
+export const ContainerNotOperation = styled.View`
+  padding: 10px;
+`;
+
 export const NotOperation = styled.Text`
   font-family: "Roboto-Medium";
   font-size: 16px;

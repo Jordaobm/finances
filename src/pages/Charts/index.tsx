@@ -173,7 +173,7 @@ export const Charts = () => {
                     <MostUsedCardChart
                       operations={pageChartOperationsByFilter}
                       colorText={"#FBFBFB"}
-                      title="Gastos em cada cartão"
+                      title="Gastos por cartão"
                     />
                   </MostUsedCard>
                 </>

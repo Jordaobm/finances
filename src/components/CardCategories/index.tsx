@@ -46,10 +46,12 @@ export const CardCategories = ({ categories }: CardCategoryProps) => {
                 <Value color={category?.color}>
                   {formatCurrency(Number(category?.accumuledValue))}
                 </Value>
-                <DateText>
-                  última adição em{" "}
-                  {getLastOperationByCategory(operations, category)?.date}
-                </DateText>
+                {getLastOperationByCategory(operations, category)?.date && (
+                  <DateText>
+                    última adição em{" "}
+                    {getLastOperationByCategory(operations, category)?.date}
+                  </DateText>
+                )}
               </ValueAndMonth>
             </ContentCard>
           </ContainerCard>
