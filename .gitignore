@@ -35,6 +35,15 @@ node_modules/
 npm-debug.log
 yarn-error.log
 coverage/lcov-report/
+coverage/lcov.info
+coverage/coverage-summary.json
+
+# environment
+.env
+.env.local
+
+# Windows
+Thumbs.db
 
 # BUCK
 buck-out/
